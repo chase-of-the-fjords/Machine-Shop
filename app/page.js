@@ -5,6 +5,8 @@ import Building from './modules/Building';
 
 import styles from './modules/App.module.css';
 
+import { query } from '../lib/db';
+
 let shops = machines.shops;
 
 // The full main page

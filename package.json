@@ -9,8 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "mysql": "^2.18.1",
+    "mysql2": "^3.5.0",
     "next": "13.4.9",
     "react": "18.2.0",
     "react-dom": "18.2.0"
-  }
+  },
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "main": "next.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chase-of-the-fjords/machine-shop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chase-of-the-fjords/machine-shop/issues"
+  },
+  "homepage": "https://github.com/chase-of-the-fjords/machine-shop#readme"
 }
