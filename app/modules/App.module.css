@@ -1,0 +1,29 @@
+@font-face {
+    font-family: CastleTLig;
+    src: url(./../fonts/CastleTLig.ttf);
+}
+
+.menu {
+    position: relative;
+    font-family: CastleTLig;
+    font-weight: bold;
+    font-size: 32px;
+    width: 600px;
+    text-align: center;
+    height: 32px;
+    padding: 12px;
+
+    border-bottom: solid 2px rgb(220, 227, 236);
+
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.shop {
+    background-color: white;
+    position: relative;
+    width: max-content;
+    margin: auto;
+    box-sizing: content-box;
+    display: table;
+}

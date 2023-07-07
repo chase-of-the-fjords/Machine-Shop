@@ -1,0 +1,172 @@
+{
+    "shops": [
+        {
+            "name": "Suite 2",
+            "code": "s2",
+            "width": 4,
+            "height": 6,
+            "machines": [
+                {
+                    "name": "Saw",
+                    "code": "SAW",
+                    "width": 1,
+                    "height": 1.5,
+                    "x": 2,
+                    "y": 1
+                },
+                {
+                    "name": "Okuma B",
+                    "code": "OB",
+                    "width": 1,
+                    "height": 2,
+                    "x": 3,
+                    "y": 1
+                },
+                {
+                    "name": "Okuma A",
+                    "code": "OA",
+                    "width": 1,
+                    "height": 2,
+                    "x": 4,
+                    "y": 1
+                },
+                {
+                    "name": "APC",
+                    "code": "APC",
+                    "width": 1,
+                    "height": 1,
+                    "x": 1,
+                    "y": 3
+                },
+                {
+                    "name": "Haas 8",
+                    "code": "H8",
+                    "width": 1,
+                    "height": 1,
+                    "x": 1,
+                    "y": 4
+                },
+                {
+                    "name": "Haas 7",
+                    "code": "H7",
+                    "width": 1,
+                    "height": 1,
+                    "x": 1,
+                    "y": 5
+                },
+                {
+                    "name": "Haas 6",
+                    "code": "H6",
+                    "width": 1,
+                    "height": 1,
+                    "x": 1,
+                    "y": 6
+                },
+                {
+                    "name": "Brother C",
+                    "code": "BC",
+                    "width": 1,
+                    "height": 1,
+                    "x": 3,
+                    "y": 4
+                },
+                {
+                    "name": "Brother B",
+                    "code": "BB",
+                    "width": 1,
+                    "height": 1,
+                    "x": 3,
+                    "y": 5
+                },
+                {
+                    "name": "Brother A",
+                    "code": "BA",
+                    "width": 1,
+                    "height": 1,
+                    "x": 3,
+                    "y": 6
+                },
+                {
+                    "name": "Mini B",
+                    "code": "mb",
+                    "width": 1,
+                    "height": 1,
+                    "x": 4,
+                    "y": 4.5
+                },
+                {
+                    "name": "Mini A",
+                    "code": "ma",
+                    "width": 1,
+                    "height": 1,
+                    "x": 4,
+                    "y": 5.5
+                }
+            ]
+        },
+        {
+            "name": "Suite 3",
+            "code": "s3",
+            "width": 4,
+            "height": 5,
+            "machines": [
+                {
+                    "name": "Haas 3",
+                    "code": "H3",
+                    "width": 1,
+                    "height": 1,
+                    "x": 2,
+                    "y": 1
+                },
+                {
+                    "name": "Haas 4",
+                    "code": "H4",
+                    "width": 1,
+                    "height": 1,
+                    "x": 3,
+                    "y": 1
+                },
+                {
+                    "name": "Haas 5",
+                    "code": "H5",
+                    "width": 1,
+                    "height": 1,
+                    "x": 4,
+                    "y": 1
+                },
+                {
+                    "name": "Haas 2",
+                    "code": "H2",
+                    "width": 1,
+                    "height": 1,
+                    "x": 2,
+                    "y": 2
+                },
+                {
+                    "name": "Haas 1",
+                    "code": "H1",
+                    "width": 1,
+                    "height": 1,
+                    "x": 2,
+                    "y": 3
+                },
+                {
+                    "name": "Okuma C",
+                    "code": "OC",
+                    "width": 1,
+                    "height": 2,
+                    "x": 3,
+                    "y": 2.5
+                },
+                {
+                    "name": "Okuma D",
+                    "code": "OD",
+                    "width": 1,
+                    "height": 2,
+                    "x": 4,
+                    "y": 2.5
+                }
+            ]
+        }
+    ]
+}
