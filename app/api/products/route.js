@@ -2,8 +2,8 @@ import { query } from '@/lib/db';
 
 export async function GET () {
     const products = await query ({
-        query: "SELECT name FROM machines",
+        query: "SELECT * from machines",
         values: [],
     })
-    return new Response(products[0]["name"]);
+    return new Response(JSON.stringify(products, null, "\t"));
 }
