@@ -15,11 +15,11 @@ export default function Building({data}) {
                 width: `${ data.width * 120 }px`,
                 height: `${ data.height * 120 }px`
             }}>
-                {
+                {/*
                     data.machines.map((machine) => {
                         return <Machine key={machine.code} data={machine} />
                     })
-                }
+                */}
             </div>
         </div>
     );

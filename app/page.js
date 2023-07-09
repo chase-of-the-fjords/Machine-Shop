@@ -1,3 +1,5 @@
+'use client'
+
 import machines from './data/machines.json';
 
 import Machine from './modules/Machine';
@@ -5,16 +7,36 @@ import Building from './modules/Building';
 
 import styles from './modules/App.module.css';
 
-import { query } from '../lib/db';
-
-let shops = machines.shops;
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 // The full main page
 export default function App() {
+    const [shops, setShops] = useState([]);
+
+    async function getShops() {
+        const postData = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            request: "machines",
+        }
+        const res = await fetch("/api/shops", postData);
+        const response = await res.json();
+        setShops(response);
+    }
+
+    getShops();
+/*
+    useEffect(() => {
+
+    }, []);
+*/
     return (
         <>
             <Menu></Menu>
-            <Shop></Shop>
+            <Shop shops={shops}></Shop>
         </>
     );
 }
@@ -27,7 +49,7 @@ function Menu() {
     }}>Origin Golf Machine Shop</h1>
 }
 
-function Shop() {
+function Shop({shops}) {
     return (
         <div className={styles.shop}>
             {
