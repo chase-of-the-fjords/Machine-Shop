@@ -22,7 +22,7 @@ export default function App() {
             },
             request: "machines",
         }
-        const res = await fetch("/api/shops", postData);
+        const res = await fetch("./api/shops", postData);
         const response = await res.json();
         setShops(response);
     }
