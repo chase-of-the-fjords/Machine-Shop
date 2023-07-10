@@ -48,7 +48,14 @@ export default function Shop() {
                     return (shop.enabled == 1);
                 })
                 .map((shop) => {
-                    return <Building key={shop.code} data={shop} machines={
+                    return <Building 
+                    key={shop.code} 
+                    data={shop}
+                    update={() => {
+                        getShops();
+                        getMachines();
+                    }} 
+                    machines={
                         machines.filter((machine) => {
                             return (machine.shop == shop.code);
                         })

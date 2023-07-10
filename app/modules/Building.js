@@ -2,7 +2,7 @@ import Machine from './Machine';
 import styles from './Building.module.css';
 
 // Individual Building
-export default function Building({data, machines}) {
+export default function Building({data, machines, update}) {
     return (
         <div 
         className={styles.buildingContainer}
@@ -18,7 +18,7 @@ export default function Building({data, machines}) {
             }}>
                 {
                     machines.map((machine) => {
-                        return <Machine key={machine.id} data={machine} />
+                        return <Machine key={machine.id} data={machine} update={() => update()} />
                     })
                 }
             </div>
