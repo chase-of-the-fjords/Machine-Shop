@@ -1,7 +1,5 @@
 'use client'
 
-import machines from './data/machines.json';
-
 import Machine from './modules/Machine';
 import Building from './modules/Building';
 
