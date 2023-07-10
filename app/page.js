@@ -32,21 +32,17 @@ export default function App() {
             headers: {
                 "Content-Type": "application/json",
             },
-            request: "s1",
         }
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines`, postData);
         const response = await res.json();
         setMachines(response);
     }
 
-    getShops();
-
-    getMachines();
-/*
     useEffect(() => {
-
+        getShops();
+        getMachines();
     }, []);
-*/
+
     return (
         <>
             <Menu></Menu>
@@ -67,7 +63,11 @@ function Shop({shops, machines}) {
     return (
         <div className={styles.shop}>
             {
-                shops.map((shop) => {
+                shops
+                .filter((shop) => {
+                    return (shop.enabled == 1);
+                })
+                .map((shop) => {
                     return <Building key={shop.code} data={shop} machines={
                         machines.filter((machine) => {
                             return (machine.shop == shop.code);

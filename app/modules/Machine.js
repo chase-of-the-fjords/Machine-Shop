@@ -9,14 +9,15 @@ export default function Machine({data}) {
     return (
         <>
             <button 
-                className={styles.machine}
+                key={data.id}
+                className={`${styles.machine} ${data.state == 0 || styles.bad_machine}`}
                 style={ { width: `${width}px`,
                           height: `${height}px`,
                           top: `${top}px` ,
                           left: `${left}px` } }
                 >
                     {data.name}
-            </button><br />
+            </button>
         </>
     )
 }

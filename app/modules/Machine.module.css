@@ -27,3 +27,22 @@
     background-color: rgb(236, 241, 247);
     box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.5);
 }
+
+.bad_machine {
+    background-color: white;
+    border: solid 1px;
+    border-color: rgb(28, 28, 28);
+    border-radius: 3px;
+
+    opacity: 35%;
+
+    cursor: not-allowed;
+
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3);
+}
+
+.bad_machine:hover {
+    margin-top: 0px;
+    background-color: white;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
+}
