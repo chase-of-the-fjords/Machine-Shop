@@ -2,7 +2,7 @@ import Machine from './Machine';
 import styles from './Building.module.css';
 
 // Individual Building
-export default function Building({data}) {
+export default function Building({data, machines}) {
     return (
         <div className={styles.buildingContainer}
         style={{
@@ -15,11 +15,11 @@ export default function Building({data}) {
                 width: `${ data.width * 120 }px`,
                 height: `${ data.height * 120 }px`
             }}>
-                {/*
-                    data.machines.map((machine) => {
+                {
+                    machines.map((machine) => {
                         return <Machine key={machine.code} data={machine} />
                     })
-                */}
+                }
             </div>
         </div>
     );

@@ -1,10 +1,10 @@
 import styles from './Machine.module.css';
 
 export default function Machine({data}) {
-    let width = (data.width * 120) - 5;
-    let height = (data.height * 120) - 5;
-    let top = 5 + (data.y - 1) * 120;
-    let left = 5 + (data.x - 1) * 120;
+    let width = (data.xdim * 120) - 5;
+    let height = (data.ydim * 120) - 5;
+    let top = 5 + (data.ypos - 1) * 120;
+    let left = 5 + (data.xpos - 1) * 120;
 
     return (
         <>

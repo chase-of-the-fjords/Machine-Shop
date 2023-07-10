@@ -2,7 +2,7 @@ import { query } from '@/lib/db';
 
 export async function GET (request) {
     const shops = await query ({
-        query: "SELECT * from shops",
+        query: "SELECT * FROM shops",
         values: [],
     })
     return new Response(JSON.stringify(shops));
