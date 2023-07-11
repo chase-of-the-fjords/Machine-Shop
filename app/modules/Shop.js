@@ -32,7 +32,6 @@ export default function Shop() {
         }
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines`, postData);
         const response = await res.json();
-        console.log("refresh");
         setMachines(response);
     }
 
@@ -43,7 +42,6 @@ export default function Shop() {
 
     
     function updateMachine(id, entry, value) {
-        console.log(id);
 
         let editedModel = machines;
         
@@ -51,7 +49,6 @@ export default function Shop() {
             if (editedModel[i]['id'] == id) {
                 editedModel[i][entry] = value;
                 //setMachines(editedModel);
-                console.log(machines);
                 return;
             }
         }
