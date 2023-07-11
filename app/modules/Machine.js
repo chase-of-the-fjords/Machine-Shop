@@ -1,7 +1,7 @@
 import styles from './Machine.module.css';
 
 export default function Machine({data, update}) {
-    async function updateMachine(id, state, reload) {
+    async function updateMachine(id, state, update) {
         const postData = {
             method: "PATCH",
             headers: {
@@ -12,7 +12,11 @@ export default function Machine({data, update}) {
             })
         }
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machineUpdate`, postData);
-        reload();
+        if (res.status == 200) {
+            update('state', state);
+        } else {
+            console.log("Error");
+        }
     }
 
     let width = (data.xdim * 120) - 5;

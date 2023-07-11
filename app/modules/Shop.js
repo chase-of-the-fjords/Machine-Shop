@@ -28,22 +28,34 @@ export default function Shop() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-            },
+            }
         }
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines`, postData);
         const response = await res.json();
+        console.log("refresh");
         setMachines(response);
     }
 
     useEffect(() => {
-        getShops();
         getMachines();
-    }, []);
+        getShops();
+    }, [machines]);
 
-    const timer = setTimeout(() => {
-        getShops();
-        getMachines();
-    }, 60000);
+    
+    function updateMachine(id, entry, value) {
+        console.log(id);
+
+        let editedModel = machines;
+        
+        for (let i = 0; i < editedModel.length; ++i) {
+            if (editedModel[i]['id'] == id) {
+                editedModel[i][entry] = value;
+                //setMachines(editedModel);
+                console.log(machines);
+                return;
+            }
+        }
+    }
 
     return (
         <div className={styles.shop}>
@@ -56,10 +68,7 @@ export default function Shop() {
                     return <Building 
                     key={shop.code} 
                     data={shop}
-                    update={() => {
-                        getShops();
-                        getMachines();
-                    }} 
+                    update={(id, entry, value) => {updateMachine(id, entry, value)}} 
                     machines={
                         machines.filter((machine) => {
                             return (machine.shop == shop.code);

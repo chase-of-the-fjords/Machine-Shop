@@ -18,7 +18,7 @@ export default function Building({data, machines, update}) {
             }}>
                 {
                     machines.map((machine) => {
-                        return <Machine key={machine.id} data={machine} update={() => update()} />
+                        return <Machine key={machine.id} data={machine} update={(entry, value) => update(machine.id, entry, value)} />
                     })
                 }
             </div>
