@@ -1,7 +1,7 @@
 import styles from './Machine.module.css';
 
 export default function Machine({data, update}) {
-    async function updateMachine(id, state) {
+    async function updateMachine(id, state, reload) {
         const postData = {
             method: "PATCH",
             headers: {
@@ -12,7 +12,7 @@ export default function Machine({data, update}) {
             })
         }
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machineUpdate`, postData);
-        //const response = await res.json();
+        reload();
     }
 
     let width = (data.xdim * 120) - 5;
@@ -31,8 +31,7 @@ export default function Machine({data, update}) {
                           left: `${left}px` } }
                 onClick={
                     () => {
-                        updateMachine(data.id, (data.state + 1) % 2);
-                        update();
+                        updateMachine(data.id, (data.state + 1) % 2, update);
                     }
                 }
                 >

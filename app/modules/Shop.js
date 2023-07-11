@@ -40,6 +40,11 @@ export default function Shop() {
         getMachines();
     }, []);
 
+    const timer = setTimeout(() => {
+        getShops();
+        getMachines();
+    }, 1000);
+
     return (
         <div className={styles.shop}>
             {
