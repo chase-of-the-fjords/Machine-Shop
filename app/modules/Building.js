@@ -1,13 +1,26 @@
 import Machine from './Machine';
 import styles from './Building.module.css';
+import { useState, useEffect } from 'react';
+import { useSpring, animated } from '@react-spring/web'
 
 // Individual Building
-export default function Building({data, machines, update}) {
+export default function Building({data, machines, update, screenWidth, position}) {
+    const springs = useSpring({
+        from: {
+            opacity: 0
+        },
+        to: {
+            opacity: 1
+        },
+    })
+
     return (
-        <div 
+        <animated.div 
         className={styles.buildingContainer}
         style={{
-            width: `${ (data.width * 120) + 100 }px`
+            width: `${ (data.width * 120) + 100 }px`,
+            left: `${position}px`,
+            ...springs,
         }}>
             <h3 className={styles.header}>{data.name}</h3>
             <div
@@ -22,6 +35,6 @@ export default function Building({data, machines, update}) {
                     })
                 }
             </div>
-        </div>
+        </animated.div>
     );
 }
