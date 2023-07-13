@@ -17,6 +17,7 @@ export default function Shop() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": '*',
             }
         }
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/shops`, postData);
@@ -29,6 +30,7 @@ export default function Shop() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": '*',
             }
         }
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines`, postData);
@@ -41,6 +43,7 @@ export default function Shop() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": '*',
             }
         }
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs`, postData);
