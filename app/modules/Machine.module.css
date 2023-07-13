@@ -1,13 +1,15 @@
 .machine_name {
+    color: gray;
+
     position: absolute;
     
     width: 100%;
-    height: 16px;
+    height: 10px;
     text-align: right;
 
     background-color: transparent;
     font-family: 'Helvetica';
-    font-size: 14px;
+    font-size: 10px;
 
     top: 2px;
     left: -2px;
@@ -69,4 +71,14 @@
 
 .priority_machine:hover {
     background-color: rgb(243, 247, 127);
+}
+
+.job_container {
+    position: relative;
+    transform: translate(0, -50%);
+    top: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Segoe UI';
+    width: 100%;
 }

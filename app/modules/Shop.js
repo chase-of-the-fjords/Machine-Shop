@@ -10,6 +10,7 @@ import styles from './App.module.css';
 export default function Shop() {
     const [shops, setShops] = useState([]);
     const [machines, setMachines] = useState([]);
+    const [jobs, setJobs] = useState([]);
 
     async function getShops() {
         const postData = {
@@ -34,25 +35,38 @@ export default function Shop() {
         const response = await res.json();
         setMachines(response);
     }
+
+    async function getJobs() {
+        const postData = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs`, postData);
+        const response = await res.json();
+        setJobs(response);
+    }
+
+    function update() {
+        getMachines();
+        getShops();
+        getJobs();
+    }
     
     useEffect(() => {
         getMachines();
         getShops();
-    }, [machines]);
+        getJobs();
 
-    
-    function updateMachine(id, entry, value) {
+        const interval = setInterval(() => {
+            getMachines();
+            getShops();
+            getJobs();
+        }, 30000);
 
-        let editedModel = machines;
-        
-        for (let i = 0; i < editedModel.length; ++i) {
-            if (editedModel[i]['id'] == id) {
-                editedModel[i][entry] = value;
-                //setMachines(editedModel);
-                return;
-            }
-        }
-    }
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <div className={styles.shop}>
@@ -65,12 +79,13 @@ export default function Shop() {
                     return <Building 
                     key={shop.code} 
                     data={shop}
-                    update={(id, entry, value) => {updateMachine(id, entry, value)}}
                     machines={
                         machines.filter((machine) => {
                             return (machine.shop == shop.code);
                         })
-                    }/>
+                    }
+                    jobs={jobs}
+                    update={update} />
                 })
             }
         </div>

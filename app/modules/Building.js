@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useSpring, animated } from '@react-spring/web'
 
 // Individual Building
-export default function Building({data, machines, update, screenWidth, position}) {
+export default function Building({data, machines, jobs, update}) {
     const springs = useSpring({
         from: {
             opacity: 0
@@ -30,7 +30,13 @@ export default function Building({data, machines, update, screenWidth, position}
             }}>
                 {
                     machines.map((machine) => {
-                        return <Machine key={machine.id} data={machine} update={(entry, value) => update(machine.id, entry, value)} />
+                        return <Machine 
+                        key={machine.id} 
+                        data={machine} 
+                        jobs={jobs.filter((job) => {
+                            return (job.machine == machine.code);
+                        })}
+                        update={update} />
                     })
                 }
             </div>

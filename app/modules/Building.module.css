@@ -9,7 +9,8 @@
     top: 0px;
     font-family: CastleTLig;
     font-size: 30px;
-    margin: 10px;
+    margin: 0px;
+    margin-bottom: 10px;
 }
 
 .building {
@@ -22,6 +23,8 @@
 }
 
 .buildingContainer {
+    background-color: transparent;
     position: relative;
-    float: left;
+    display: inline-block;
+    margin-bottom: 40px;
 }

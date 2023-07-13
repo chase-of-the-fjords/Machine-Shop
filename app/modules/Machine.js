@@ -1,7 +1,7 @@
 import styles from './Machine.module.css';
 
-export default function Machine({data, update}) {
-    async function updateMachine(id, state, update) {
+export default function Machine({data, jobs, update}) {
+    async function updateMachine(id, state) {
         const postData = {
             method: "PATCH",
             headers: {
@@ -12,11 +12,7 @@ export default function Machine({data, update}) {
             })
         }
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machineUpdate`, postData);
-        if (res.status == 200) {
-            update('state', state);
-        } else {
-            console.log("Error");
-        }
+        update();
     }
 
     let width = (data.width * 120) - 5;
@@ -35,12 +31,26 @@ export default function Machine({data, update}) {
                           left: `${left}px` } }
                 onClick={
                     () => {
-                        updateMachine(data.id, (data.state + 1) % 3, update);
+                        updateMachine(data.id, (data.state + 1) % 3);
                     }
                 }
                 >
                     <div className={`${styles.machine_name}`}>{data.name}</div>
+                    <div 
+                    className={`${styles.job_viewport}`}
+                    style= { {
+                        height: `${height - 16}px`
+                    } }>
+                        <div className={`${styles.job_container}`}>
+                            {getJobsText(jobs)}
+                        </div>
+                    </div>
             </button>
         </>
     )
+}
+
+function getJobsText (jobs) {
+    if (jobs.length == 0) return "";
+    return jobs.length + " jobs";
 }
