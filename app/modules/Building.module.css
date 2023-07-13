@@ -22,5 +22,6 @@
 }
 
 .buildingContainer {
-    position: fixed;
+    position: relative;
+    float: left;
 }

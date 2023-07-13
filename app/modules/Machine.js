@@ -19,27 +19,27 @@ export default function Machine({data, update}) {
         }
     }
 
-    let width = (data.xdim * 120) - 5;
-    let height = (data.ydim * 120) - 5;
-    let top = 5 + (data.ypos - 1) * 120;
-    let left = 5 + (data.xpos - 1) * 120;
+    let width = (data.width * 120) - 5;
+    let height = (data.height * 120) - 5;
+    let top = 5 + (data.ypos * 120);
+    let left = 5 + (data.xpos * 120);
 
     return (
         <>
             <button 
                 key={data.id}
-                className={`${styles.machine} ${data.state == 0 || styles.bad_machine}`}
+                className={`${styles.machine} ${data.state == 1 && styles.bad_machine} ${data.state == 2 && styles.priority_machine}`}
                 style={ { width: `${width}px`,
                           height: `${height}px`,
                           top: `${top}px` ,
                           left: `${left}px` } }
                 onClick={
                     () => {
-                        updateMachine(data.id, (data.state + 1) % 2, update);
+                        updateMachine(data.id, (data.state + 1) % 3, update);
                     }
                 }
                 >
-                    {data.name}
+                    <div className={`${styles.machine_name}`}>{data.name}</div>
             </button>
         </>
     )

@@ -11,8 +11,6 @@ export default function Shop() {
     const [shops, setShops] = useState([]);
     const [machines, setMachines] = useState([]);
 
-    const [screenWidth, setWidth] = useState(window.innerWidth);
-
     async function getShops() {
         const postData = {
             method: "GET",
@@ -40,14 +38,6 @@ export default function Shop() {
     useEffect(() => {
         getMachines();
         getShops();
-        window.addEventListener("resize", () => {
-            setWidth(window.innerWidth);
-            generatePositions();
-        });
-        return () => window.removeEventListener("resize", () => {
-            setWidth(window.innerWidth);
-            generatePositions();
-        });
     }, [machines]);
 
     
@@ -64,42 +54,18 @@ export default function Shop() {
         }
     }
 
-    let totalWidth = 0;
-    let positions = [];
-
-    function generatePositions() {
-        totalWidth = 0;
-        let x = 0;
-
-        // Find the total width
-        for (let i = 0; i < shops.length; i++) {
-            if (shops[i].enabled) totalWidth += 100 + (shops[i].width * 120);
-        }
-
-        for (let i = 0; i < shops.length; i++) {
-            if (shops[i].enabled) {
-                positions[shops[i].code] = x + ((screenWidth / 2) - (totalWidth / 2));
-                x += (shops[i].width * 120) + 100;
-            }
-        }
-    }
-
-    generatePositions();
-
     return (
         <div className={styles.shop}>
             {
                 shops
                 .filter((shop) => {
-                    return (shop.enabled == 1);
+                    return true;
                 })
                 .map((shop) => {
                     return <Building 
                     key={shop.code} 
                     data={shop}
-                    update={(id, entry, value) => {updateMachine(id, entry, value)}} 
-                    screenWidth={screenWidth}
-                    position={positions[shop.code]}
+                    update={(id, entry, value) => {updateMachine(id, entry, value)}}
                     machines={
                         machines.filter((machine) => {
                             return (machine.shop == shop.code);

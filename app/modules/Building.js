@@ -19,7 +19,6 @@ export default function Building({data, machines, update, screenWidth, position}
         className={styles.buildingContainer}
         style={{
             width: `${ (data.width * 120) + 100 }px`,
-            left: `${position}px`,
             ...springs,
         }}>
             <h3 className={styles.header}>{data.name}</h3>
