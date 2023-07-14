@@ -1,7 +1,23 @@
 import styles from './Machine.module.css';
 
+/* 
+ * Default export for the machine.
+ * 
+ * data: The JSON data for this specific machine.
+ * jobs: The JSON data for all the jobs for this machine.
+ * update: An update function for all the SQL data.
+ */
 export default function Machine({data, jobs, update}) {
-    async function updateMachine(id, state) {
+
+    /* 
+     * Updates the state in the SQL database for a given machine.
+     * 
+     * code: The code for the machine (i.e. H8, OB, ma).
+     * state: The state of the machine.
+     */
+    async function updateMachine(code, state) {
+
+        // Sets the post-data for the machine, including its body.
         const postData = {
             method: "PATCH",
             headers: {
@@ -11,15 +27,21 @@ export default function Machine({data, jobs, update}) {
                 id, state
             })
         }
+
+        // Sends the actual request.
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machineUpdate`, postData);
+        
+        // Refreshes the JSON data for the page from the database.
         update();
     }
 
+    // Generates the machine's width, height, top (y-position), and left (x-position) values based on JSON data.
     let width = (data.width * 120) - 5;
     let height = (data.height * 120) - 5;
     let top = 5 + (data.ypos * 120);
     let left = 5 + (data.xpos * 120);
 
+    // 
     return (
         <>
             <button 
@@ -52,5 +74,6 @@ export default function Machine({data, jobs, update}) {
 
 function getJobsText (jobs) {
     if (jobs.length == 0) return "";
+    if (jobs.length == 1) return "1 job";
     return jobs.length + " jobs";
 }

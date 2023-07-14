@@ -1,30 +1,46 @@
+/* Loads the CastleTLig font. */
 @font-face {
     font-family: CastleTLig;
     src: url(./../fonts/CastleTLig.ttf);
 }
 
+/* The container box for a building and its header. */
+.container {
+    /* By using an inline-block display, allows its parent component to center it. */
+    display: inline-block;
+
+    /* Adds a bit of space at the bottom. Mostly for when several shops are vertical. */
+    margin-bottom: 40px;
+}
+
+/* The header text for a single building. */
 .header {
-    position: relative;
-    text-align: center;
-    top: 0px;
+    /* Sets the font and its size. */
     font-family: CastleTLig;
     font-size: 30px;
-    margin: 0px;
-    margin-bottom: 10px;
+
+    /* Aligns the text in the center. */
+    text-align: center;
+
+    /* Removes all margins except at the bottom for positioning. */
+    margin: 0px 0px 10px 0px;
 }
 
+/* The styling for the physical building box. */
 .building {
+    /* The color of the building. */
     background-color: lightgray;
+
+    /* The building border & its radius. */
     border: 1px solid black;
     border-radius: 5px;
-    position: relative;
+    
+    /* Sets padding to add a buffer around the machines. */
     padding: 2.5px;
-    margin: auto;
-}
 
-.buildingContainer {
-    background-color: transparent;
+    /* Centers the building within its container. */
+    margin: auto;
+    
+    /* Relative position is needed to position its children (machines) in relation to the shop. */
     position: relative;
-    display: inline-block;
-    margin-bottom: 40px;
 }

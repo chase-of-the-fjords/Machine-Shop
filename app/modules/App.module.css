@@ -1,27 +1,36 @@
+/* Loads the CastleTLig font. */
 @font-face {
     font-family: CastleTLig;
     src: url(./../fonts/CastleTLig.ttf);
 }
 
+/* The styling for the menu bar. */
 .menu {
-    position: relative;
+    /* Uses the CastleTLig font with the following settings */
     font-family: CastleTLig;
     font-weight: bold;
     font-size: 32px;
-    width: 600px;
     text-align: center;
-    height: 32px;
-    padding: 8px;
 
+    /* Creates the underline and sets the width of the component (which is only relevant for the underline) */
     border-bottom: solid 2px rgb(220, 227, 236);
+    width: 600px;
+    
+    /* Centers the component */
+    margin: auto;
 
-    left: 50%;
-    transform: translateX(-50%);
+    /* Sets margins and padding to position the component */
+    padding-top: 10px;
+    padding-bottom: 5px;
+    margin-bottom: 30px;
 }
 
+/* The styling for the "shop" box that holds the buildings. */
 .shop {
-    background-color: transparent;
+    /* The shops should span across the whole shop */
     width: 100%;
+
+    /* This is treated as a main block with several inline-blocks (the buildings). Text-align centers the buildings. */
     display: block;
     text-align: center;
 }

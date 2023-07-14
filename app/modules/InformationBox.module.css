@@ -1,0 +1,28 @@
+.popup_div {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 50%;
+}
+
+.info_box {
+    position: relative;
+    opacity: 200%;
+    height: 80%;
+    top: 10%;
+    width: 600px;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 0px 10px 20px rgb(0, 0, 0, 0.5);
+    background-color: white;
+    margin: auto;
+}
