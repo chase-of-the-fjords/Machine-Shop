@@ -42,7 +42,7 @@ export default function Shop() {
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/buildings`, postData);
         const response = await res.json();
         // Sets the value of "buildings".
-        setBuildings(response);
+        setBuildings(response.filter((building) => { return (building.code != "lm" )}));
     }
 
     // Gets the machines to populate the "machines" hook.

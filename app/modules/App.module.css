@@ -13,8 +13,8 @@
     text-align: center;
 
     /* Creates the underline and sets the width of the component (which is only relevant for the underline) */
-    border-bottom: solid 2px rgb(220, 227, 236);
-    width: 600px;
+    border-bottom: solid 2px black;
+    width: 500px;
     
     /* Centers the component */
     margin: auto;

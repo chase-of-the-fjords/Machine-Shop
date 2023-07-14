@@ -14,7 +14,7 @@
 .name {
     /* Sets the font and text settings. */
     font-family: 'OpenSans';
-    font-size: 10px;
+    font-size: 12px;
     color: gray;
 
     /* By stretching across the whole machine and right-aligning, the text is put in the top-right corner. */
@@ -24,7 +24,7 @@
     /* Absolute positioning with top and left are used to set the exact position on the machine box. */
     position: absolute;
     top: 2px;
-    left: -2px;
+    left: -4px;
 }
 
 /* The styling for the machine box itself. Affects all machines. */
