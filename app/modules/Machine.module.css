@@ -108,9 +108,4 @@
     font-family: 'OpenSans';
     font-size: 20px;
     font-weight: bold;
-
-    /* Positions the jobs so they're centered vertically. */
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
 }
