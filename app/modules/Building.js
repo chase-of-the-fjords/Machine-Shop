@@ -13,9 +13,9 @@ import { useSpring, animated } from '@react-spring/web'
  * data: The JSON data for this specific building.
  * machines: The JSON data for all the machines in the building.
  * jobs: The JSON data for all the jobs in all the shops.
- * update: An update function for all the SQL data.
+ * reload: An reload function for all the SQL data.
  */
-export default function Building({data, machines, jobs, update}) {
+export default function Building({data, machines, jobs, reload}) {
 
     // Defines the animation that plays when the buildings load for the first time.
     const springs = useSpring({
@@ -63,7 +63,7 @@ export default function Building({data, machines, jobs, update}) {
                      * data: Gives the JSON data from the SQL database for the machine.
                      * jobs: Gives the JSON data from the SQL database for the jobs tied to the machine.
                      *      note - Filters through the data to find only the relevant jobs.
-                     * update: The update method for the SQL databases. Can be used to update from inside each component.
+                     * reload: The reload method for the SQL databases. Can be used to reload from inside each component.
                      *      note - This is likely to be changed later.
                      */
                     machines.map((machine) => {
@@ -76,7 +76,7 @@ export default function Building({data, machines, jobs, update}) {
                                 return (job.machine == machine.code);
                             })
                         }
-                        update={update} />
+                        reload={(params) => { reload(params)}} />
                     })
                 }
             </div>

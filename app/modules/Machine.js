@@ -6,9 +6,9 @@ import styles from './Machine.module.css';
  * 
  * data: The JSON data for this specific machine.
  * jobs: The JSON data for all the jobs for this machine.
- * update: An update function for all the SQL data.
+ * reload: An reload function for all the SQL data.
  */
-export default function Machine({data, jobs, update}) {
+export default function Machine({data, jobs, reload}) {
 
     /* 
      * Updates the state in the SQL database for a given machine.
@@ -33,7 +33,7 @@ export default function Machine({data, jobs, update}) {
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machineUpdate`, postData);
         
         // Refreshes the JSON data for the page from the database.
-        update();
+        reload("machines");
     }
 
     // Generates the machine's width, height, top (y-position), and left (x-position) values based on JSON data.

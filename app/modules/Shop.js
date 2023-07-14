@@ -69,18 +69,18 @@ export default function Shop() {
     }
 
     // A joint function to get all the necessary SQL data.
-    function update() {
-        getBuildings();
-        getMachines();
-        getJobs();
+    function reload( param ) {
+        if (param == "all" || param == "buildings") getBuildings();
+        if (param == "all" || param == "machines") getMachines();
+        if (param == "all" || param == "jobs") getJobs();
     }
     
     // This gets all the data when the page loads, and then again every 30 seconds.
     useEffect(() => {
-        update();
+        reload("all");
 
         const interval = setInterval(() => {
-            update();
+            reload("all");
         }, 30000);
 
         return () => clearInterval(interval);
@@ -101,7 +101,7 @@ export default function Shop() {
                      * machines: Gives the JSON data from the SQL database for all machines in the building (filtered).
                      * jobs: Gives the JSON data from the SQL database for all the jobs.
                      *      note - Because jobs are tied to machines, not buildings, they aren't filtered here.
-                     * update: The update method for the SQL databases. Can be used to update from inside each component.
+                     * reload: The reload method for the SQL databases. Can be used to reload from inside each component.
                      *      note - This is likely to be changed later.
                      */
                     buildings
@@ -116,7 +116,7 @@ export default function Shop() {
                             })
                         }
                         jobs={jobs}
-                        update={update} />
+                        reload={(params) => { reload(params)}} />
                     })
                 }
 
