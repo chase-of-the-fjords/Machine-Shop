@@ -1,84 +1,116 @@
-.machine_name {
+/* Loads the CastleTLig font. */
+@font-face {
+    font-family: CastleTLig;
+    src: url(./../fonts/CastleTLig.ttf);
+}
+
+/* Loads the OpenSans font. */
+@font-face {
+    font-family: OpenSans;
+    src: url(./../fonts/OpenSans.ttf);
+}
+
+/* The name of the machine in its top-right corner. */
+.name {
+    /* Sets the font and text settings. */
+    font-family: 'OpenSans';
+    font-size: 10px;
     color: gray;
 
-    position: absolute;
-    
+    /* By stretching across the whole machine and right-aligning, the text is put in the top-right corner. */
     width: 100%;
-    height: 10px;
     text-align: right;
 
-    background-color: transparent;
-    font-family: 'Helvetica';
-    font-size: 10px;
-
+    /* Absolute positioning with top and left are used to set the exact position on the machine box. */
+    position: absolute;
     top: 2px;
     left: -2px;
 }
 
+/* The styling for the machine box itself. Affects all machines. */
 .machine {
+    /* Absolute positioning allows position to be set without being affected by other machines. */
     position: absolute;
 
-    box-sizing: border-box;
-
+    /* Sets the color and border of the machine. */
     background-color: white;
-    border: solid 1px;
-    border-color: black;
-    border-radius: 3px;
+    border: 1px solid black;
+    border-radius: 5px;
 
-    transition: background-color 0.2s,
+    /* Sets the transition for hovering. */
+    transition:
+        background-color 0.2s,
         margin-top ease 0.2s,
-        box-shadow ease 0.2s;
+        box-shadow ease 0.2s,
+        opacity ease 0.2s;
 
+    /* Sets the cursor to change when hovering over the machine. */
     cursor: pointer;
 
+    /* The shadow for the machine. */
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
 
+    /* Unneeded, but here for clarification. Margin-top changes when hovering, this is its "neutral" position. */
     margin-top: 0px;
-
-    padding: 0px;
 }
 
+/* The styling for the machine box when the mouse is hovering. Affects all machines. */
 .machine:hover {
+    /* Changes the margin to lift the machine up. */
     margin-top: -3px;
+
+    /* Darkens the background color. */
     background-color: rgb(236, 241, 247);
+
+    /* Broadens, lowers, and darkens the shadow. */
     box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.5);
 }
 
-.bad_machine {
-    background-color: white;
-    border: solid 1px;
-    border-color: rgb(28, 28, 28);
-    border-radius: 3px;
-
+/* The styling for an out-of-service machine box. */
+.out_of_service {
+    /* "Grays out" the machine by lowering its opacity. */
     opacity: 35%;
 
+    /* Changes the cursor to display a red circle with a line. */
     cursor: not-allowed;
 
-    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3);
+    /* Removes the box shadow. */
+    box-shadow: none;
 }
 
-.bad_machine:hover {
+/* The styling for an out-of-service machine box when the mouse is hovering. */
+.out_of_service:hover {
+    /* Negates the "lifting" margin effect. */
     margin-top: 0px;
+
+    /* Negates the background color change. */
     background-color: white;
+
+    /* Negates the background shadow effect. */
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
 }
 
-.priority_machine {
+/* The styling for a priority machine. */
+.priority {
+    /* Sets the background color. */
     background-color: rgb(252, 255, 150);
-    border: solid 1px;
-    border-color: rgb(0, 0, 0);
 }
 
-.priority_machine:hover {
-    background-color: rgb(243, 247, 127);
+/* The styling for a priority machine when the mouse is hovering. */
+.priority:hover {
+    /* Darkens the background color. */
+    background-color: rgb(236, 240, 121);
 }
 
-.job_container {
-    position: relative;
-    transform: translate(0, -50%);
-    top: 50%;
+/* The styling for the jobs displayed on the machine box. */
+.jobs {
+    /* Styling for the font and its settings. */
+    font-family: 'OpenSans';
     font-size: 20px;
     font-weight: bold;
-    font-family: 'Segoe UI';
-    width: 100%;
+
+    /* Positions the jobs so they're centered vertically. */
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }

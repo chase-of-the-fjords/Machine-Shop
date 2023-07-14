@@ -27,7 +27,7 @@ export default function Building({data, machines, jobs, update}) {
         },
     })
 
-    // Returns the JSX for the buildings
+    // Returns the JSX for the building.
     return (
 
         /* 
@@ -59,7 +59,7 @@ export default function Building({data, machines, jobs, update}) {
                     /* 
                      * Creates a machine component from each machine in the data. 
                      * 
-                     * key: The code for the building (i.e. H3, OB, or ma)
+                     * key: The code for the machine (i.e. H3, OB, or ma)
                      * data: Gives the JSON data from the SQL database for the machine.
                      * jobs: Gives the JSON data from the SQL database for the jobs tied to the machine.
                      *      note - Filters through the data to find only the relevant jobs.
