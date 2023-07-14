@@ -8,7 +8,7 @@ import styles from './Machine.module.css';
  * jobs: The JSON data for all the jobs for this machine.
  * reload: An reload function for all the SQL data.
  */
-export default function Machine({data, jobs, reload}) {
+export default function Machine({data, jobs, doAction, selectedMachine}) {
 
     /* 
      * Updates the state in the SQL database for a given machine.
@@ -33,7 +33,7 @@ export default function Machine({data, jobs, reload}) {
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machineUpdate`, postData);
         
         // Refreshes the JSON data for the page from the database.
-        reload("machines");
+        doAction("reload", ["machines"]);
     }
 
     // Generates the machine's width, height, top (y-position), and left (x-position) values based on JSON data.
@@ -58,7 +58,8 @@ export default function Machine({data, jobs, reload}) {
                     // If the state is 2, that means the machine is a priority, so the priority style is applied.
                     `${styles.machine}
                      ${data.state == 1 && styles.out_of_service}
-                     ${data.state == 2 && styles.priority}`
+                     ${data.state == 2 && styles.priority}
+                     ${data.code == selectedMachine && styles.selected}`
                 }
                 style={
                     // Sets the width, height, top, and left values set earlier. 
@@ -68,9 +69,10 @@ export default function Machine({data, jobs, reload}) {
                   left: `${left}px` } 
                 }
                 onClick={
-                    // When the button is clicked, uses the updateMachine function to cycle to the next state.
+                    // TODO When the button is clicked, uses the updateMachine function to cycle to the next state. 
                     () => {
-                        updateMachine(data.id, (data.state + 1) % 3);
+                        doAction("openPopup", [data.code]);
+                        //updateMachine(data.id, (data.state + 1) % 3);
                     }
                 }
                 >

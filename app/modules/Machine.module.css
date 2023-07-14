@@ -102,6 +102,13 @@
     background-color: rgb(236, 240, 121);
 }
 
+
+.selected {
+    /* Darkens the background color. */
+    background-color: rgb(144, 168, 195);
+}
+
+
 /* The styling for the jobs displayed on the machine box. */
 .jobs {
     /* Styling for the font and its settings. */

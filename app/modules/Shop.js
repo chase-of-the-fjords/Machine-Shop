@@ -20,6 +20,15 @@ export default function Shop() {
     const [machines, setMachines] = useState([]);
     const [jobs, setJobs] = useState([]);
 
+    /* 
+     * The current state of the popup.
+     * 
+     * 0: No popup selected
+     * 1: Viewing machine jobs
+     */
+    const [popupState, setPopupState] = useState(0);
+    const [currentMachine, setCurrentMachine] = useState('');
+
     // Gets the shops to populate the "buildings" hook.
     async function getBuildings() {
         const postData = {
@@ -86,6 +95,23 @@ export default function Shop() {
         return () => clearInterval(interval);
     }, []);
 
+    function openPopup(code) {
+        setPopupState(1);
+        setCurrentMachine(code);
+    }
+
+    function closePopup() {
+        setPopupState(0);
+        setCurrentMachine('');
+    }
+
+    function doAction(action, params) {
+        console.log(params);
+        if (action == "reload") reload(params[0]);
+        if (action == "openPopup") openPopup(params[0]);
+        if (action == "closePopup") closePopup();
+    }
+
     // Returns the JSX for the whole shop.
     return (
         <>
@@ -116,13 +142,19 @@ export default function Shop() {
                             })
                         }
                         jobs={jobs}
-                        reload={(params) => { reload(params)}} />
+                        doAction={(action, params) => { doAction(action, params)}}
+                        selectedMachine={currentMachine} />
                     })
                 }
 
             </div>
+            { // TODO
+            popupState != 0 && 
+            <InformationBox 
+            doAction={(action, params) => { doAction(action, params)}}
+            popupState={popupState}
+            machine={machines.find((machine) => { return machine.code == currentMachine })}
+            jobs={jobs.filter((job) => { return job.machine == currentMachine})} />}
         </>
-        
-        //<InformationBox></InformationBox>
     )
 }

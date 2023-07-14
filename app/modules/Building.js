@@ -15,7 +15,7 @@ import { useSpring, animated } from '@react-spring/web'
  * jobs: The JSON data for all the jobs in all the shops.
  * reload: An reload function for all the SQL data.
  */
-export default function Building({data, machines, jobs, reload}) {
+export default function Building({data, machines, jobs, doAction, selectedMachine}) {
 
     // Defines the animation that plays when the buildings load for the first time.
     const springs = useSpring({
@@ -76,7 +76,8 @@ export default function Building({data, machines, jobs, reload}) {
                                 return (job.machine == machine.code);
                             })
                         }
-                        reload={(params) => { reload(params)}} />
+                        doAction={(action, params) => { doAction(action, params)}}
+                        selectedMachine={selectedMachine} />
                     })
                 }
             </div>
