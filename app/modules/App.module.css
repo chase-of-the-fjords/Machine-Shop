@@ -34,3 +34,14 @@
     display: block;
     text-align: center;
 }
+
+.navigation {
+    color: black;
+    text-decoration: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-family: 'OpenSans';
+    font-size: 20px;
+    cursor: pointer;
+}

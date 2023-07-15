@@ -9,6 +9,9 @@ import InformationBox from './InformationBox';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
+// Link from Next.JS, used to Link to edit page.
+import Link from 'next/link';
+
 // Stylesheet for the main page.
 import styles from './App.module.css';
 
@@ -176,6 +179,8 @@ export default function Shop( { type } ) {
                 }
 
             </div>
+            {type == "view" && <Link className={styles.navigation} href="/edit">EDIT</Link>}
+            {type == "edit" && <Link className={styles.navigation} href="./">BACK</Link>}
             { // TODO
             popupState != 0 && 
             <InformationBox 
