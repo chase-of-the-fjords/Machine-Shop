@@ -8,6 +8,7 @@ import PasswordForm from './PasswordForm';
 // The function for the full application.
 export default function App() {
     return (<>
+            <div className={styles.edit_background}></div>
             <div>
                 { /* The menu at the top of the screen. Likely to be updated later. */ }
                 <Menu></Menu>
