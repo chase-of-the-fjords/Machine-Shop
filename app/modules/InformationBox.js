@@ -24,7 +24,7 @@ export default function InformationBox( { doAction, popupState, machine, jobs } 
             <div className={styles.info_box}>
                 <div className={styles.content}>
                     <h1 className={styles.machine_name}>{machine.name}</h1>
-                    { machine.state == 1 && <h2 className={styles.state}>OUT OF SERVICE</h2> }
+                    { machine.state == 1 && <h2 className={styles.state}>OUT OF ORDER</h2> }
                     { machine.state == 2 && <h2 className={styles.state}>PRIORITY</h2> }
 
                     { /* The list of current jobs. */ }
@@ -33,8 +33,7 @@ export default function InformationBox( { doAction, popupState, machine, jobs } 
                         <h3 className={styles.subsection}>Currently Running:</h3>
                         <ul className={styles.list}>
                         {currentJobs.map((job) => {
-                            return <><li>{job.op}</li>
-                            {job.notes == null || <p className={styles.note}>{job.notes}</p>}</>
+                            return <li key={job.id}>{job.op}{job.notes == null || <p className={styles.note}>{job.notes}</p>}</li>
                         })}
                         </ul>
                     </>}

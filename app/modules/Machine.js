@@ -10,32 +10,6 @@ import styles from './Machine.module.css';
  */
 export default function Machine({data, jobs, doAction, selectedMachine}) {
 
-    /* 
-     * Updates the state in the SQL database for a given machine.
-     * 
-     * code: The code for the machine (i.e. H8, OB, ma).
-     * state: The state of the machine.
-     */
-    async function updateMachine(code, state) {
-
-        // Sets the post-data for the machine, including its body.
-        const postData = {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                code, state
-            })
-        }
-
-        // Sends the actual request.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machineUpdate`, postData);
-        
-        // Refreshes the JSON data for the page from the database.
-        doAction("reload", ["machines"]);
-    }
-
     // Generates the machine's width, height, top (y-position), and left (x-position) values based on JSON data.
     let width = (data.width * 120) - 5;
     let height = (data.height * 120) - 5;
@@ -71,7 +45,7 @@ export default function Machine({data, jobs, doAction, selectedMachine}) {
                 onClick={
                     // TODO When the button is clicked, uses the updateMachine function to cycle to the next state. 
                     () => {
-                        doAction("openPopup", [data.code]);
+                        doAction("clickMachine", [data.code, (data.state + 1) % 3]);
                         //updateMachine(data.id, (data.state + 1) % 3);
                     }
                 }

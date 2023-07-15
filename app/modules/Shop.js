@@ -13,7 +13,7 @@ import { useState } from 'react';
 import styles from './App.module.css';
 
 // Default export for the machine shop.
-export default function Shop() {
+export default function Shop( { type } ) {
 
     // These 3 hooks contain the buildings, machines, and jobs.
     const [buildings, setBuildings] = useState([]);
@@ -105,10 +105,38 @@ export default function Shop() {
         setCurrentMachine('');
     }
 
+    /* 
+     * Updates the state in the SQL database for a given machine.
+     * 
+     * code: The code for the machine (i.e. H8, OB, ma).
+     * state: The state of the machine.
+     */
+    async function updateMachine(code, state) {
+
+        // Sets the post-data for the machine, including its body.
+        const postData = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                code, state
+            })
+        }
+
+        // Sends the actual request.
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machineUpdate`, postData);
+        
+        // Refreshes the JSON data for the page from the database.
+        doAction("reload", ["machines"]);
+    }
+
     function doAction(action, params) {
-        console.log(params);
         if (action == "reload") reload(params[0]);
-        if (action == "openPopup") openPopup(params[0]);
+        if (action == "clickMachine") {
+            if (type == "view") openPopup(params[0]);
+            if (type == "edit") updateMachine(params[0], params[1])
+        }
         if (action == "closePopup") closePopup();
     }
 

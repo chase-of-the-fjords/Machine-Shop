@@ -9,7 +9,7 @@ export async function PATCH (request) {
     // The request:
     const machines = await query ({
         // The SQL query:
-        query: `UPDATE machines SET state = ${body.state} WHERE id = '${body.code}'`,
+        query: `UPDATE machines SET state = ${body.state} WHERE code = '${body.code}'`,
         values: [],
     })
 
