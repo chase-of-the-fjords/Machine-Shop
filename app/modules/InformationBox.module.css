@@ -86,3 +86,11 @@
     font-size: 14px;
     font-style: italic;
 }
+
+.button {
+    width: 36px;
+    height: 36px;
+    margin: 24px;
+    position: absolute;
+    cursor: pointer;
+}

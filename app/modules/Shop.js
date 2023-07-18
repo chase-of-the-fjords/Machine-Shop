@@ -22,9 +22,9 @@ export default function Shop( { type } ) {
     const [buildings, setBuildings] = useState([]);
     const [machines, setMachines] = useState([]);
     const [jobs, setJobs] = useState([]);
-    let changes = { "machines": [{"code": "OC", "deleted": false, "jobsUpdated": false, "changes": [
-        {"field": "height", "value": 2.5}, {"field": "ypos", "value": 2}
-    ]}] };
+    
+    // These 3 hooks contain the queued changes for the buildings, machines, and jobs.
+    const [changes, setChanges] = useState({"buildings": {}, "machines": {}, "jobs": {}});
 
     /* 
      * The current state of the popup.
@@ -101,22 +101,30 @@ export default function Shop( { type } ) {
         return () => clearInterval(interval);
     }, []);
 
+    // Opens the popup box, sets its state, & sets the selected machine.
     function openPopup(code, state) {
         setPopupState(state);
         setCurrentMachine(code);
     }
 
+    // Closes the popup box and deselects the selected machine.
     function closePopup() {
         setPopupState(0);
         setCurrentMachine('');
     }
 
+    // TODO
     function save() {
-        
+        console.log(changes);
+        Object.entries(changes.machines).forEach(([key, machine]) => {
+            updateMachine(key);
+        })
     }
 
     /* 
-     * Updates values for a given machine.
+     * Updates values for a given machine. 2 steps:
+     *  1. Delete the old entry for the machine by setting an end-time.
+     *  2. Create a duplicate starting at the current moment with changes.
      * 
      * code: The code for the machine (i.e. H8, OB, ma).
      */
@@ -144,6 +152,8 @@ export default function Shop( { type } ) {
 
         // STEP 2: Create a new, updated machine.
 
+        machine = getEditedMachine({machine, changes});
+
         // Sets the post-data for the machine, including its body.
         const postData2 = {
             method: "POST",
@@ -162,13 +172,99 @@ export default function Shop( { type } ) {
         doAction("reload", ["machines"]);
     }
 
-    function doAction(action, params) {
-        if (action == "reload") reload(params[0]);
-        if (action == "clickMachine") {
-            if (type == "view") openPopup(params[0], 1);
-            if (type == "edit") openPopup(params[0], 1);
+    /*
+    * Given a list of changes, returns modified data for the machine.
+    */
+    function getEditedMachine ({machine, changes}) {
+        let editedMachine = {...machine};
+        let edits = changes["machines"][machine.code];
+        if (edits != undefined) {
+            for (const [key, value] of Object.entries(edits)) {
+                editedMachine[key] = value;
+            }
         }
+        return editedMachine;
+    }
+
+    /* 
+     * Deletes entry for a given machine.
+     * 
+     * code: The code for the machine (i.e. H8, OB, ma).
+     */
+    async function deleteMachine(code) {
+
+        // Gets the machine
+        let machine = machines.find((m) => {
+            return m.code == code;
+        });
+
+        // Sets the post-data for the machine, including its body.
+        const postData1 = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                machine
+            })
+        }
+
+        // Sends the actual request.
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines/deleteEnd`, postData1);
+
+        // Refreshes the JSON data for the page from the database.
+        doAction("reload", ["machines"]);
+    }
+
+    /* 
+     * Does an action, mostly tied to other functions. To be passed into child components.
+     * 
+     * action: The action being performed (i.e. "reload", "save", etc.)
+     * params: An array of parameters to be passed in.
+     */
+    function doAction(action, params) {
+        /* 
+         * Reloads data from the SQL database.
+         * param[0]: The table being reloaded: "machines", "shops", "jobs", "all".
+         */
+        if (action == "reload") reload(params[0]);
+
+        /* 
+         * The effect when a machine is clicked.
+         * param[0]: The code of the machine.
+         */
+        if (action == "clickMachine") {
+            // Different effects on the "view" and "edit" pages.
+            if (type == "view") openPopup(params[0], 1);
+            if (type == "edit") openPopup(params[0], 2);
+        }
+
+        /* 
+         * Sets the value of something in the current machine.
+         * 
+         */
+        if (action == "set") {
+
+            let updatedChanges = {...changes};
+
+            if (updatedChanges["machines"][currentMachine] == undefined) updatedChanges["machines"][currentMachine] = {};
+
+            if (updatedChanges["machines"][currentMachine][params[0]] == params[1]) updatedChanges["machines"][currentMachine][params[0]] = 0;
+            else updatedChanges["machines"][currentMachine][params[0]] = params[1];
+
+            setChanges(updatedChanges);
+
+        }
+
+        /* 
+         * Closes the popup box.
+         */
         if (action == "closePopup") closePopup();
+
+        /* 
+         * Saves any changed machines, jobs, or shops.
+         * param[0]: The table being reloaded: "machines", "shops", "jobs", "all".
+         */
         if (action == "save") save();
     }
 
@@ -187,8 +283,9 @@ export default function Shop( { type } ) {
                      * machines: Gives the JSON data from the SQL database for all machines in the building (filtered).
                      * jobs: Gives the JSON data from the SQL database for all the jobs.
                      *      note - Because jobs are tied to machines, not buildings, they aren't filtered here.
-                     * reload: The reload method for the SQL databases. Can be used to reload from inside each component.
-                     *      note - This is likely to be changed later.
+                     * changes: Includes all changes made on the edit page.
+                     * doAction: A function that can do a number of different actions given parameters.
+                     * selectedMachine: The current machine selected.
                      */
                     buildings
                     .map((building) => {
@@ -202,22 +299,25 @@ export default function Shop( { type } ) {
                             })
                         }
                         jobs={jobs}
+                        changes={changes}
                         doAction={(action, params) => { doAction(action, params)}}
                         selectedMachine={currentMachine} />
                     })
                 }
 
             </div>
+            { /* The EDIT, SAVE, and BACK buttons in the corners of the pages. */ }
             {type == "view" && <Link className={styles.navigation} href="/edit">EDIT</Link>}
             {type == "edit" && <Link className={styles.navigation} href="./">BACK</Link>}
             {type == "edit" && <div className={styles.save} onClick={() => doAction("save", [])}>SAVE</div>}
-            { // TODO
+            { /* A popup box that shows up if it's enabled (state isn't 0). */
             popupState != 0 && 
             <InformationBox 
             doAction={(action, params) => { doAction(action, params)}}
             popupState={popupState}
             machine={machines.find((machine) => { return machine.code == currentMachine })}
-            jobs={jobs.filter((job) => { return job.machine == currentMachine})} />}
+            jobs={jobs.filter((job) => { return job.machine == currentMachine})} 
+            changes={changes} />}
         </>
     )
 }

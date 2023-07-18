@@ -1,4 +1,5 @@
 // Stylesheet for the machine component.
+import { useEffect, useState } from 'react';
 import styles from './Machine.module.css';
 
 /* 
@@ -8,13 +9,19 @@ import styles from './Machine.module.css';
  * jobs: The JSON data for all the jobs for this machine.
  * reload: An reload function for all the SQL data.
  */
-export default function Machine({data, jobs, doAction, selectedMachine}) {
+export default function Machine( {data, jobs, changes, doAction, selectedMachine} ) {
+
+    const [editedData, setEditedData] = useState({});
+
+    useEffect(() => {
+        setEditedData(getEditedMachine( {data, changes} ));
+    }, [data, changes])
 
     // Generates the machine's width, height, top (y-position), and left (x-position) values based on JSON data.
-    let width = (data.width * 120) - 5;
-    let height = (data.height * 120) - 5;
-    let top = 5 + (data.ypos * 120);
-    let left = 5 + (data.xpos * 120);
+    let width = (editedData.width * 120) - 5;
+    let height = (editedData.height * 120) - 5;
+    let top = 5 + (editedData.ypos * 120);
+    let left = 5 + (editedData.xpos * 120);
 
     // Returns the JSX for the machine.
     return (
@@ -31,10 +38,10 @@ export default function Machine({data, jobs, doAction, selectedMachine}) {
                     // If the state is 1, that means the machine is out of service, so the out_of_service style is applied.
                     // If the state is 2, that means the machine is a priority, so the priority style is applied.
                     `${styles.machine}
-                     ${data.state == 1 && styles.out_of_service}
-                     ${data.state == 2 && styles.priority}
-                     ${data.changed && styles.unsaved}
-                     ${data.code == selectedMachine && styles.selected}`
+                     ${editedData.state == 1 && styles.out_of_service}
+                     ${editedData.state == 2 && styles.priority}
+                     ${editedData.changed && styles.unsaved}
+                     ${editedData.code == selectedMachine && styles.selected}`
                 }
                 style={
                     // Sets the width, height, top, and left values set earlier. 
@@ -46,7 +53,7 @@ export default function Machine({data, jobs, doAction, selectedMachine}) {
                 onClick={
                     // TODO When the button is clicked, uses the updateMachine function to cycle to the next state. 
                     () => {
-                        doAction("clickMachine", [data.code, (data.state + 1) % 3]);
+                        doAction("clickMachine", [data.code, (editedData.state + 1) % 3]);
                         //updateMachine(data.id, (data.state + 1) % 3);
                     }
                 }
@@ -75,4 +82,18 @@ function getJobsText (jobs) {
     if (jobs.length == 0) return "";
     if (jobs.length == 1) return "1 job";
     return jobs.length + " jobs";
+}
+
+/*
+ * Given a list of changes, returns modified data for the machine.
+ */
+function getEditedMachine ({data, changes}) {
+    let editedMachine = {...data};
+    let edits = changes["machines"][data.code];
+    if (edits != undefined) {
+        for (const [key, value] of Object.entries(edits)) {
+            editedMachine[key] = value;
+        }
+    }
+    return editedMachine;
 }

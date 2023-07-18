@@ -6,6 +6,7 @@ import styles from './Building.module.css';
 
 /* The imports for the react-spring library (animations). */
 import { useSpring, animated } from '@react-spring/web'
+import { useEffect } from 'react';
 
 /* 
  * Default export for the building.
@@ -15,7 +16,7 @@ import { useSpring, animated } from '@react-spring/web'
  * jobs: The JSON data for all the jobs in all the shops.
  * reload: An reload function for all the SQL data.
  */
-export default function Building({data, machines, jobs, doAction, selectedMachine}) {
+export default function Building({data, machines, jobs, changes, doAction, selectedMachine}) {
 
     // Defines the animation that plays when the buildings load for the first time.
     const springs = useSpring({
@@ -63,8 +64,9 @@ export default function Building({data, machines, jobs, doAction, selectedMachin
                      * data: Gives the JSON data from the SQL database for the machine.
                      * jobs: Gives the JSON data from the SQL database for the jobs tied to the machine.
                      *      note - Filters through the data to find only the relevant jobs.
-                     * reload: The reload method for the SQL databases. Can be used to reload from inside each component.
-                     *      note - This is likely to be changed later.
+                     * changes: Includes all changes from the edit page.
+                     * doAction: A function that can do a number of different actions given parameters.
+                     * selectedMachine: The current machine selected.
                      */
                     machines.map((machine) => {
                         return <Machine 
@@ -76,6 +78,7 @@ export default function Building({data, machines, jobs, doAction, selectedMachin
                                 return (job.machine == machine.code);
                             })
                         }
+                        changes={changes}
                         doAction={(action, params) => { doAction(action, params)}}
                         selectedMachine={selectedMachine} />
                     })
