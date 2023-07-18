@@ -9,7 +9,7 @@ export async function GET (request) {
     // The request:
     const jobs = await query ({
         // The SQL query:
-        query: "SELECT * FROM jobs",
+        query: "SELECT * FROM jobs WHERE end IS NULL",
         values: [],
     })
 

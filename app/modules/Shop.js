@@ -22,6 +22,9 @@ export default function Shop( { type } ) {
     const [buildings, setBuildings] = useState([]);
     const [machines, setMachines] = useState([]);
     const [jobs, setJobs] = useState([]);
+    let changes = { "machines": [{"code": "OC", "deleted": false, "jobsUpdated": false, "changes": [
+        {"field": "height", "value": 2.5}, {"field": "ypos", "value": 2}
+    ]}] };
 
     /* 
      * The current state of the popup.
@@ -98,8 +101,8 @@ export default function Shop( { type } ) {
         return () => clearInterval(interval);
     }, []);
 
-    function openPopup(code) {
-        setPopupState(1);
+    function openPopup(code, state) {
+        setPopupState(state);
         setCurrentMachine(code);
     }
 
@@ -108,28 +111,53 @@ export default function Shop( { type } ) {
         setCurrentMachine('');
     }
 
+    function save() {
+        
+    }
+
     /* 
-     * Updates the state in the SQL database for a given machine.
+     * Updates values for a given machine.
      * 
      * code: The code for the machine (i.e. H8, OB, ma).
-     * state: The state of the machine.
      */
-    async function updateMachine(code, state) {
+    async function updateMachine(code) {
+
+        // STEP 1: End the old machine.
+
+        let machine = machines.find((m) => {
+            return m.code == code;
+        });
 
         // Sets the post-data for the machine, including its body.
-        const postData = {
+        const postData1 = {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                code, state
+                machine
             })
         }
 
         // Sends the actual request.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machineUpdate`, postData);
-        
+        const res1 = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines/updateEnd`, postData1);
+
+        // STEP 2: Create a new, updated machine.
+
+        // Sets the post-data for the machine, including its body.
+        const postData2 = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                machine
+            })
+        }
+
+        // Sends the actual request.
+        const res2 = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines/create`, postData2);
+
         // Refreshes the JSON data for the page from the database.
         doAction("reload", ["machines"]);
     }
@@ -137,10 +165,11 @@ export default function Shop( { type } ) {
     function doAction(action, params) {
         if (action == "reload") reload(params[0]);
         if (action == "clickMachine") {
-            if (type == "view") openPopup(params[0]);
-            if (type == "edit") updateMachine(params[0], params[1])
+            if (type == "view") openPopup(params[0], 1);
+            if (type == "edit") openPopup(params[0], 1);
         }
         if (action == "closePopup") closePopup();
+        if (action == "save") save();
     }
 
     // Returns the JSX for the whole shop.
@@ -181,6 +210,7 @@ export default function Shop( { type } ) {
             </div>
             {type == "view" && <Link className={styles.navigation} href="/edit">EDIT</Link>}
             {type == "edit" && <Link className={styles.navigation} href="./">BACK</Link>}
+            {type == "edit" && <div className={styles.save} onClick={() => doAction("save", [])}>SAVE</div>}
             { // TODO
             popupState != 0 && 
             <InformationBox 

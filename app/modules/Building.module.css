@@ -38,6 +38,9 @@
     /* Sets padding to add a buffer around the machines. */
     padding: 2.5px;
 
+    /* The shadow for the building. */
+    box-shadow: 0px 7px 12px rgba(0, 0, 0, 0.3);
+
     /* Centers the building within its container. */
     margin: auto;
     

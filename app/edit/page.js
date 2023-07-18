@@ -22,5 +22,5 @@ export default function App() {
 
 // The menu bar component. So far, just an H1 title with an underline.
 function Menu() {
-    return <h1 className={styles.menu}>Origin Golf Machine Shop (Edit)</h1>
+    return <h1 className={styles.menu}>Origin Golf Machine Shop</h1>
 }

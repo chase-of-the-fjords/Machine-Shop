@@ -33,6 +33,7 @@ export default function Machine({data, jobs, doAction, selectedMachine}) {
                     `${styles.machine}
                      ${data.state == 1 && styles.out_of_service}
                      ${data.state == 2 && styles.priority}
+                     ${data.changed && styles.unsaved}
                      ${data.code == selectedMachine && styles.selected}`
                 }
                 style={

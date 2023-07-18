@@ -102,6 +102,18 @@
     background-color: rgb(236, 240, 121);
 }
 
+/* The styling for a priority machine. */
+.unsaved {
+    /* Sets the background color. */
+    background-color: rgb(150, 255, 150);
+}
+
+/* The styling for a priority machine when the mouse is hovering. */
+.unsaved:hover {
+    /* Darkens the background color. */
+    background-color: rgb(121, 240, 129);
+}
+
 
 .selected {
     /* Darkens the background color. */

@@ -12,7 +12,7 @@ export default function PasswordForm() {
         <div className={styles.background}/>
         <div className={styles.password_box}>
             <h1 className={styles.password_text}>Enter Password</h1>
-            <input type="password" className={styles.input} onChange={e => setPassword(e.target.value)}></input>
+            <input autoFocus type="password" className={styles.input} onChange={e => setPassword(e.target.value)}></input>
         </div>
     </div>
     );
