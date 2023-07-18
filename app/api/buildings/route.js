@@ -9,7 +9,7 @@ export async function GET (request) {
     // The request:
     const buildings = await query ({
         // The SQL query:
-        query: "SELECT * FROM buildings WHERE end IS NULL",
+        query: "SELECT * FROM buildings WHERE end IS NULL GROUP BY code",
         values: [],
     });
 

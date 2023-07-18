@@ -14,6 +14,10 @@ import Link from 'next/link';
 
 // Stylesheet for the main page.
 import styles from './App.module.css';
+import { update } from 'react-spring';
+
+let immune = {};
+let saving = false;
 
 // Default export for the machine shop.
 export default function Shop( { type } ) {
@@ -26,6 +30,9 @@ export default function Shop( { type } ) {
     // These 3 hooks contain the queued changes for the buildings, machines, and jobs.
     const [changes, setChanges] = useState({"buildings": {}, "machines": {}, "jobs": {}});
 
+    // Variables to track whether individual machines have been updated
+    const [updated, setUpdated] = useState({});
+
     /* 
      * The current state of the popup.
      * 
@@ -34,6 +41,27 @@ export default function Shop( { type } ) {
      */
     const [popupState, setPopupState] = useState(0);
     const [currentMachine, setCurrentMachine] = useState('');
+
+    // This gets all the data when the page loads, and then again every 30 seconds.
+    useEffect(() => {
+        reload("all");
+
+        const interval = setInterval(() => {
+            reload("all");
+        }, 4000);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    // A joint function to get all the necessary SQL data.
+    async function reload( param ) {
+        if (param == "buildings") await getBuildings();
+        if (param == "machines") await getMachines();
+        if (param == "jobs") await getJobs();
+        if (param == "all") {
+            await Promise.all([getBuildings(), getMachines(), getJobs()]);
+        }
+    }
 
     // Gets the shops to populate the "buildings" hook.
     async function getBuildings() {
@@ -83,24 +111,6 @@ export default function Shop( { type } ) {
         setJobs(response);
     }
 
-    // A joint function to get all the necessary SQL data.
-    function reload( param ) {
-        if (param == "all" || param == "buildings") getBuildings();
-        if (param == "all" || param == "machines") getMachines();
-        if (param == "all" || param == "jobs") getJobs();
-    }
-    
-    // This gets all the data when the page loads, and then again every 30 seconds.
-    useEffect(() => {
-        reload("all");
-
-        const interval = setInterval(() => {
-            reload("all");
-        }, 30000);
-
-        return () => clearInterval(interval);
-    }, []);
-
     // Opens the popup box, sets its state, & sets the selected machine.
     function openPopup(code, state) {
         setPopupState(state);
@@ -115,11 +125,16 @@ export default function Shop( { type } ) {
 
     // TODO
     async function save() {
-        console.log(changes);
-        await Object.entries(changes.machines).forEach(async ([key, machine]) => {
-            await updateMachine(key);
-        })
-        window.alert("Save successful.");
+        saving = true;
+        for (let [key, machine] of Object.entries(changes.machines)) {
+            if (Object.entries(machine).length != 0) {
+                immune[key] = true;
+                await updateMachine(key);
+            }
+        }
+        await reload("machines");
+        setChanges({"buildings": {}, "machines": {}, "jobs": {}});
+        saving = false;
     }
 
     /* 
@@ -131,32 +146,15 @@ export default function Shop( { type } ) {
      */
     async function updateMachine(code) {
 
-        // STEP 1: End the old machine.
+        // STEP 1: Create a new, updated machine.
 
         let machine = machines.find((m) => {
             return m.code == code;
         });
-
-        // Sets the post-data for the machine, including its body.
-        const postData1 = {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                machine
-            })
-        }
-
-        // Sends the actual request.
-        const res1 = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines/updateEnd`, postData1);
-
-        // STEP 2: Create a new, updated machine.
-
         machine = getEditedMachine({machine, changes});
 
         // Sets the post-data for the machine, including its body.
-        const postData2 = {
+        const postData1 = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -167,10 +165,23 @@ export default function Shop( { type } ) {
         }
 
         // Sends the actual request.
-        const res2 = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines/create`, postData2);
+        const res1 = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines/create`, postData1);
 
-        // Refreshes the JSON data for the page from the database.
-        doAction("reload", ["machines"]);
+        // STEP 2: End the old machine.
+
+        // Sets the post-data for the machine, including its body.
+        const postData2 = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                machine
+            })
+        }
+
+        // Sends the actual request.
+        const res2 = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines/updateEnd`, postData2);
     }
 
     /*
@@ -236,6 +247,7 @@ export default function Shop( { type } ) {
          */
         if (action == "clickMachine") {
             // Different effects on the "view" and "edit" pages.
+            updated[params[0]] = false;
             if (type == "view") openPopup(params[0], 1);
             if (type == "edit") openPopup(params[0], 2);
         }
@@ -246,13 +258,31 @@ export default function Shop( { type } ) {
          */
         if (action == "set") {
 
+            // Gets a copy of the changes to modify
             let updatedChanges = {...changes};
 
-            if (updatedChanges["machines"][currentMachine] == undefined) updatedChanges["machines"][currentMachine] = {};
+            // If the current machine hasn't been logged, creates an object for it.
+            if (updatedChanges["machines"][currentMachine] == undefined) {
+                updatedChanges["machines"][currentMachine] = {};
+            }
 
-            if (updatedChanges["machines"][currentMachine][params[0]] == params[1]) updatedChanges["machines"][currentMachine][params[0]] = 0;
-            else updatedChanges["machines"][currentMachine][params[0]] = params[1];
+            // Finds the SQL database value, changes list value, and intended value.
+            let sqlValue = machines.find((machine) => { return machine.code == currentMachine; }).state;
+            let currentValue = changes["machines"][currentMachine][params[0]] == undefined ? sqlValue : changes["machines"][currentMachine][params[0]];
+            let intendedValue = (params[1] == currentValue) ? 0 : params[1];
 
+            // If the change matches the database, remove the key/value pair from changes. Otherwise, set it to the intended value.
+            if (sqlValue == intendedValue) {
+
+                delete updatedChanges["machines"][currentMachine][params[0]];
+
+            } else {
+
+                updatedChanges["machines"][currentMachine][params[0]] = intendedValue;
+
+            }
+
+            // Update the changes list to match.
             setChanges(updatedChanges);
 
         }
@@ -262,11 +292,17 @@ export default function Shop( { type } ) {
          */
         if (action == "closePopup") closePopup();
 
+        if (action == "setUpdated") {
+            if (!immune[params[0]]) updated[params[0]] = true;
+            else immune[params[0]] = false;
+        }
+
         /* 
          * Saves any changed machines, jobs, or shops.
-         * param[0]: The table being reloaded: "machines", "shops", "jobs", "all".
          */
-        if (action == "save") save();
+        if (action == "save") {
+            if (!saving) save();
+        }
     }
 
     // Returns the JSX for the whole shop.
@@ -285,6 +321,7 @@ export default function Shop( { type } ) {
                      * jobs: Gives the JSON data from the SQL database for all the jobs.
                      *      note - Because jobs are tied to machines, not buildings, they aren't filtered here.
                      * changes: Includes all changes made on the edit page.
+                     * updated: Whether or not machines have been updated.
                      * doAction: A function that can do a number of different actions given parameters.
                      * selectedMachine: The current machine selected.
                      */
@@ -301,6 +338,7 @@ export default function Shop( { type } ) {
                         }
                         jobs={jobs}
                         changes={changes}
+                        updated={updated}
                         doAction={(action, params) => { doAction(action, params)}}
                         selectedMachine={currentMachine} />
                     })

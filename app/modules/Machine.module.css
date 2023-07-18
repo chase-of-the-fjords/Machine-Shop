@@ -91,18 +91,6 @@
 }
 
 /* The styling for a priority machine. */
-.priority {
-    /* Sets the background color. */
-    background-color: rgb(252, 255, 150);
-}
-
-/* The styling for a priority machine when the mouse is hovering. */
-.priority:hover {
-    /* Darkens the background color. */
-    background-color: rgb(236, 240, 121);
-}
-
-/* The styling for a priority machine. */
 .unsaved {
     /* Sets the background color. */
     background-color: rgb(150, 255, 150);
@@ -114,6 +102,17 @@
     background-color: rgb(121, 240, 129);
 }
 
+/* The styling for a machine that's been updated. */
+.updated {
+    /* Sets the background color. */
+    background-color: rgb(252, 255, 150);
+}
+
+/* The styling for a machine that's been updated when the mouse is hovering. */
+.updated:hover {
+    /* Darkens the background color. */
+    background-color: rgb(236, 240, 121);
+}
 
 .selected {
     /* Darkens the background color. */
@@ -127,4 +126,12 @@
     font-family: 'OpenSans';
     font-size: 20px;
     font-weight: bold;
+}
+
+.priority_star {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 2px;
+    top: 2px;
 }

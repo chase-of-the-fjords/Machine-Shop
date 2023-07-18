@@ -97,8 +97,10 @@ function EditJobBox( { doAction, popupState, machine, jobs, changes } ) {
 
     return (
         <div className={styles.content}>
-            <img className={styles.button} src={editedMachine.state == 2 ? "/icons/star-filled.svg" : "/icons/star-empty.svg"} alt="Priority Button" onClick={() => {doAction("set", ["state", 2])}}/>
-            <img className={styles.button} style={{left: "52px"}} src={editedMachine.state == 1 ? "/icons/error-filled.svg" : "/icons/error-empty.svg"} alt="Out of Order Button" onClick={() => {doAction("set", ["state", 1])}}/>
+            <div className={styles.leftButtonMenu}>
+                <img className={styles.button} src={editedMachine.state == 2 ? "/icons/star-filled.svg" : "/icons/star-empty.svg"} alt="Priority Button" onClick={() => {doAction("set", ["state", 2])}}/>
+                <img className={styles.button} style={{left: "52px"}} src={editedMachine.state == 1 ? "/icons/error-filled.svg" : "/icons/error-empty.svg"} alt="Out of Order Button" onClick={() => {doAction("set", ["state", 1])}}/>
+            </div>
 
             <h1 className={styles.machine_name}>{editedMachine.name}</h1>
             { editedMachine.state == 1 && <h2 className={styles.state}>OUT OF ORDER</h2> }

@@ -6,7 +6,7 @@ import styles from './Building.module.css';
 
 /* The imports for the react-spring library (animations). */
 import { useSpring, animated } from '@react-spring/web'
-import { useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 /* 
  * Default export for the building.
@@ -16,7 +16,7 @@ import { useEffect } from 'react';
  * jobs: The JSON data for all the jobs in all the shops.
  * reload: An reload function for all the SQL data.
  */
-export default function Building({data, machines, jobs, changes, doAction, selectedMachine}) {
+export default function Building({data, machines, jobs, changes, updated, doAction, selectedMachine}) {
 
     // Defines the animation that plays when the buildings load for the first time.
     const springs = useSpring({
@@ -79,7 +79,8 @@ export default function Building({data, machines, jobs, changes, doAction, selec
                             })
                         }
                         changes={changes}
-                        doAction={(action, params) => { doAction(action, params)}}
+                        updated={updated}
+                        doAction={(action, params) => { doAction(action, params) }}
                         selectedMachine={selectedMachine} />
                     })
                 }

@@ -9,11 +9,14 @@ import styles from './Machine.module.css';
  * jobs: The JSON data for all the jobs for this machine.
  * reload: An reload function for all the SQL data.
  */
-export default function Machine( {data, jobs, changes, doAction, selectedMachine} ) {
+export default function Machine( {data, jobs, changes, updated, doAction, selectedMachine} ) {
 
     const [editedData, setEditedData] = useState({});
 
     useEffect(() => {
+        if (Object.entries(editedData).length != 0 && data.id != editedData.id) {
+            doAction("setUpdated", [data.code]);
+        }
         setEditedData(getEditedMachine( {data, changes} ));
     }, [data, changes])
 
@@ -39,8 +42,8 @@ export default function Machine( {data, jobs, changes, doAction, selectedMachine
                     // If the state is 2, that means the machine is a priority, so the priority style is applied.
                     `${styles.machine}
                      ${editedData.state == 1 && styles.out_of_service}
-                     ${editedData.state == 2 && styles.priority}
-                     ${editedData.changed && styles.unsaved}
+                     ${updated[data.code] && styles.updated}
+                     ${editedData.unsaved && styles.unsaved}
                      ${editedData.code == selectedMachine && styles.selected}`
                 }
                 style={
@@ -53,11 +56,12 @@ export default function Machine( {data, jobs, changes, doAction, selectedMachine
                 onClick={
                     // TODO When the button is clicked, uses the updateMachine function to cycle to the next state. 
                     () => {
-                        doAction("clickMachine", [data.code, (editedData.state + 1) % 3]);
-                        //updateMachine(data.id, (data.state + 1) % 3);
+                        doAction("clickMachine", [data.code]);
                     }
                 }
                 >
+
+                { editedData.state == 2 && <img className={styles.priority_star} src="/icons/star-filled.svg" alt="Priority"/> }
 
                 { /* The name of the machine in the top-right corner. */ }
                 <div className={`${styles.name}`}>{data.name}</div>
@@ -93,6 +97,7 @@ function getEditedMachine ({data, changes}) {
     if (edits != undefined) {
         for (const [key, value] of Object.entries(edits)) {
             editedMachine[key] = value;
+            editedMachine["unsaved"] = true;
         }
     }
     return editedMachine;
