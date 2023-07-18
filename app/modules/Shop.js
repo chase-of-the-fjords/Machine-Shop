@@ -114,11 +114,12 @@ export default function Shop( { type } ) {
     }
 
     // TODO
-    function save() {
+    async function save() {
         console.log(changes);
-        Object.entries(changes.machines).forEach(([key, machine]) => {
-            updateMachine(key);
+        await Object.entries(changes.machines).forEach(async ([key, machine]) => {
+            await updateMachine(key);
         })
+        window.alert("Save successful.");
     }
 
     /* 
