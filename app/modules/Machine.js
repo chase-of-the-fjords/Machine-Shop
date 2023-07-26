@@ -123,7 +123,6 @@ function getEditedMachine ({data, changes}) {
         }
     }
     if (changes["jobs"][data.code] != undefined && Object.entries(changes["jobs"][data.code]).length > 0) {
-        console.log(changes["jobs"][data.code]);
         editedMachine["unsaved"] = true;
     }
     return editedMachine;
