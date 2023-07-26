@@ -81,6 +81,10 @@
     font-size: 18px;
 }
 
+.list_entry {
+    margin-bottom: 8px;
+}
+
 .note {
     margin: 4px 40px 8px 12px;
     font-size: 14px;
@@ -95,6 +99,69 @@
     cursor: pointer;
 }
 
-.leftButtonMenu {
+.button_menu {
     position: relative;
+}
+
+.add_job {
+    font-family: 'OpenSans';
+    font-size: 20px;
+    position: relative;
+    margin-top: 12px;
+    margin-bottom: 24px;
+    left: 30px;
+    width: 110px;
+    height: 30px;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgb(144, 238, 144);
+    border: 2px black solid;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+.input_op {
+    font-family: 'OpenSans';
+    width: 90%;
+    font-size: 16px;
+    margin-bottom: 6px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 8px;
+    padding: 8px;
+    border: 1px solid black;
+}
+
+.input_notes {
+    font-family: 'OpenSans';
+    width: 90%;
+    font-size: 16px;
+    resize: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; 
+    border-radius: 8px;
+    padding: 8px;
+    border: 1px solid black;
+}
+
+.new {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.deleted {
+    text-decoration: line-through;
+    text-decoration-thickness: 3px;
+}
+
+.unsaved {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.job_form {
+    margin-top: 6px;
+    margin-bottom: 6px;
 }

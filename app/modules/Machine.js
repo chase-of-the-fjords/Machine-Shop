@@ -12,13 +12,15 @@ import styles from './Machine.module.css';
 export default function Machine( {data, jobs, changes, updated, doAction, selectedMachine} ) {
 
     const [editedData, setEditedData] = useState({});
+    const [editedJobs, setEditedJobs] = useState({});
 
     useEffect(() => {
-        if (Object.entries(editedData).length != 0 && data.id != editedData.id) {
-            doAction("setUpdated", [data.code]);
-        }
         setEditedData(getEditedMachine( {data, changes} ));
     }, [data, changes])
+
+    useEffect(() => {
+        setEditedJobs(getEditedJobs( {machine: data, jobs, changes} ));
+    }, [data, jobs, changes])
 
     // Generates the machine's width, height, top (y-position), and left (x-position) values based on JSON data.
     let width = (editedData.width * 120) - 5;
@@ -68,7 +70,12 @@ export default function Machine( {data, jobs, changes, updated, doAction, select
 
                 { /* The div that contains the text for the jobs. */ }
                 <div className={`${styles.jobs}`}>
-                    { getJobsText(jobs) }
+                    { getJobsText(editedJobs) }
+                </div>
+
+                { /* The div that contains the text for the queued jobs. */ }
+                <div className={`${styles.queued}`}>
+                    { getQueuedJobsText(editedJobs) }
                 </div>
 
             </button>
@@ -82,10 +89,25 @@ export default function Machine( {data, jobs, changes, updated, doAction, select
  * jobs: The JSON data for the jobs for the machine.
  */
 function getJobsText (jobs) {
-    // Currently returns "X job(s)", or nothing, depending on the quantity.
-    if (jobs.length == 0) return "";
-    if (jobs.length == 1) return "1 job";
-    return jobs.length + " jobs";
+    if (jobs.length > 0) {
+        let currentJobs = jobs.filter((job) => { return (job.state == 0 && !job.deleted) });
+        // Currently returns "X job(s)", or nothing, depending on the quantity.
+        if (currentJobs.length == 0) return "";
+        if (currentJobs.length == 1) return "1 job";
+        return currentJobs.length + " jobs";
+    }
+    return "";
+}
+
+function getQueuedJobsText (jobs) {
+    if (jobs.length > 0) {
+        let queuedJobs = jobs.filter((job) => { return (job.state == 2 && !job.deleted) });
+        // Currently returns "X job(s)", or nothing, depending on the quantity.
+        if (queuedJobs.length == 0) return "";
+        if (queuedJobs.length == 1) return "1 job queued";
+        return queuedJobs.length + " jobs queued";
+    }
+    return "";
 }
 
 /*
@@ -100,5 +122,33 @@ function getEditedMachine ({data, changes}) {
             editedMachine["unsaved"] = true;
         }
     }
+    if (changes["jobs"][data.code] != undefined && Object.entries(changes["jobs"][data.code]).length > 0) {
+        console.log(changes["jobs"][data.code]);
+        editedMachine["unsaved"] = true;
+    }
     return editedMachine;
+}
+
+/*
+ * Given a list of changes, returns modified data for jobs.
+ */
+function getEditedJobs ({machine, jobs, changes}) {
+    let editedJobs = JSON.parse(JSON.stringify(jobs));
+    let edits = changes["jobs"][machine.code];
+    if (edits != undefined) {
+        for (const [key, value] of Object.entries(edits)) {
+            if (key > 0 && Object.entries(value).length > 0) {
+                let match = editedJobs.find((job) => { return job.id == key });
+                if (value.op != undefined) match.op = value.op;
+                if (value.notes != undefined) match.notes = value.notes;
+                if (value.state != undefined) match.state = value.state;
+                if (value.deleted == true) match.deleted = true;
+                match.unsaved = true;
+            } else {
+                let newJob = {id: key, machine: machine.code, op: value.op, notes: value.notes, state: value.state};
+                editedJobs.push(newJob);
+            }
+        }
+    }
+    return editedJobs;
 }

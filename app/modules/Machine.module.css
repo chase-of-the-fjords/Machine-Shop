@@ -128,6 +128,14 @@
     font-weight: bold;
 }
 
+/* The styling for the jobs displayed on the machine box. */
+.queued {
+    /* Styling for the font and its settings. */
+    font-family: 'OpenSans';
+    font-size: 12px;
+    font-style: italic;
+}
+
 .priority_star {
     width: 16px;
     height: 16px;
