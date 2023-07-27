@@ -19,16 +19,20 @@ export default function App() {
 
     const [user, setUser] = useState(0);
 
+    const [hasChanges, setHasChanges] = useState(false);
+
     useEffect(() => {
         const unloadCallback = (event) => {
-            event.preventDefault();
-            event.returnValue = "";
-            return "";
+            if (hasChanges) {
+                event.preventDefault();
+                event.returnValue = "";
+                return "";
+            }
         };
 
         window.addEventListener("beforeunload", unloadCallback);
         return () => window.removeEventListener("beforeunload", unloadCallback);
-    }, []);
+    }, [hasChanges]);
 
     return (<>
             <div className={styles.edit_background}></div>
@@ -37,7 +41,8 @@ export default function App() {
                 <Menu></Menu>
                 { /* The rest of the machine shop. */ }
                 <Shop type="edit" buildings={buildings} machines={machines} jobs={jobs} 
-                    setBuildings={setBuildings} setMachines={setMachines} setJobs={setJobs} user={user}></Shop>
+                    setBuildings={setBuildings} setMachines={setMachines} setJobs={setJobs} 
+                    user={user} hasChanges={hasChanges} setHasChanges={setHasChanges} />
             </div>
             <PasswordForm setUser={setUser}></PasswordForm>
         </>

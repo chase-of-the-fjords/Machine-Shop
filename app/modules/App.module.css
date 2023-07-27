@@ -49,6 +49,9 @@
     /* Sets the font and its size. */
     font-family: 'OpenSans';
     font-size: 20px;
+
+    /* Sets the cursor to a pointer. */
+    cursor: pointer;
 }
 
 /* The styling for the "save" button in the top-left corner. */

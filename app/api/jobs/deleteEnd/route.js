@@ -9,7 +9,7 @@ export async function PATCH (request) {
     // The request:
     const jobs = await query ({
         // The SQL query:
-        query: `UPDATE jobs SET end = NOW(), ender = '${body.job.ender}' WHERE entry = ${body.job.entry}`,
+        query: `UPDATE jobs SET end = NOW(), ender = '${body.job.ender}', log = (${body.job.log} + 2) WHERE entry = ${body.job.entry}`,
         values: [],
     })
 

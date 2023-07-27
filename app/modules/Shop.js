@@ -17,7 +17,7 @@ import styles from './App.module.css';
 import { update } from 'react-spring';
 
 // Default export for the machine shop.
-export default function Shop( { type, machines, buildings, jobs, setMachines, setBuildings, setJobs, user } ) {
+export default function Shop( { type, machines, buildings, jobs, setMachines, setBuildings, setJobs, user, hasChanges, setHasChanges } ) {
     
     // These 3 hooks contain the queued changes for the buildings, machines, and jobs.
     const [changes, setChanges] = useState({"buildings": {}, "machines": {}, "jobs": {}});
@@ -77,6 +77,17 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
         setShopRecord(newShop);
 
     }, [machines, jobs]);
+
+    useEffect(() => {
+        let hasChanges = false;
+        Object.entries(changes["machines"]).forEach(([key, value]) => {
+            if (Object.entries(value).length > 0) hasChanges = true;
+        });
+        Object.entries(changes["jobs"]).forEach(([key, value]) => {
+            if (Object.entries(value).length > 0) hasChanges = true;
+        });
+        if (type == "edit") setHasChanges(hasChanges);
+    }, [changes])
 
     // A joint function to get all the necessary SQL data.
     async function reload( param ) {
@@ -246,6 +257,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
         if (changes["jobs"][job.machine][id].state != undefined) job.state = changes["jobs"][job.machine][id].state;
         job.starter = user;
         job.ender = user;
+        job.log = 1;
 
         // Sets the post-data for the machine, including its body.
         const postData1 = {
@@ -324,7 +336,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
 
         // STEP 1: Create a new, updated job.
 
-        job = {id: id, machine: machine, op: job.op, notes: job.notes, state: job.state, starter: user};
+        job = {id: id, machine: machine, op: job.op, notes: job.notes, state: job.state, starter: user, log: 0};
 
         // Sets the post-data for the machine, including its body.
         const postData = {
@@ -652,8 +664,8 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
 
             </div>
             { /* The EDIT, SAVE, and BACK buttons in the corners of the pages. */ }
-            {type == "view" && <Link className={styles.navigation} href="/edit"><img src="/icons/google/edit.svg"></img></Link>}
-            {type == "edit" && <Link className={styles.navigation} href="./"><img src="/icons/google/back_arrow.svg"></img></Link>}
+            {type == "view" && <div className={styles.navigation}><a href="./edit"><img src="/icons/google/edit.svg"></img></a></div>}
+            {type == "edit" && <div className={styles.navigation}><a href="./"><img src="/icons/google/back_arrow.svg"></img></a></div>}
             {type == "edit" && <div className={styles.save} onClick={save}><img src="/icons/google/save.svg"></img></div>}
             { /* A popup box that shows up if it's enabled (state isn't 0). */
             popupState != 0 && 

@@ -9,8 +9,8 @@ export async function POST (request) {
     // The request:
     const jobs = await query ({
         // The SQL query:
-        query: `INSERT INTO jobs (id, machine, op, notes, state, starter) 
-        VALUES (${body.job.id}, '${body.job.machine}', '${body.job.op}', '${body.job.notes}', ${body.job.state}, '${body.job.starter}')`,
+        query: `INSERT INTO jobs (id, machine, op, notes, state, log, starter) 
+        VALUES (${body.job.id}, '${body.job.machine}', '${body.job.op}', '${body.job.notes}', ${body.job.state}, ${body.job.log}, '${body.job.starter}')`,
         values: [],
     })
 
