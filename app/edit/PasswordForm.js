@@ -24,6 +24,11 @@ export default function PasswordForm( {setUser} ) {
             setUser(3);
             setUnlocked(true);
         }
+        // Rocky
+        if (password == "ykcor") {
+            setUser(4);
+            setUnlocked(true);
+        }
     }, [password])
 
     return (unlocked ||
