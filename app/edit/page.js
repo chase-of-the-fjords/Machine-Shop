@@ -7,7 +7,7 @@ import Shop from '../modules/Shop';
 import styles from '../modules/App.module.css';
 import PasswordForm from './PasswordForm';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // The function for the full application.
 export default function App() {
@@ -18,6 +18,17 @@ export default function App() {
     const [jobs, setJobs] = useState([]);
 
     const [user, setUser] = useState(0);
+
+    useEffect(() => {
+        const unloadCallback = (event) => {
+            event.preventDefault();
+            event.returnValue = "";
+            return "";
+        };
+
+        window.addEventListener("beforeunload", unloadCallback);
+        return () => window.removeEventListener("beforeunload", unloadCallback);
+    }, []);
 
     return (<>
             <div className={styles.edit_background}></div>

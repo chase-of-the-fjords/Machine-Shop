@@ -24,11 +24,6 @@ export default function PasswordForm( {setUser} ) {
             setUser(3);
             setUnlocked(true);
         }
-        // Test
-        if (password == "1234") {
-            setUser(5);
-            setUnlocked(true);
-        }
     }, [password])
 
     return (unlocked ||
