@@ -85,7 +85,7 @@
 /* The background on the "edit" page. */
 .edit_background {
     /* Sets the background color. */
-    background-color: lightyellow;
+    background-color: lightblue;
 
     /* Sets the size and position to cover the whole page. */
     position: fixed;
