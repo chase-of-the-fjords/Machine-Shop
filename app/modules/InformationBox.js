@@ -37,7 +37,7 @@ export default function InformationBox( { doAction, popupState, machine, jobs, c
             <div className={styles.background} onClick={() => { 
                 if (popupState == 2 && selectedJob != 0) save({jobs: editedJobs, selectedJob, jobOp, jobNotes, doAction});
                 if (popupState == 2) setSelectedJob(0);
-                doAction("closePopup", [])
+                if (popupState != -1) doAction("closePopup", [])
             }} />
             { /* The popup box itself. */ }
             { popupState != -1 &&
