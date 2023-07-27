@@ -146,6 +146,7 @@ function EditJobBox( { doAction, machine, jobs, changes, selectedJob, setSelecte
             </ul>
             <div className={styles.add_job} onClick={
                     () => {
+                        if (selectedJob != 0) save({jobs, selectedJob, jobOp, jobNotes, doAction});
                         doAction("createJob", [machine.code, newJobCounter, "New Job", "", 0]);
                         setSelectedJob(newJobCounter);
                         setJobOp("New Job");
@@ -168,6 +169,7 @@ function EditJobBox( { doAction, machine, jobs, changes, selectedJob, setSelecte
             </ul>
             <div className={styles.add_job} onClick={
                     () => {
+                        if (selectedJob != 0) save({jobs, selectedJob, jobOp, jobNotes, doAction});
                         doAction("createJob", [machine.code, newJobCounter, "New Job", "", 2]);
                         setSelectedJob(newJobCounter);
                         setJobOp("New Job");

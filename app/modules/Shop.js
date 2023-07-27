@@ -17,7 +17,7 @@ import styles from './App.module.css';
 import { update } from 'react-spring';
 
 // Default export for the machine shop.
-export default function Shop( { type, machines, buildings, jobs, setMachines, setBuildings, setJobs } ) {
+export default function Shop( { type, machines, buildings, jobs, setMachines, setBuildings, setJobs, user } ) {
     
     // These 3 hooks contain the queued changes for the buildings, machines, and jobs.
     const [changes, setChanges] = useState({"buildings": {}, "machines": {}, "jobs": {}});
@@ -192,6 +192,8 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             return m.code == code;
         });
         machine = getEditedMachine({machine, changes});
+        machine.starter = user;
+        machine.ender = user;
 
         // Sets the post-data for the machine, including its body.
         const postData1 = {
@@ -242,6 +244,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
         if (changes["jobs"][job.machine][id].op != undefined) job.op = changes["jobs"][job.machine][id].op;
         if (changes["jobs"][job.machine][id].notes != undefined) job.notes = changes["jobs"][job.machine][id].notes;
         if (changes["jobs"][job.machine][id].state != undefined) job.state = changes["jobs"][job.machine][id].state;
+        job.ender = user;
 
         // Sets the post-data for the machine, including its body.
         const postData1 = {
@@ -290,6 +293,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
         if (changes["jobs"][job.machine][id].op != undefined) job.op = changes["jobs"][job.machine][id].op;
         if (changes["jobs"][job.machine][id].notes != undefined) job.notes = changes["jobs"][job.machine][id].notes;
         if (changes["jobs"][job.machine][id].state != undefined) job.state = changes["jobs"][job.machine][id].state;
+        job.ender = user;
 
         // End the job.
 
@@ -319,7 +323,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
 
         // STEP 1: Create a new, updated job.
 
-        job = {id: id, machine: machine, op: job.op, notes: job.notes, state: job.state};
+        job = {id: id, machine: machine, op: job.op, notes: job.notes, state: job.state, starter: user};
 
         // Sets the post-data for the machine, including its body.
         const postData = {

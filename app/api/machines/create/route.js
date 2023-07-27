@@ -9,9 +9,9 @@ export async function POST (request) {
     // The request:
     const machines = await query ({
         // The SQL query:
-        query: `INSERT INTO machines (code, name, building, width, height, xpos, ypos, state, log) 
+        query: `INSERT INTO machines (code, name, building, width, height, xpos, ypos, state, log, starter) 
         VALUES ('${body.machine.code}', '${body.machine.name}', '${body.machine.building}', ${body.machine.width}, ${body.machine.height}, 
-        ${body.machine.xpos}, ${body.machine.ypos}, ${body.machine.state}, ${body.machine.log})`,
+        ${body.machine.xpos}, ${body.machine.ypos}, ${body.machine.state}, ${body.machine.log}, ${body.machine.starter})`,
         values: [],
     })
 

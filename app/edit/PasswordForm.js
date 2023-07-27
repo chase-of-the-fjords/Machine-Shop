@@ -2,12 +2,36 @@
 
 import styles from './PasswordForm.module.css';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function PasswordForm() {
-    let [password, setPassword] = useState('');
+export default function PasswordForm( {setUser} ) {
+    const [password, setPassword] = useState('');
+    const [unlocked, setUnlocked] = useState(false);
 
-    return (password == "1234" ||
+    useEffect(() => {
+        // Kevin
+        if (password == "4432") {
+            setUser(1);
+            setUnlocked(true);
+        }
+        // Chase
+        if (password == "april") {
+            setUser(2);
+            setUnlocked(true);
+        }
+        // Drew
+        if (password == "drew") {
+            setUser(3);
+            setUnlocked(true);
+        }
+        // Test
+        if (password == "1234") {
+            setUser(5);
+            setUnlocked(true);
+        }
+    }, [password])
+
+    return (unlocked ||
     <div className={styles.screen}>
         <div className={styles.background}/>
         <div className={styles.password_box}>

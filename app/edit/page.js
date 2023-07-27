@@ -17,6 +17,8 @@ export default function App() {
     const [machines, setMachines] = useState([]);
     const [jobs, setJobs] = useState([]);
 
+    const [user, setUser] = useState(0);
+
     return (<>
             <div className={styles.edit_background}></div>
             <div>
@@ -24,9 +26,9 @@ export default function App() {
                 <Menu></Menu>
                 { /* The rest of the machine shop. */ }
                 <Shop type="edit" buildings={buildings} machines={machines} jobs={jobs} 
-                    setBuildings={setBuildings} setMachines={setMachines} setJobs={setJobs}></Shop>
+                    setBuildings={setBuildings} setMachines={setMachines} setJobs={setJobs} user={user}></Shop>
             </div>
-            <PasswordForm></PasswordForm>
+            <PasswordForm setUser={setUser}></PasswordForm>
         </>
     );
 }
