@@ -16,8 +16,6 @@ import Link from 'next/link';
 import styles from './App.module.css';
 import { update } from 'react-spring';
 
-let saving = false;
-
 // Default export for the machine shop.
 export default function Shop( { type, machines, buildings, jobs, setMachines, setBuildings, setJobs } ) {
     
@@ -29,6 +27,8 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
 
     // A record of the shop
     const [shopRecord, setShopRecord] = useState({"machines": {}, "immune": 3});
+
+    const [saving, setSaving] = useState(false);
 
     /* 
      * The current state of the popup.
@@ -150,7 +150,8 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
 
     // TODO
     async function save() {
-        saving = true;
+        setSaving(true);
+        setPopupState(-1);
         for (let [key, machine] of Object.entries(changes.machines)) {
             if (Object.entries(machine).length != 0) {
                 await updateMachine(key);
@@ -172,7 +173,8 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
         }
         await reload("all");
         setChanges({"buildings": {}, "machines": {}, "jobs": {}});
-        saving = false;
+        setSaving(false);
+        setPopupState(0);
     }
 
     /* 
@@ -645,9 +647,9 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
 
             </div>
             { /* The EDIT, SAVE, and BACK buttons in the corners of the pages. */ }
-            {type == "view" && <Link className={styles.navigation} href="/edit">EDIT</Link>}
-            {type == "edit" && <Link className={styles.navigation} href="./">BACK</Link>}
-            {type == "edit" && <div className={styles.save} onClick={save}>SAVE</div>}
+            {type == "view" && <Link className={styles.navigation} href="/edit"><img src="/icons/google/edit.svg"></img></Link>}
+            {type == "edit" && <Link className={styles.navigation} href="./"><img src="/icons/google/back_arrow.svg"></img></Link>}
+            {type == "edit" && <div className={styles.save} onClick={save}><img src="/icons/google/save.svg"></img></div>}
             { /* A popup box that shows up if it's enabled (state isn't 0). */
             popupState != 0 && 
             <InformationBox 

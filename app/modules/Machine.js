@@ -138,11 +138,13 @@ function getEditedJobs ({machine, jobs, changes}) {
         for (const [key, value] of Object.entries(edits)) {
             if (key > 0 && Object.entries(value).length > 0) {
                 let match = editedJobs.find((job) => { return job.id == key });
-                if (value.op != undefined) match.op = value.op;
-                if (value.notes != undefined) match.notes = value.notes;
-                if (value.state != undefined) match.state = value.state;
-                if (value.deleted == true) match.deleted = true;
-                match.unsaved = true;
+                if (match != undefined) {
+                    if (value.op != undefined) match.op = value.op;
+                    if (value.notes != undefined) match.notes = value.notes;
+                    if (value.state != undefined) match.state = value.state;
+                    if (value.deleted == true) match.deleted = true;
+                    match.unsaved = true;
+                }
             } else {
                 let newJob = {id: key, machine: machine.code, op: value.op, notes: value.notes, state: value.state};
                 editedJobs.push(newJob);

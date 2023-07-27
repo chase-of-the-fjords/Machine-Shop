@@ -49,12 +49,18 @@
 }
 
 .state {
+    width: 200px;
     font-family: 'OpenSans';
     font-weight: 100;
     font-size: 24px;
-    margin: 5px;
+    margin: 5px auto;
     margin-top: 0px;
     text-align: center;
+}
+
+.edited_state {
+    background-color: rgb(144, 238, 144);
+    border-radius: 8px;
 }
 
 .content {
@@ -78,90 +84,133 @@
     margin-left: 20px;
     margin-top: 8px;
     margin-bottom: 4px;
+    margin-right: 0px;
     font-size: 18px;
 }
 
-.list_entry {
-    margin-bottom: 8px;
+.list_edit {
+    vertical-align: text-top;
+    width: 93%;
 }
 
 .note {
-    margin: 4px 40px 8px 12px;
+    margin: 4px 40px 4px 12px;
     font-size: 14px;
     font-style: italic;
-}
-
-.button {
-    width: 36px;
-    height: 36px;
-    margin: 24px;
-    position: absolute;
-    cursor: pointer;
-}
-
-.button_menu {
-    position: relative;
 }
 
 .add_job {
     font-family: 'OpenSans';
     font-size: 20px;
     position: relative;
-    margin-top: 12px;
-    margin-bottom: 24px;
-    left: 30px;
-    width: 110px;
-    height: 30px;
-    font-weight: bold;
     text-align: center;
-    background-color: rgb(144, 238, 144);
-    border: 2px black solid;
-    border-radius: 9px;
+    width: 100px;
+    left: 60px;
+    border: 1px black solid;
+    border-radius: 8px;
     cursor: pointer;
+    background-color: white;
+    transition: background-color 0.2s;
+}
+
+.add_job:hover {
+    background-color: rgb(144, 238, 144);
 }
 
 .input_op {
+    float: left;
     font-family: 'OpenSans';
-    width: 90%;
     font-size: 16px;
-    margin-bottom: 6px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border-radius: 8px;
+    height: 36px;
     padding: 8px;
     border: 1px solid black;
+    flex-grow: 1;
+}
+
+.first_line {
+    height: 36px;
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0px;
+}
+
+.form_button {
+    width: 36px;
+    float: right;
+    top: 0px;
+    margin: 0px;
+    padding: 0px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: black solid 1px;
+    border-radius: 8px;
+    margin-left: 5px;
+    cursor: pointer;
+    background-color: white;
+    transition: background-color 0.2s;
+}
+
+.form_button:hover {
+    background-color: lightgray;
 }
 
 .input_notes {
     font-family: 'OpenSans';
-    width: 90%;
+    width: 100%;
     font-size: 16px;
     resize: none;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box; 
     border-radius: 8px;
-    padding: 8px;
+    padding: 6px 8px;
     border: 1px solid black;
+    height: 36px;
+}
+
+.list_entry {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 4px 8px;
+    margin-bottom: 4px;
+    width: 93%;
+    border: solid 1px transparent;
+    border-radius: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; 
+    vertical-align: text-top;
 }
 
 .new {
-    font-weight: bold;
-    font-style: italic;
+    background-color: rgb(178, 255, 150);
+}
+
+.unsaved {
+    background-color: rgb(178, 255, 150);
 }
 
 .deleted {
     text-decoration: line-through;
-    text-decoration-thickness: 3px;
-}
-
-.unsaved {
-    font-style: italic;
-    font-weight: bold;
+    text-decoration-thickness: 2px;
 }
 
 .job_form {
     margin-top: 6px;
-    margin-bottom: 6px;
+}
+
+.button_menu {
+    top: 0px;
+    position: relative;
+}
+
+.button {
+    margin: 6px 10px;
+    cursor: pointer;
+    position: absolute;
 }
