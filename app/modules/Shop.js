@@ -244,6 +244,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
         if (changes["jobs"][job.machine][id].op != undefined) job.op = changes["jobs"][job.machine][id].op;
         if (changes["jobs"][job.machine][id].notes != undefined) job.notes = changes["jobs"][job.machine][id].notes;
         if (changes["jobs"][job.machine][id].state != undefined) job.state = changes["jobs"][job.machine][id].state;
+        job.starter = user;
         job.ender = user;
 
         // Sets the post-data for the machine, including its body.
