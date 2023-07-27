@@ -19,8 +19,8 @@ export default function PasswordForm( {setUser} ) {
             setUser(2);
             setUnlocked(true);
         }
-        // Drew
-        if (password == "drew") {
+        // Ernie
+        if (password == "1973") {
             setUser(3);
             setUnlocked(true);
         }
