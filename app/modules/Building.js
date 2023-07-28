@@ -7,6 +7,7 @@ import styles from './Building.module.css';
 /* The imports for the react-spring library (animations). */
 import { useSpring, animated } from '@react-spring/web'
 import { useState, useEffect, useRef } from 'react';
+import useWindowDimensions from './hooks/useWindowDimensions';
 
 /* 
  * Default export for the building.
@@ -28,6 +29,11 @@ export default function Building({data, machines, jobs, changes, updated, doActi
         },
     })
 
+    const { height, width } = useWindowDimensions();
+
+    let machine_size = (width <= 700 ? (width <= 500 ? 75 : 100) : 120);
+    let machine_buffer = (width <= 700 ? (width <= 500 ? 3 : 4) : 5);
+
     // Returns the JSX for the building.
     return (
 
@@ -40,7 +46,7 @@ export default function Building({data, machines, jobs, changes, updated, doActi
         className={styles.container}
         style={{
             // Sets the width based off the JSON data for the building. 100px is added as padding.
-            width: `${ (data.width * 120) + 100 }px`,
+            width: `${ (data.width * machine_size) + (width <= 700 ? 4 : 100) }px`,
             // Adds the animation to the div.
             ...springs,
         }}>
@@ -53,8 +59,8 @@ export default function Building({data, machines, jobs, changes, updated, doActi
             className={styles.building}
             style={{
                 /* Width and height are set based off of data from the SQL database. */
-                width: `${ data.width * 120 }px`,
-                height: `${ data.height * 120 }px`
+                width: `${ data.width * machine_size }px`,
+                height: `${ data.height * machine_size }px`
             }}>
                 {
                     /* 

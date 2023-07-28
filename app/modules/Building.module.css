@@ -47,3 +47,31 @@
     /* Relative position is needed to position its children (machines) in relation to the shop. */
     position: relative;
 }
+
+@media (max-width: 700px) {
+    /* The header text for a single building. */
+    .header {
+        /* Sets the font and its size. */
+        font-size: 24px;
+    }
+
+    /* The styling for the physical building box. */
+    .building {
+        /* Sets padding to add a buffer around the machines. */
+        padding: 2px;
+    }
+}
+
+@media (max-width: 500px) {
+    /* The header text for a single building. */
+    .header {
+        /* Sets the font and its size. */
+        font-size: 20px;
+    }
+
+    /* The styling for the physical building box. */
+    .building {
+        /* Sets padding to add a buffer around the machines. */
+        padding: 1.5px;
+    }
+}

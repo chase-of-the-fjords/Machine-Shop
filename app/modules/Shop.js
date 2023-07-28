@@ -697,15 +697,24 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             </div>
             { /* The EDIT, SAVE, and BACK buttons in the corners of the pages. */ }
             <div className={styles.left_bar}>
-                {type == "edit" && <div className={styles.left_button} title="Save Changes" onClick={save}><img src="/icons/google/save.svg"></img></div>}
+                {type == "edit" && <div className={styles.left_button} title="Save Changes" onClick={save}><img className={styles.button_image} src="/icons/google/save.svg" /></div>}
                 {(type == "view" || type == "edit") && <div className={styles.right_button} title="Change View" onClick={ () => {
                     if (typeof window !== undefined) localStorage.setItem('view', (view + 1) % 3);
                     setView((view + 1) % 3);
-                }}><img src="/icons/google/eye.svg"></img></div>}
+                }}><img className={styles.button_image} src="/icons/google/eye.svg" /></div>}
             </div>
+
             <div className={styles.right_bar}>
-                {type == "view" && <div className={styles.right_button} title="Edit"><a href="./edit"><img src="/icons/google/edit.svg"></img></a></div>}
-                {type == "edit" && <div className={styles.right_button} title="Return to Home"><a href="./"><img src="/icons/google/back_arrow.svg"></img></a></div>}
+                {type == "view" && <div className={styles.right_button} title="Edit">
+                    <a href="./edit">
+                        <img className={styles.button_image} src="/icons/google/edit.svg" />
+                    </a>
+                </div>}
+                {type == "edit" && <div className={styles.right_button} title="Return to Home">
+                    <a href="./">
+                        <img className={styles.button_image} src="/icons/google/back_arrow.svg" />
+                    </a>
+                </div>}
             </div>
             
             { /* A popup box that shows up if it's enabled (state isn't 0). */

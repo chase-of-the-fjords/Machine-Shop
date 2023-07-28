@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import styles from './Machine.module.css';
 
+import useWindowDimensions from './hooks/useWindowDimensions';
+
 /* 
  * Default export for the machine.
  * 
@@ -14,6 +16,8 @@ export default function Machine( {data, jobs, changes, updated, doAction, select
     const [editedData, setEditedData] = useState({});
     const [editedJobs, setEditedJobs] = useState({});
 
+    const { height, width } = useWindowDimensions();
+
     useEffect(() => {
         setEditedData(getEditedMachine( {data, changes} ));
     }, [data, changes])
@@ -23,10 +27,12 @@ export default function Machine( {data, jobs, changes, updated, doAction, select
     }, [data, jobs, changes])
 
     // Generates the machine's width, height, top (y-position), and left (x-position) values based on JSON data.
-    let width = (editedData.width * 120) - 5;
-    let height = (editedData.height * 120) - 5;
-    let top = 5 + (editedData.ypos * 120);
-    let left = 5 + (editedData.xpos * 120);
+    let machine_size = (width <= 700 ? (width <= 500 ? 75 : 100) : 120);
+    let machine_buffer = (width <= 700 ? (width <= 500 ? 3 : 4) : 5);
+    let machine_width = (editedData.width * machine_size) - machine_buffer;
+    let machine_height = (editedData.height * machine_size) - machine_buffer;
+    let top = machine_buffer + (editedData.ypos * machine_size);
+    let left = machine_buffer + (editedData.xpos * machine_size);
 
     // Returns the JSX for the machine.
     return (
@@ -50,8 +56,8 @@ export default function Machine( {data, jobs, changes, updated, doAction, select
                 }
                 style={
                     // Sets the width, height, top, and left values set earlier. 
-                { width: `${width}px`,
-                  height: `${height}px`,
+                { width: `${machine_width}px`,
+                  height: `${machine_height}px`,
                   top: `${top}px` ,
                   left: `${left}px` } 
                 }

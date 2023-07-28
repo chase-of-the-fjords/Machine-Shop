@@ -29,9 +29,11 @@
 .info_box {
     position: relative;
     opacity: 100%;
-    height: 80%;
+    height: 140vw;
+    max-height: 80%;
     top: 10%;
-    width: 600px;
+    width: 90vw;
+    max-width: 600px;
     border: 1px solid black;
     border-radius: 5px;
     box-shadow: 0px 10px 20px rgb(0, 0, 0, 0.5);
@@ -215,4 +217,74 @@
     margin: 0px 9px;
     cursor: pointer;
     position: absolute;
+}
+
+@media (max-width: 700px) {
+    .machine_name {
+        font-size: 24px;
+        margin: 5px;
+    }
+
+    .subsection {
+        font-size: 16px;
+        margin-left: 10px;
+        margin-bottom: 0px;
+        margin-top: 6px;
+    }
+    
+    .list {
+        margin-left: 0px;
+        margin-top: 8px;
+        margin-bottom: 2px;
+        margin-right: 0px;
+        font-size: 12px;
+        width: 85%;
+    }
+    
+    .note {
+        margin: 0px 20px 4px 12px;
+        font-size: 10px;
+        font-style: italic;
+    }
+
+    .state {
+        width: 150px;
+        font-size: 16px;
+        margin: 5px auto;
+    }
+}
+
+@media (max-width: 500px) {
+    .machine_name {
+        font-size: 24px;
+        margin: 5px;
+    }
+
+    .subsection {
+        font-size: 16px;
+        margin-left: 10px;
+        margin-bottom: 0px;
+        margin-top: 6px;
+    }
+    
+    .list {
+        margin-left: 0px;
+        margin-top: 8px;
+        margin-bottom: 2px;
+        margin-right: 0px;
+        font-size: 12px;
+        width: 85%;
+    }
+    
+    .note {
+        margin: 0px 20px 4px 12px;
+        font-size: 10px;
+        font-style: italic;
+    }
+
+    .state {
+        width: 150px;
+        font-size: 16px;
+        margin: 5px auto;
+    }
 }

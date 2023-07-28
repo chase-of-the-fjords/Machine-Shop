@@ -14,7 +14,7 @@
 
     /* Creates the underline and sets the width of the component (which is only relevant for the underline) */
     border-bottom: solid 2px black;
-    width: 500px;
+    width: 400px;
     
     /* Centers the component */
     margin: auto;
@@ -44,8 +44,8 @@
     position: fixed;
     top: 0px;
     left: 0px;
-    width: 100%;
-    height: 100%;
+    width: 0%;
+    height: 0%;
 
     /* Sets the z-index to ensure it appears at the very back. */
     z-index: -100;
@@ -101,4 +101,93 @@
 
     /* Positions the buttons. */
     float: right;
+}
+
+/* The styling for the images of the buttons. */
+.button_image {
+    /* Sets the size of the button. */
+    width: 48px;
+}
+
+@media (max-width: 700px) {
+    /* The styling for the menu bar. */
+    .menu {
+        /* Makes the font smaller. */
+        font-size: 24px;
+
+        /* Makes the title smaller. */
+        width: 300px;
+
+        /* Makes the underline smaller. */
+        border: none;
+
+        /* Sets margins and padding to position the component */
+        padding-top: 5px;
+    }
+
+    /* The styling for the images in menu buttons. */
+    .button_image {
+        /* Shrinks the buttons. */
+        width: 32px;
+    }
+    
+    /* The styling for the buttons in the top-left corner. */
+    .left_bar {
+        /* Moves the buttons closer to the corner. */
+        top: 10px;
+        left: 10px;
+    }
+    
+    /* The styling for the buttons in the top-right corner. */
+    .right_bar {
+        /* Moves the buttons closer to the corner. */
+        top: 10px;
+        right: 10px;
+    }
+}
+
+@media (max-width: 500px) {
+    /* The styling for the menu bar. */
+    .menu {
+        /* Makes the font smaller. */
+        font-size: 20px;
+
+        /* Makes the title smaller. */
+        width: 250px;
+
+        /* Sets margins and padding to position the component */
+        padding-top: 0px;
+    }
+
+    /* The styling for the images in menu buttons. */
+    .button_image {
+        /* Shrinks the buttons. */
+        width: 24px;
+    }
+    
+    /* The styling for the buttons in the top-left corner. */
+    .left_bar {
+        /* Moves the buttons closer to the corner. */
+        top: 8px;
+        left: 8px;
+    }
+    
+    /* The styling for the buttons in the top-right corner. */
+    .right_bar {
+        /* Moves the buttons closer to the corner. */
+        top: 8px;
+        right: 8px;
+    }
+
+    /* The styling for the "back" link in the top-right corner. */
+    .right_button {
+        /* Puts a gap between the buttons. */
+        padding: 0px 0px;
+    }
+
+    /* The styling for the "save" button in the top-left corner. */
+    .left_button {
+        /* Puts a gap between the buttons. */
+        padding: 0px 0px;
+    }
 }
