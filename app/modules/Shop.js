@@ -664,13 +664,13 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
 
             </div>
             { /* The EDIT, SAVE, and BACK buttons in the corners of the pages. */ }
-            {type == "view" && <div className={styles.navigation}><a href="./edit"><img src="/icons/google/edit.svg"></img></a></div>}
-            {type == "edit" && <div className={styles.navigation}><a href="./"><img src="/icons/google/back_arrow.svg"></img></a></div>}
-            {type == "edit" && <div className={styles.save} onClick={save}><img src="/icons/google/save.svg"></img></div>}
+            {type == "view" && <div className={styles.navigation} title="Edit"><a href="./edit"><img src="/icons/google/edit.svg"></img></a></div>}
+            {type == "edit" && <div className={styles.navigation} title="Return to Home"><a href="./"><img src="/icons/google/back_arrow.svg"></img></a></div>}
+            {type == "edit" && <div className={styles.save} title="Save Changes" onClick={save}><img src="/icons/google/save.svg"></img></div>}
             { /* A popup box that shows up if it's enabled (state isn't 0). */
             popupState != 0 && 
             <InformationBox 
-            doAction={(action, params) => { doAction(action, params)}}
+            doAction={(action, params) => { doAction(action, params) }}
             popupState={popupState}
             machine={machines.find((machine) => { return machine.code == currentMachine })}
             jobs={jobs.filter((job) => { return job.machine == currentMachine})} 

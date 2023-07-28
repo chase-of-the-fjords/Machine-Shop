@@ -86,11 +86,11 @@
     margin-bottom: 4px;
     margin-right: 0px;
     font-size: 18px;
+    width: 85%;
 }
 
 .list_edit {
     vertical-align: text-top;
-    width: 93%;
 }
 
 .note {
@@ -104,13 +104,15 @@
     font-size: 20px;
     position: relative;
     text-align: center;
-    width: 100px;
-    left: 60px;
+    width: 80px;
+    left: 30px;
     border: 1px black solid;
     border-radius: 8px;
     cursor: pointer;
     background-color: white;
     transition: background-color 0.2s;
+    margin-top: 24px;
+    margin-bottom: 24px;
 }
 
 .add_job:hover {
@@ -178,13 +180,13 @@
     margin-right: 0px;
     padding: 4px 8px;
     margin-bottom: 4px;
-    width: 93%;
     border: solid 1px transparent;
     border-radius: 10px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box; 
     vertical-align: text-top;
+    cursor: pointer;
 }
 
 .new {

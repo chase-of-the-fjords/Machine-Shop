@@ -116,13 +116,13 @@ function EditJobBox( { doAction, machine, jobs, changes, selectedJob, setSelecte
             }}>
                 { /* Menu buttons for setting a machine to be a priority or out of service. */ }
                 <div className={styles.button_menu}>
-                    <img className={styles.button} src={editedMachine.state == 2 ? "/icons/google/star_filled.svg" : "/icons/google/star_empty.svg"} alt="Priority Button" onClick={() => {doAction("setMachine", ["state", 2])}}/>
-                    <img className={styles.button} style={{left: "52px"}} src={editedMachine.state == 1 ? "/icons/google/broken_filled.svg" : "/icons/google/broken_empty.svg"} alt="Out of Order Button" onClick={() => {doAction("setMachine", ["state", 1])}}/>
+                    <img className={styles.button} src={editedMachine.state == 2 ? "/icons/google/star_filled.svg" : "/icons/google/star_empty.svg"} alt="Priority Button" title={editedMachine.state == 2 ? "Unset as Priority" : "Set as Priority"} onClick={() => {doAction("setMachine", ["state", 2])}}/>
+                    <img className={styles.button} style={{left: "52px"}} src={editedMachine.state == 1 ? "/icons/google/broken_filled.svg" : "/icons/google/broken_empty.svg"} alt="Out of Order Button" title={editedMachine.state == 1 ? "Set as Operational" : "Set as Out of Order"} onClick={() => {doAction("setMachine", ["state", 1])}}/>
                 </div>
 
                 { /* Menu button for reverting machine to its original state. */ }
                 <div className={styles.button_menu}>
-                    <img className={styles.button} style={{right: "0px"}} src="/icons/google/undo.svg" alt="Revert Button" onClick={() => {doAction("undo", [machine.code])}}/>
+                    <img className={styles.button} style={{right: "0px"}} src="/icons/google/undo.svg" alt="Revert Button" title="Undo Changes" onClick={() => {doAction("undo", [machine.code])}}/>
                 </div>
 
                 { /* Machine name & its current state. */ }
@@ -144,7 +144,7 @@ function EditJobBox( { doAction, machine, jobs, changes, selectedJob, setSelecte
                                 jobOp={jobOp} jobNotes={jobNotes} setJobOp={setJobOp} setJobNotes={setJobNotes} ></Job>
                 })}
             </ul>
-            <div className={styles.add_job} onClick={
+            <div className={styles.add_job} title="Create New Job" onClick={
                     () => {
                         if (selectedJob != 0) save({jobs, selectedJob, jobOp, jobNotes, doAction});
                         doAction("createJob", [machine.code, newJobCounter, "New Job", "", 0]);
@@ -167,7 +167,7 @@ function EditJobBox( { doAction, machine, jobs, changes, selectedJob, setSelecte
                                 jobOp={jobOp} jobNotes={jobNotes} setJobOp={setJobOp} setJobNotes={setJobNotes} ></Job>
                 })}
             </ul>
-            <div className={styles.add_job} onClick={
+            <div className={styles.add_job} title="Create New Job" onClick={
                     () => {
                         if (selectedJob != 0) save({jobs, selectedJob, jobOp, jobNotes, doAction});
                         doAction("createJob", [machine.code, newJobCounter, "New Job", "", 2]);
@@ -251,19 +251,26 @@ function Job ( { doAction, jobs, job, selectedJob, setSelectedJob, jobOp, jobNot
                                     setSelectedJob(0);
                                 }
                             }}></input>
-                    <img className={styles.form_button} src={"/icons/google/delete.svg"} alt="Delete" onClick={() => {
-                        doAction("deleteJob", [job.machine, job.id]);
+                    
+
+                    <img className={styles.form_button} src="/icons/google/save.svg" alt="Save Button" title="Save" onClick={() => {
+                        save({jobs, selectedJob, jobOp, jobNotes, doAction});
                         setSelectedJob(0);
                     }}/>
 
-                    <img className={styles.form_button} src={job.state == 0 ? "/icons/google/down_arrow.svg" : "/icons/google/up_arrow.svg"} alt={job.state == 0 ? "Move to Queue" : "Set to Currently Running"} onClick={() => {
+                    <img className={styles.form_button} src={job.state == 0 ? "/icons/google/down_arrow.svg" : "/icons/google/up_arrow.svg"} title={job.state == 0 ? "Queue" : "Set Current"} alt={job.state == 0 ? "Move to Queue" : "Set to Currently Running"} onClick={() => {
                         doAction("setJob", [job.machine, job.id, jobOp, jobNotes]);
                         doAction("setJobState", [job.machine, job.id, (job.state + 2) % 4]);
                         setSelectedJob(0);
                     }}/>
 
-                    <img className={styles.form_button} src={"/icons/google/undo.svg"} alt={"Undo Changes"} onClick={() => {
+                    { /* <img className={styles.form_button} src={"/icons/google/undo.svg"} alt={"Undo Changes"} onClick={() => {
                         doAction("undoJob", [job.machine, selectedJob]);
+                        setSelectedJob(0);
+                    }}/> */ }
+
+                    <img className={styles.form_button} src={"/icons/google/delete.svg"} alt="Delete" title="Delete" onClick={() => {
+                        doAction("deleteJob", [job.machine, job.id]);
                         setSelectedJob(0);
                     }}/>
                 </div>
