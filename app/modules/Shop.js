@@ -23,14 +23,14 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
     const [changes, setChanges] = useState({"buildings": {}, "machines": {}, "jobs": {}});
 
     // Variables to track whether individual machines have been updated
-    const [updated, setUpdated] = useState(localStorage.getItem('updated') ? JSON.parse(localStorage.getItem('updated')) : {});
+    const [updated, setUpdated] = useState((typeof window !== 'undefined' && localStorage.getItem('updated')) ? JSON.parse(localStorage.getItem('updated')) : {});
 
     // A record of the shop
-    const [shopRecord, setShopRecord] = useState({"machines": {}, "immune": (localStorage.getItem('new') ? 1 : 3)});
+    const [shopRecord, setShopRecord] = useState({"machines": {}, "immune": ((typeof window !== 'undefined' && localStorage.getItem('new')) ? 1 : 3)});
 
     const [saving, setSaving] = useState(false);
 
-    const [view, setView] = useState(localStorage.getItem('view') ? JSON.parse(localStorage.getItem('view')) : 0);
+    const [view, setView] = useState(0);
 
     /* 
      * The current state of the popup.
@@ -45,6 +45,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
     useEffect(() => {
         reload("all");
         localStorage.setItem('new', true);
+        setView(localStorage.getItem('view') ? JSON.parse(localStorage.getItem('view')) : 0);
 
         const interval = setInterval(() => {
             reload("all");

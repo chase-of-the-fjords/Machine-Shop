@@ -13,9 +13,9 @@ import { useState, useEffect } from 'react';
 export default function App() {
 
     // These 3 hooks contain the buildings, machines, and jobs.
-    const [buildings, setBuildings] = useState(localStorage.getItem('buildings') ? JSON.parse(localStorage.getItem('buildings')) : []);
-    const [machines, setMachines] = useState(localStorage.getItem('machines') ? JSON.parse(localStorage.getItem('machines')) : []);
-    const [jobs, setJobs] = useState(localStorage.getItem('jobs') ? JSON.parse(localStorage.getItem('jobs')) : []);
+    const [buildings, setBuildings] = useState((typeof window !== 'undefined' && localStorage.getItem('buildings')) ? JSON.parse(localStorage.getItem('buildings')) : []);
+    const [machines, setMachines] = useState((typeof window !== 'undefined' && localStorage.getItem('machines')) ? JSON.parse(localStorage.getItem('machines')) : []);
+    const [jobs, setJobs] = useState((typeof window !== 'undefined' && localStorage.getItem('jobs')) ? JSON.parse(localStorage.getItem('jobs')) : []);
 
     const [user, setUser] = useState(0);
 
