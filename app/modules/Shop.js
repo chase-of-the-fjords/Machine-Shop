@@ -108,11 +108,13 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
                 "Access-Control-Allow-Origin": '*',
             }
         }
-        // Accesses the buildings API.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/buildings`, postData);
-        const response = await res.json();
-        // Sets the value of "buildings".
-        setBuildings(response.filter((building) => { return (building.code != "lm" )}));
+        try {
+            // Accesses the buildings API.
+            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/buildings`, postData);
+            const response = await res.json();
+            // Sets the value of "buildings".
+            setBuildings(response.filter((building) => { return (building.code != "lm" )}));
+        } catch (e) { }
     }
 
     // Gets the machines to populate the "machines" hook.
@@ -124,11 +126,13 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
                 "Access-Control-Allow-Origin": '*',
             }
         }
-        // Accesses the machines API.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines`, postData);
-        const response = await res.json();
-        // Sets the value of "machines".
-        setMachines(response);
+        try {
+            // Accesses the machines API.
+            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines`, postData);
+            const response = await res.json();
+            // Sets the value of "machines".
+            setMachines(response);
+        } catch (e) { }
     }
 
     // Gets the jobs to populate the "jobs" hook.
@@ -140,11 +144,13 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
                 "Access-Control-Allow-Origin": '*',
             }
         }
-        // Accesses the jobs API.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs`, postData);
-        const response = await res.json();
-        // Sets the value of "jobs".
-        setJobs(response);
+        try {
+            // Accesses the jobs API.
+            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs`, postData);
+            const response = await res.json();
+            // Sets the value of "jobs".
+            setJobs(response);
+        } catch (e) { }
     }
 
     // Opens the popup box, sets its state, & sets the selected machine.
