@@ -35,40 +35,6 @@
     text-align: center;
 }
 
-/* The styling for the "back" link in the top-right corner. */
-.navigation {
-    /* Sets to black and removes underline that is usually present with links. */
-    color: black;
-    text-decoration: none;
-
-    /* Sets the position on the page. */
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    
-    /* Sets the font and its size. */
-    font-family: 'OpenSans';
-    font-size: 20px;
-
-    /* Sets the cursor to a pointer. */
-    cursor: pointer;
-}
-
-/* The styling for the "save" button in the top-left corner. */
-.save {
-    /* Sets the position on the page. */
-    position: absolute;
-    top: 20px;
-    left: 20px;
-
-    /* Sets the font and its size. */
-    font-family: 'OpenSans';
-    font-size: 20px;
-
-    /* Changes the cursor on hover to make it like a normal link. */
-    cursor: pointer;
-}
-
 /* The background on the "view" page (the main page). */
 .view_background {
     /* Sets the background color. */
@@ -99,4 +65,40 @@
 
     /* Sets the z-index to ensure it appears at the very back. */
     z-index: -100;
+}
+
+.left_bar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.right_bar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+/* The styling for the "back" link in the top-right corner. */
+.right_button {
+    /* Sets the cursor to a pointer. */
+    cursor: pointer;
+
+    /* Puts a gap between the buttons. */
+    padding: 0px 4px;
+
+    /* Positions the buttons. */
+    float: left;
+}
+
+/* The styling for the "save" button in the top-left corner. */
+.left_button {
+    /* Changes the cursor on hover to make it like a normal link. */
+    cursor: pointer;
+
+    /* Puts a gap between the buttons. */
+    padding: 0px 4px;
+
+    /* Positions the buttons. */
+    float: right;
 }

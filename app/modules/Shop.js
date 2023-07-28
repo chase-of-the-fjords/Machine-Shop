@@ -30,6 +30,8 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
 
     const [saving, setSaving] = useState(false);
 
+    const [view, setView] = useState(0);
+
     /* 
      * The current state of the popup.
      * 
@@ -89,6 +91,10 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
         if (type == "edit") setHasChanges(hasChanges);
     }, [changes])
 
+    useEffect(() => {
+        setView(localStorage.getItem('view') ? JSON.parse(localStorage.getItem('view')) : 0);
+    }, [])
+
     // A joint function to get all the necessary SQL data.
     async function reload( param ) {
         if (param == "buildings") await getBuildings();
@@ -113,7 +119,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/buildings`, postData);
             const response = await res.json();
             // Sets the value of "buildings".
-            setBuildings(response.filter((building) => { return (building.code != "lm" )}));
+            setBuildings(response);
         } catch (e) { }
     }
 
@@ -650,6 +656,11 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
                      * selectedMachine: The current machine selected.
                      */
                     buildings
+                    .filter((building) => {
+                        if (view == 0) return true;
+                        if (view == 1) return building.code != "lm";
+                        if (view == 2) return building.code == "lm";
+                    })
                     .map((building) => {
                         return <Building 
                         key={building.code} 
@@ -670,9 +681,18 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
 
             </div>
             { /* The EDIT, SAVE, and BACK buttons in the corners of the pages. */ }
-            {type == "view" && <div className={styles.navigation} title="Edit"><a href="./edit"><img src="/icons/google/edit.svg"></img></a></div>}
-            {type == "edit" && <div className={styles.navigation} title="Return to Home"><a href="./"><img src="/icons/google/back_arrow.svg"></img></a></div>}
-            {type == "edit" && <div className={styles.save} title="Save Changes" onClick={save}><img src="/icons/google/save.svg"></img></div>}
+            <div className={styles.left_bar}>
+                {type == "edit" && <div className={styles.left_button} title="Save Changes" onClick={save}><img src="/icons/google/save.svg"></img></div>}
+                {(type == "view" || type == "edit") && <div className={styles.right_button} title="Change View" onClick={ () => {
+                    localStorage.setItem('view', (view + 1) % 3);
+                    setView((view + 1) % 3);
+                }}><img src="/icons/google/eye.svg"></img></div>}
+            </div>
+            <div className={styles.right_bar}>
+                {type == "view" && <div className={styles.right_button} title="Edit"><a href="./edit"><img src="/icons/google/edit.svg"></img></a></div>}
+                {type == "edit" && <div className={styles.right_button} title="Return to Home"><a href="./"><img src="/icons/google/back_arrow.svg"></img></a></div>}
+            </div>
+            
             { /* A popup box that shows up if it's enabled (state isn't 0). */
             popupState != 0 && 
             <InformationBox 
