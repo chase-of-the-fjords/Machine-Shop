@@ -23,14 +23,14 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
     const [changes, setChanges] = useState({"buildings": {}, "machines": {}, "jobs": {}});
 
     // Variables to track whether individual machines have been updated
-    const [updated, setUpdated] = useState({});
+    const [updated, setUpdated] = useState(localStorage.getItem('updated') ? JSON.parse(localStorage.getItem('updated')) : {});
 
     // A record of the shop
-    const [shopRecord, setShopRecord] = useState({"machines": {}, "immune": 3});
+    const [shopRecord, setShopRecord] = useState({"machines": {}, "immune": (localStorage.getItem('new') ? 1 : 3)});
 
     const [saving, setSaving] = useState(false);
 
-    const [view, setView] = useState(0);
+    const [view, setView] = useState(localStorage.getItem('view') ? JSON.parse(localStorage.getItem('view')) : 0);
 
     /* 
      * The current state of the popup.
@@ -44,6 +44,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
     // This gets all the data when the page loads, and then again every 30 seconds.
     useEffect(() => {
         reload("all");
+        localStorage.setItem('new', true);
 
         const interval = setInterval(() => {
             reload("all");
@@ -53,8 +54,13 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
     }, []);
 
     useEffect(() => {
+        localStorage.setItem('updated', JSON.stringify(updated));
+    }, [updated])
+
+    useEffect(() => {
 
         let newShop = {"machines": {}, "immune": shopRecord.immune}
+        let newUpdated = {...updated};
 
         machines.forEach(machine => {
             newShop["machines"][machine.code] = {};
@@ -63,16 +69,18 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             newShop["machines"][machine.code].jobs.sort();
             if (shopRecord.immune == 0) {
                 if (shopRecord["machines"][machine.code] == undefined) {
-                    updated[machine.code] = true;
+                    newUpdated[machine.code] = true;
                 }
                 else if (JSON.stringify(shopRecord["machines"][machine.code].jobs) != JSON.stringify(newShop["machines"][machine.code].jobs)) {
-                    updated[machine.code] = true;
+                    newUpdated[machine.code] = true;
                 }
                 else if (shopRecord["machines"][machine.code].id != machine.id) {
-                    updated[machine.code] = true;
+                    newUpdated[machine.code] = true;
                 }
             }
         });
+
+        setUpdated(newUpdated);
 
         if (shopRecord.immune != 0) newShop.immune = newShop.immune - 1;
 
@@ -90,10 +98,6 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
         });
         if (type == "edit") setHasChanges(hasChanges);
     }, [changes])
-
-    useEffect(() => {
-        setView(localStorage.getItem('view') ? JSON.parse(localStorage.getItem('view')) : 0);
-    }, [])
 
     // A joint function to get all the necessary SQL data.
     async function reload( param ) {
@@ -120,6 +124,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             const response = await res.json();
             // Sets the value of "buildings".
             setBuildings(response);
+            localStorage.setItem('buildings', JSON.stringify(response));
         } catch (e) { }
     }
 
@@ -138,6 +143,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             const response = await res.json();
             // Sets the value of "machines".
             setMachines(response);
+            localStorage.setItem('machines', JSON.stringify(response));
         } catch (e) { }
     }
 
@@ -156,6 +162,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             const response = await res.json();
             // Sets the value of "jobs".
             setJobs(response);
+            localStorage.setItem('jobs', JSON.stringify(response));
         } catch (e) { }
     }
 
@@ -428,7 +435,9 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
          */
         if (action == "clickMachine") {
             // Different effects on the "view" and "edit" pages.
-            updated[params[0]] = false;
+            let newUpdated = {...updated};
+            newUpdated[params[0]] = false;
+            setUpdated(newUpdated);
             if (type == "view") openPopup(params[0], 1);
             if (type == "edit") if (!saving) openPopup(params[0], 2);
         }
@@ -615,10 +624,6 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
          * Closes the popup box.
          */
         if (action == "closePopup") closePopup();
-
-        if (action == "setUpdated") {
-            updated[params[0]] = true;
-        }
 
         if (action == "undo") {
             let newChanges = {...changes};

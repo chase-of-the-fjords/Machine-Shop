@@ -6,15 +6,15 @@ import Shop from './modules/Shop';
 // The style sheet for the main page.
 import styles from './modules/App.module.css';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // The function for the full application.
 export default function App() {
 
     // These 3 hooks contain the buildings, machines, and jobs.
-    const [buildings, setBuildings] = useState([]);
-    const [machines, setMachines] = useState([]);
-    const [jobs, setJobs] = useState([]);
+    const [buildings, setBuildings] = useState(localStorage.getItem('buildings') ? JSON.parse(localStorage.getItem('buildings')) : []);
+    const [machines, setMachines] = useState(localStorage.getItem('machines') ? JSON.parse(localStorage.getItem('machines')) : []);
+    const [jobs, setJobs] = useState(localStorage.getItem('jobs') ? JSON.parse(localStorage.getItem('jobs')) : []);
 
     return (<>
             <div className={styles.view_background}></div>
