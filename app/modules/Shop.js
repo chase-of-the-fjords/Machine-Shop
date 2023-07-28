@@ -23,10 +23,10 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
     const [changes, setChanges] = useState({"buildings": {}, "machines": {}, "jobs": {}});
 
     // Variables to track whether individual machines have been updated
-    const [updated, setUpdated] = useState((typeof window !== 'undefined' && localStorage.getItem('updated')) ? JSON.parse(localStorage.getItem('updated')) : {});
+    const [updated, setUpdated] = useState({"initial": true});
 
     // A record of the shop
-    const [shopRecord, setShopRecord] = useState({"machines": {}, "immune": ((typeof window !== 'undefined' && localStorage.getItem('new')) ? 1 : 3)});
+    const [shopRecord, setShopRecord] = useState({"machines": {}, "immune": -1});
 
     const [saving, setSaving] = useState(false);
 
@@ -43,9 +43,14 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
 
     // This gets all the data when the page loads, and then again every 30 seconds.
     useEffect(() => {
-        reload("all");
-        localStorage.setItem('new', true);
+        setUpdated(localStorage.getItem('updated') ? JSON.parse(localStorage.getItem('updated')) : {"initial": false});
+        setShopRecord({"machines": {}, "immune": (localStorage.getItem('new') ? 1 : 3)});
+        setBuildings(localStorage.getItem('buildings') ? JSON.parse(localStorage.getItem('buildings')) : []);
+        setMachines(localStorage.getItem('machines') ? JSON.parse(localStorage.getItem('machines')) : []);
+        setJobs(localStorage.getItem('jobs') ? JSON.parse(localStorage.getItem('jobs')) : []);
         setView(localStorage.getItem('view') ? JSON.parse(localStorage.getItem('view')) : 0);
+        localStorage.setItem('new', true);
+        reload("all");
 
         const interval = setInterval(() => {
             reload("all");
@@ -55,37 +60,41 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
     }, []);
 
     useEffect(() => {
-        localStorage.setItem('updated', JSON.stringify(updated));
+        if (!updated.initial) localStorage.setItem('updated', JSON.stringify(updated));
     }, [updated])
 
     useEffect(() => {
 
-        let newShop = {"machines": {}, "immune": shopRecord.immune}
-        let newUpdated = {...updated};
+        if (!updated.initial) {
 
-        machines.forEach(machine => {
-            newShop["machines"][machine.code] = {};
-            newShop["machines"][machine.code].id = machine.id;
-            newShop["machines"][machine.code].jobs = jobs.filter((job) => { return job.machine == machine.code; }).map((job) => { return job.entry });
-            newShop["machines"][machine.code].jobs.sort();
-            if (shopRecord.immune == 0) {
-                if (shopRecord["machines"][machine.code] == undefined) {
-                    newUpdated[machine.code] = true;
+            let newShop = {"machines": {}, "immune": shopRecord.immune}
+            let newUpdated = {...updated};
+
+            machines.forEach(machine => {
+                newShop["machines"][machine.code] = {};
+                newShop["machines"][machine.code].id = machine.id;
+                newShop["machines"][machine.code].jobs = jobs.filter((job) => { return job.machine == machine.code; }).map((job) => { return job.entry });
+                newShop["machines"][machine.code].jobs.sort();
+                if (shopRecord.immune == 0) {
+                    if (shopRecord["machines"][machine.code] == undefined) {
+                        newUpdated[machine.code] = true;
+                    }
+                    else if (JSON.stringify(shopRecord["machines"][machine.code].jobs) != JSON.stringify(newShop["machines"][machine.code].jobs)) {
+                        newUpdated[machine.code] = true;
+                    }
+                    else if (shopRecord["machines"][machine.code].id != machine.id) {
+                        newUpdated[machine.code] = true;
+                    }
                 }
-                else if (JSON.stringify(shopRecord["machines"][machine.code].jobs) != JSON.stringify(newShop["machines"][machine.code].jobs)) {
-                    newUpdated[machine.code] = true;
-                }
-                else if (shopRecord["machines"][machine.code].id != machine.id) {
-                    newUpdated[machine.code] = true;
-                }
-            }
-        });
+            });
 
-        setUpdated(newUpdated);
+            setUpdated(newUpdated);
 
-        if (shopRecord.immune != 0) newShop.immune = newShop.immune - 1;
+            if (shopRecord.immune != 0) newShop.immune = newShop.immune - 1;
 
-        setShopRecord(newShop);
+            setShopRecord(newShop);
+
+        }
 
     }, [machines, jobs]);
 
