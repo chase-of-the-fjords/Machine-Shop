@@ -104,6 +104,11 @@ function EditJobBox( { doAction, machine, jobs, changes, selectedJob, setSelecte
     let currentJobs = jobs.filter((job) => { return job.state == 0 });
     let queuedJobs = jobs.filter((job) => { return job.state == 2 });
 
+    let state;
+    if (editedMachine.state == 0) state = "OPERATIONAL";
+    if (editedMachine.state == 1) state = "OUT OF ORDER";
+    if (editedMachine.state == 2) state = "PRIORITY";
+
     return (
         <div className={styles.content} onClick={(e) => {
             if (e.currentTarget != e.target) return;
@@ -111,25 +116,38 @@ function EditJobBox( { doAction, machine, jobs, changes, selectedJob, setSelecte
             setSelectedJob(0);
         }}>
             <div onClick={(e) => {
+                if (e.currentTarget != e.target) return;
                 if (selectedJob != 0) save({jobs, selectedJob, jobOp, jobNotes, doAction});
                 setSelectedJob(0);
             }}>
                 { /* Menu buttons for setting a machine to be a priority or out of service. */ }
-                <div className={styles.button_menu}>
+                <div className={styles.button_menu} onClick={(e) => {
+                    if (selectedJob != 0) save({jobs, selectedJob, jobOp, jobNotes, doAction});
+                    setSelectedJob(0);
+                }}>
                     <img className={styles.button} src={editedMachine.state == 2 ? "/icons/google/star_filled.svg" : "/icons/google/star_empty.svg"} alt="Priority Button" title={editedMachine.state == 2 ? "Unset as Priority" : "Set as Priority"} onClick={() => {doAction("setMachine", ["state", 2])}}/>
                     <img className={styles.button} style={{left: "52px"}} src={editedMachine.state == 1 ? "/icons/google/broken_filled.svg" : "/icons/google/broken_empty.svg"} alt="Out of Order Button" title={editedMachine.state == 1 ? "Set as Operational" : "Set as Out of Order"} onClick={() => {doAction("setMachine", ["state", 1])}}/>
                 </div>
 
                 { /* Menu button for reverting machine to its original state. */ }
                 <div className={styles.button_menu}>
-                    <img className={styles.button} style={{right: "0px"}} src="/icons/google/undo.svg" alt="Revert Button" title="Undo Changes" onClick={() => {doAction("undo", [machine.code])}}/>
+                    <img className={styles.button} style={{right: "0px"}} src="/icons/google/undo.svg" alt="Revert Button" title="Undo Changes" onClick={() => {
+                        setSelectedJob(0);
+                        doAction("undo", [machine.code])
+                    }}/>
                 </div>
 
                 { /* Machine name & its current state. */ }
-                <h1 className={styles.machine_name}>{editedMachine.name}</h1>
-                { editedMachine.state == 0 && <h2 className={`${styles.state} ${editedMachine.state != machine.state && styles.edited_state}`}>OPERATIONAL</h2> }
-                { editedMachine.state == 1 && <h2 className={`${styles.state} ${editedMachine.state != machine.state && styles.edited_state}`}>OUT OF ORDER</h2> }
-                { editedMachine.state == 2 && <h2 className={`${styles.state} ${editedMachine.state != machine.state && styles.edited_state}`}>PRIORITY</h2> }
+                <h1 className={styles.machine_name} onClick={(e) => {
+                    if (e.currentTarget != e.target) return;
+                    if (selectedJob != 0) save({jobs, selectedJob, jobOp, jobNotes, doAction});
+                    setSelectedJob(0);
+                }}>{editedMachine.name}</h1>
+                <h2 className={`${styles.state} ${editedMachine.state != machine.state && styles.edited_state}`} onClick={(e) => {
+                    if (e.currentTarget != e.target) return;
+                    if (selectedJob != 0) save({jobs, selectedJob, jobOp, jobNotes, doAction});
+                    setSelectedJob(0);
+                }}>{state}</h2>
             </div>
 
             { /* The list of current jobs. */ }
