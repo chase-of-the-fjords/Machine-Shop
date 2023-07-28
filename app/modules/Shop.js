@@ -125,7 +125,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             const response = await res.json();
             // Sets the value of "buildings".
             setBuildings(response);
-            localStorage.setItem('buildings', JSON.stringify(response));
+            if (typeof window !== undefined) localStorage.setItem('buildings', JSON.stringify(response));
         } catch (e) { }
     }
 
@@ -144,7 +144,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             const response = await res.json();
             // Sets the value of "machines".
             setMachines(response);
-            localStorage.setItem('machines', JSON.stringify(response));
+            if (typeof window !== undefined) localStorage.setItem('machines', JSON.stringify(response));
         } catch (e) { }
     }
 
@@ -163,7 +163,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             const response = await res.json();
             // Sets the value of "jobs".
             setJobs(response);
-            localStorage.setItem('jobs', JSON.stringify(response));
+            if (typeof window !== undefined) localStorage.setItem('jobs', JSON.stringify(response));
         } catch (e) { }
     }
 
@@ -690,7 +690,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             <div className={styles.left_bar}>
                 {type == "edit" && <div className={styles.left_button} title="Save Changes" onClick={save}><img src="/icons/google/save.svg"></img></div>}
                 {(type == "view" || type == "edit") && <div className={styles.right_button} title="Change View" onClick={ () => {
-                    localStorage.setItem('view', (view + 1) % 3);
+                    if (typeof window !== undefined) localStorage.setItem('view', (view + 1) % 3);
                     setView((view + 1) % 3);
                 }}><img src="/icons/google/eye.svg"></img></div>}
             </div>
