@@ -1,14 +1,21 @@
+/* Fonts */
+
 /* Loads the CastleTLig font. */
 @font-face {
     font-family: CastleTLig;
-    src: url(./../fonts/CastleTLig.ttf);
+    src: url(./../../fonts/CastleTLig.ttf);
 }
 
 /* Loads the OpenSans font. */
 @font-face {
     font-family: OpenSans;
-    src: url(./../fonts/OpenSans.ttf);
+    src: url(./../../fonts/OpenSans.ttf);
 }
+
+
+
+
+/* Basic Machine Box */
 
 /* The name of the machine in its top-right corner. */
 .name {
@@ -66,8 +73,40 @@
     box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* The styling for an out-of-service machine box. */
-.out_of_service {
+/* The styling for the jobs displayed on the machine box. */
+.jobs {
+    /* Styling for the font and its settings. */
+    font-family: 'OpenSans';
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* The styling for the jobs displayed on the machine box. */
+.queued {
+    /* Styling for the font and its settings. */
+    font-family: 'OpenSans';
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* The styling for the star displayed in the corner of the box. */
+.priority_star {
+    /* Sets the size of the star. */
+    width: 16px;
+
+    /* Sets the position of the star. */
+    position: absolute;
+    left: 2px;
+    top: 2px;
+}
+
+
+
+
+/* Extra Display Settings */
+
+/* The styling for an out-of-order machine box. */
+.out_of_order {
     /* "Grays out" the machine by lowering its opacity. */
     opacity: 35%;
 
@@ -78,8 +117,8 @@
     box-shadow: none;
 }
 
-/* The styling for an out-of-service machine box when the mouse is hovering. */
-.out_of_service:hover {
+/* The styling for an out-of-order machine box when the mouse is hovering. */
+.out_of_order:hover {
     /* Negates the "lifting" margin effect. */
     margin-top: 0px;
 
@@ -114,36 +153,17 @@
     background-color: rgb(236, 240, 121);
 }
 
+/* The styling for a machine that's currently selected. */
 .selected {
-    /* Darkens the background color. */
+    /* Sets the background color. */
     background-color: rgb(144, 168, 195);
 }
 
 
-/* The styling for the jobs displayed on the machine box. */
-.jobs {
-    /* Styling for the font and its settings. */
-    font-family: 'OpenSans';
-    font-size: 20px;
-    font-weight: bold;
-}
 
-/* The styling for the jobs displayed on the machine box. */
-.queued {
-    /* Styling for the font and its settings. */
-    font-family: 'OpenSans';
-    font-size: 12px;
-    font-style: italic;
-}
+/* Mobile Settings */
 
-.priority_star {
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    left: 2px;
-    top: 2px;
-}
-
+/* Styling for screens under 700px wide. */
 @media (max-width: 700px) {
     /* The name of the machine in its top-right corner. */
     .name {
@@ -168,6 +188,7 @@
     }
 }
 
+/* Styling for screens under 500px wide. */
 @media (max-width: 500px) {
     /* The name of the machine in its top-right corner. */
     .name {
@@ -191,9 +212,12 @@
         font-size: 9px;
     }
 
+    /* The styling for the star displayed in the corner of the box. */
     .priority_star {
+        /* Sets the size of the star. */
         width: 12px;
-        height: 12px;
+
+        /* Sets the position of the star. */
         left: 1px;
         top: 1px;
     }

@@ -2,8 +2,8 @@
 'use client'
 
 // Imports other modules.
-import Building from './Building';
-import InformationBox from './InformationBox';
+import Building from './Building/Building';
+import InfoBox from './Popup/Popup';
 
 // React hooks used later.
 import { useEffect } from 'react';
@@ -719,7 +719,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             
             { /* A popup box that shows up if it's enabled (state isn't 0). */
             popupState != 0 && 
-            <InformationBox 
+            <InfoBox 
             doAction={(action, params) => { doAction(action, params) }}
             popupState={popupState}
             machine={machines.find((machine) => { return machine.code == currentMachine })}

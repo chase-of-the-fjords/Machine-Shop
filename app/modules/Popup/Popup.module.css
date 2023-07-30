@@ -1,0 +1,81 @@
+/* FONTS */
+
+/* Loads the CastleTLig font. */
+@font-face {
+    font-family: CastleTLig;
+    src: url(./../../fonts/CastleTLig.ttf);
+}
+
+/* Loads the OpenSans font. */
+@font-face {
+    font-family: OpenSans;
+    src: url(./../../fonts/OpenSans.ttf);
+}
+
+
+
+
+/* BASIC POPUP STYLES */
+
+/* A blank box covering the screen. */
+.popup {
+    /* Sets the position of the box .*/
+    position: fixed;
+    top: 0px;
+    left: 0px;
+
+    /* Sets the size to cover the screen (uses % instead of vw/vh to avoid including scrollbar). */
+    width: 100%;
+    height: 100%;
+}
+
+/* A basic background covering the screen. */
+.background {
+    /* Sets the background to a fixed position so it can't scroll. */
+    position: fixed;
+
+    /* Sets the size to be larger than the screen to avoid problems with mobile scrolling. */
+    width: 100vw;
+    height: 150vh;
+
+    /* Sets the color & opacity of the background. */
+    background-color: black;
+    opacity: 50%;
+}
+
+/* A basic popup box. Used in both machine boxes. */
+.standard_box {
+    /* Sets the position of the box. */
+    position: relative;
+    margin: auto;
+    top: 10%;
+
+    /* Sets the size of the box. */
+    height: 140vw;
+    max-height: 80%;
+    width: 90vw;
+    max-width: 600px;
+
+    /* Sets the background color. */
+    background-color: white;
+
+    /* Adds a border. */
+    border: 1px solid black;
+    border-radius: 5px;
+
+    /* Adds a shadow. */
+    box-shadow: 0px 10px 20px rgb(0, 0, 0, 0.5);
+    
+    /* Avoids showing overflow. This is to hide the corners of the scrollbar. */
+    overflow: hidden;
+}
+
+/* The content within the box. This primarily here for the scrollbar. */
+.content {
+    /* Sets the size to fill the full box. */
+    width: 100%;
+    height: 100%;
+
+    /* Enables the scrollbar. */
+    overflow: auto;
+}
