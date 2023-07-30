@@ -46,15 +46,15 @@
 
     /* Aligns the text to the center. */
     text-align: center;
+
+    /* Creates a radius around the border. */
+    border-radius: 8px;
 }
 
 /* The styling for the state (when edited). */
 .edited_state {
     /* Sets the background color. */
     background-color: rgb(144, 238, 144);
-
-    /* Creates a radius around the border. */
-    border-radius: 8px;
 }
 
 /* The styling for the subsection headers. */
@@ -141,4 +141,85 @@
 .add:hover {
     /* Changes the background color. */
     background-color: rgb(144, 238, 144);
+}
+
+/* Styling for mobile devices. */
+@media (max-width: 500px) {
+    /* The styling for the machine name. */
+    .name {
+        /* Decreases font size. */
+        font-size: 28px;
+
+        /* Decreases top margin. */
+        margin-top: 5px;
+    }
+
+    /* The styling for the state. */
+    .state {
+        /* Decreases font size. */
+        font-size: 16px;
+
+        /* Slightly decreases padding. */
+        padding: 0px 6px;
+    }
+
+    /* The styling for the subsection headers. */
+    .subsection {
+        /* Decreases font size. */
+        font-size: 18px;
+
+        /* Decreases margins. */
+        margin: 6px 0px 0px 16px;
+    }
+
+    /* The styling for the job list. */
+    .list {
+        /* Removes left margin. */
+        margin-left: 0px;
+    }
+
+    /* The styling for the left button menu container. */
+    .left_button_menu {
+        /* Sets the position to absolute, allowing a position independent from other components, but with scrolling. */
+        position: absolute;
+
+        /* Sets the position. */
+        top: 10px;
+        left: 10px;
+    }
+
+    /* The styling for the right button menu container. */
+    .right_button_menu {
+        /* Sets the position to absolute, allowing a position independent from other components, but with scrolling. */
+        position: absolute;
+
+        /* Sets the position. */
+        top: 10px;
+        right: 10px;
+    }
+
+    /* The styling for all buttons in the top menu. */
+    .menu_button {
+        /* Sets the size. */
+        width: 30px;
+
+        /* Adds a margin between buttons. */
+        margin: 1px;
+    }
+
+    /* The styling for the add job button. */
+    .add {
+        /* Decreases the width. */
+        width: 60px;
+
+        /* Decreases the font size. */
+        font-size: 16px;
+
+        /* Moves towards the left. */
+        left: 18px;
+
+        /* Decreases margins. */
+        margin-top: 0px;
+        margin-bottom: 20px;
+    }
 }

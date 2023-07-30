@@ -153,7 +153,7 @@
         font-size: 20px;
 
         /* Makes the title smaller. */
-        width: 250px;
+        width: 150px;
 
         /* Sets margins and padding to position the component */
         padding-top: 0px;
@@ -162,7 +162,7 @@
     /* The styling for the images in menu buttons. */
     .button_image {
         /* Shrinks the buttons. */
-        width: 24px;
+        width: 28px;
     }
     
     /* The styling for the buttons in the top-left corner. */
@@ -182,12 +182,12 @@
     /* The styling for the "back" link in the top-right corner. */
     .right_button {
         /* Puts a gap between the buttons. */
-        padding: 0px 0px;
+        padding: 4px 4px;
     }
 
     /* The styling for the "save" button in the top-left corner. */
     .left_button {
         /* Puts a gap between the buttons. */
-        padding: 0px 0px;
+        padding: 4px 4px;
     }
 }
