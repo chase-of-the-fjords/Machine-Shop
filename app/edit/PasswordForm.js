@@ -56,6 +56,18 @@ export default function PasswordForm( {setUser} ) {
             {/* BACKGROUND */}
             <div className={styles.background}/>
 
+            {/* RIGHT MENU */}
+            <div className={styles.right_bar}>
+
+                {/* HOME BUTTON */}
+                <div className={styles.right_button} title="Return to Home">
+                    <a href="./">
+                        <img className={styles.button_image} src="/icons/google/back_arrow.svg" />
+                    </a>
+                </div>
+
+            </div>
+
             {/* PASSWORD BOX */}
             <div className={styles.password_box}>
 
@@ -66,6 +78,8 @@ export default function PasswordForm( {setUser} ) {
                 <form><input autoFocus type="password" className={styles.input} autoComplete="off" onChange={e => setPassword(e.target.value)} /></form>
 
             </div>
+
+            
 
         </div>
 
