@@ -147,8 +147,8 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                          title="Delete" 
                          alt="Delete" 
                          onClick={() => {
-                            deselect();
                             doAction("deleteJob", [job.machine, job.id]);
+                            deselect();
                          }
                     }/>
 

@@ -1,43 +1,74 @@
+// This is an interactive component, so it's a client component.
 'use client'
 
+// Style sheets.
 import styles from './PasswordForm.module.css';
 
+// Basic React hooks.
 import { useState, useEffect } from 'react';
 
+/**
+ * PASSWORD FORM DEFAULT EXPORT
+ * 
+ * @returns The export for the form.
+ */
 export default function PasswordForm( {setUser} ) {
+
+    // Hooks for the password and whether it's unlocked.
     const [password, setPassword] = useState('');
     const [unlocked, setUnlocked] = useState(false);
 
+    // Updates the user if the password matches any of the following.
     useEffect(() => {
+
         // Kevin
         if (password == "4432") {
             setUser(1);
             setUnlocked(true);
         }
+
         // Chase
         if (password == "april") {
             setUser(2);
             setUnlocked(true);
         }
+
         // Ernie
         if (password == "1973") {
             setUser(3);
             setUnlocked(true);
         }
+
         // Rocky
         if (password == "ykcor") {
             setUser(4);
             setUnlocked(true);
         }
+
     }, [password])
 
+        // JSX (RETURN VALUE) - only displays if locked.
+
     return (unlocked ||
-    <div className={styles.screen}>
-        <div className={styles.background}/>
-        <div className={styles.password_box}>
-            <h1 className={styles.password_text}>Enter Password</h1>
-            <form><input autoFocus type="password" className={styles.input} autoComplete="off" onChange={e => setPassword(e.target.value)}></input></form>
+
+        <div className={styles.screen}>
+
+            {/* BACKGROUND */}
+            <div className={styles.background}/>
+
+            {/* PASSWORD BOX */}
+            <div className={styles.password_box}>
+
+                {/* PROMPT */}
+                <h1 className={styles.prompt}>Enter Password</h1>
+
+                {/* INPUT */}
+                <form><input autoFocus type="password" className={styles.input} autoComplete="off" onChange={e => setPassword(e.target.value)} /></form>
+
+            </div>
+
         </div>
-    </div>
+
     );
+
 }

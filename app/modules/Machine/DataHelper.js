@@ -2,8 +2,6 @@
  * A set of helper functions to deal with edited Machine data.
  */
 
-
-
 /**
  * GET EDITED MACHINE
  * 

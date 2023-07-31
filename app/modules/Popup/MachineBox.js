@@ -58,7 +58,7 @@ export default function MachineBox( { popupState, machine, jobs, changes, doActi
         // DESELECTS A JOB
 
     function deselect() {
-        doAction("setJob", [machine.code, selectedJob, jobOp, jobNotes]);
+        if (selectedJob != 0) doAction("setJob", [machine.code, selectedJob, jobOp, jobNotes]);
         setSelectedJob(0);
     }
 
