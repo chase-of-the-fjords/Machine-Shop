@@ -156,46 +156,55 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
         <h2 className={`${machine_style.state} ${machine.newState && machine_style.edited_state}`} onClick={deselect}>{state}</h2>
 
         {/* This includes the menu buttons if the popup is in edit mode. */}
-        { popupState == 2 && <>
 
-            {/* Left menu buttons */}
-            <div className={machine_style.left_button_menu}>
+        {/* Left menu buttons */}
+        <div className={machine_style.left_button_menu}>
 
-                {/* Priority Button */}
-                <img className={machine_style.menu_button}
-                    src={machine.state == 2 ? "/icons/google/star_filled.svg" : "/icons/google/star_empty.svg"} 
-                    title={machine.state == 2 ? "Unset as Priority" : "Set as Priority"} 
-                    alt="Priority Button" 
-                    onClick={() => { doAction("setMachine", ["state", 2]); deselect(); }}
-                />
+            {/* Priority Button */}
+            {popupState == 2 && <img className={machine_style.menu_button}
+                src={machine.state == 2 ? "/icons/google/star_filled.svg" : "/icons/google/star_empty.svg"} 
+                title={machine.state == 2 ? "Unset as Priority" : "Set as Priority"} 
+                alt="Priority Button" 
+                onClick={() => { doAction("setMachine", ["state", 2]); deselect(); }}
+            />}
 
-                {/* Out of Order Button */}
-                <img className={machine_style.menu_button}
-                    src={machine.state == 1 ? "/icons/google/broken_filled.svg" : "/icons/google/broken_empty.svg"}
-                    title={machine.state == 1 ? "Set as Operational" : "Set as Out of Order"} 
-                    alt="Out of Order Button"
-                    onClick={() => { doAction("setMachine", ["state", 1]); deselect(); }}
-                />
-                
-            </div>
+            {/* Out of Order Button */}
+            {popupState == 2 && <img className={machine_style.menu_button}
+                src={machine.state == 1 ? "/icons/google/broken_filled.svg" : "/icons/google/broken_empty.svg"}
+                title={machine.state == 1 ? "Set as Operational" : "Set as Out of Order"} 
+                alt="Out of Order Button"
+                onClick={() => { doAction("setMachine", ["state", 1]); deselect(); }}
+            />}
+            
+        </div>
 
-            {/* Right menu buttons */}
-            <div className={machine_style.right_button_menu}>
+        {/* Right menu buttons */}
+        <div className={machine_style.right_button_menu}>
 
-                {/* Undo Button */}
-                <img className={machine_style.menu_button}
-                    src="/icons/google/undo.svg"
-                    title="Undo Changes" 
-                    alt="Revert Button" onClick={() => {
-                        setSelectedJob(0);
-                        doAction("undo", [machine.code])
-                    }}
-                />
-                
-            </div>
+            {/* Undo Button */}
+            {popupState == 2 && <img className={machine_style.menu_button}
+                src="/icons/google/undo.svg"
+                title="Undo Changes" 
+                alt="Revert Button" onClick={() => {
+                    setSelectedJob(0);
+                    doAction("undo", [machine.code])
+                }}
+            />}
 
-        </> }
+            {/* Close Button */}
+            <img className={machine_style.menu_button}
+                src="/icons/google/close.svg"
+                title="Close Popup" 
+                alt="Close Button" onClick={() => {
+                    deselect();
+                    doAction('closePopup', []);
+                }}
+            />
+            
+        </div>
+
     </>
+
 }
 
 /**

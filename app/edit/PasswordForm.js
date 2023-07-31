@@ -75,11 +75,9 @@ export default function PasswordForm( {setUser} ) {
                 <h1 className={styles.prompt}>Enter Password</h1>
 
                 {/* INPUT */}
-                <form><input autoFocus type="password" className={styles.input} autoComplete="off" onChange={e => setPassword(e.target.value)} /></form>
+                <form onSubmit={e => { e.preventDefault(); }} ><input autoFocus type="password" className={styles.input} autoComplete="off" onChange={e => setPassword(e.target.value)} /></form>
 
             </div>
-
-            
 
         </div>
 
