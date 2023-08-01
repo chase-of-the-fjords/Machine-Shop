@@ -1,0 +1,44 @@
+/* Loads the OpenSans font. */
+@font-face {
+    font-family: OpenSans;
+    src: url(./../fonts/OpenSans.ttf);
+}
+
+.date_selector {
+    width: fit-content;
+    margin: auto;
+}
+
+.date_input {
+    font-family: 'OpenSans';
+    font-size: 24px;
+    margin: 0px 24px;
+}
+
+.to {
+    font-family: 'OpenSans';
+    font-size: 24px;
+}
+
+.button {
+    margin: 24px auto;
+    width: 100px;
+    padding: 8px 10px;
+    border: 1px solid black;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.button:hover {
+    background-color: rgb(222, 222, 222);
+}
+
+.invalid_button {
+    cursor: not-allowed;
+}
+
+.invalid_button:hover {
+    background-color: white;
+}

@@ -250,10 +250,17 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
                     </a>
                 </div>}
 
+                {/* HISTORY BUTTON */}
+                {type == "edit" && <div className={styles.right_button} title="View History">
+                    <a href="./history">
+                        <img className={styles.button_image} src="/icons/google/history.svg" />
+                    </a>
+                </div>}
+
                 {/* HOME BUTTON */}
                 {type == "edit" && <div className={styles.right_button} title="Return to Home">
                     <a href="./">
-                        <img className={styles.button_image} src="/icons/google/back_arrow.svg" />
+                        <img className={styles.button_image} src="/icons/google/home.svg" />
                     </a>
                 </div>}
 

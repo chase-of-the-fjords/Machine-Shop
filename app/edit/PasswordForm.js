@@ -62,7 +62,7 @@ export default function PasswordForm( {setUser} ) {
                 {/* HOME BUTTON */}
                 <div className={styles.right_button} title="Return to Home">
                     <a href="./">
-                        <img className={styles.button_image} src="/icons/google/back_arrow.svg" />
+                        <img className={styles.button_image} src="/icons/google/home.svg" />
                     </a>
                 </div>
 

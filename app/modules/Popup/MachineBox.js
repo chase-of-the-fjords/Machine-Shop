@@ -194,7 +194,7 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
             {/* Close Button */}
             <img className={machine_style.menu_button}
                 src="/icons/google/close.svg"
-                title="Close Popup" 
+                title="Close" 
                 alt="Close Button" onClick={() => {
                     deselect();
                     doAction('closePopup', []);

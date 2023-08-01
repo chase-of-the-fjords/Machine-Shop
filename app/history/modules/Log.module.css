@@ -1,0 +1,73 @@
+/* Loads the OpenSans font. */
+@font-face {
+    font-family: OpenSans;
+    src: url(./../../fonts/OpenSans.ttf);
+}
+
+.log {
+    width: 600px;
+
+    /* The color of the building. */
+    background-color: lightgray;
+
+    /* The building border & its radius. */
+    border: 1px solid black;
+    border-radius: 5px;
+    
+    /* Sets padding to add a buffer around the machines. */
+    padding: 20px;
+
+    /* The shadow for the building. */
+    box-shadow: 0px 7px 12px rgba(0, 0, 0, 0.3);
+
+    /* Centers the building within its container. */
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 60px;
+    
+    /* Relative position is needed to position its children (machines) in relation to the shop. */
+    position: relative;
+}
+
+.entry {
+    font-family: 'OpenSans';
+    display: flex;
+}
+
+.entry_info {
+    float: right;
+    flex-grow: 1;
+}
+
+.metadata {
+    width: 100px;
+    text-align: left;
+}
+
+.user {
+    font-size: 14px;
+}
+
+.op {
+    font-size: 16px;
+    margin-left: 16px;
+}
+
+.notes {
+    font-size: 12px;
+    margin-left: 20px;
+}
+
+.old_value {
+    font-size: 16px;
+    margin-left: 16px;
+}
+
+.new_value {
+    font-size: 12px;
+    margin-left: 20px;
+}
+
+.date {
+    text-align: center;
+}

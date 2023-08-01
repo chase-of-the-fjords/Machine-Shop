@@ -122,7 +122,7 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
 
                     {/* SAVE BUTTON */}
                     <img className={job_style.edit_button}
-                         src="/icons/google/save.svg"
+                         src="/icons/google/check.svg"
                          title="Save"
                          alt="Save Button"
                          onClick={() => {

@@ -124,6 +124,7 @@ export async function updateMachine( code, { machines, changes, user } ) {
         return m.code == code;
     });
     machine = getEditedMachine({data: machine, changes});
+    machine.log = 1;
     machine.starter = user;
     machine.ender = user;
 
