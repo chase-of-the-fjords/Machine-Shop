@@ -115,6 +115,8 @@ export async function getLog(start, end) {
 
         let job = created_job_entries[i];
 
+        console.log(job.start);
+
         let log = {timestamp: job.start, 
                    action: 'created job', 
                    user: getUser(job.starter), 

@@ -39,13 +39,25 @@ export default function App() {
 
                 <input type="date" className={history_style.date_input} 
                     defaultValue={new Date(Date.now()).toLocaleDateString('sv')} 
-                    onChange={(e) => { setStart(e.target.value) }} />
+                    onChange={(e) => { setStart(e.target.value) }} 
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' && start <= end) {
+                            setSubmitStart(start);
+                            setSubmitEnd(end);
+                        }
+                    }} />
 
                 <span className={history_style.to}> to </span>
 
                 <input type="date" className={history_style.date_input} 
                     defaultValue={new Date(Date.now()).toLocaleDateString('sv')} 
-                    onChange={(e) => { setEnd(e.target.value) }} />
+                    onChange={(e) => { setEnd(e.target.value) }} 
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' && start <= end) {
+                            setSubmitStart(start);
+                            setSubmitEnd(end);
+                        }
+                    }} />
 
             </div>
 
