@@ -215,6 +215,8 @@ export async function getLog(start, end) {
 
         let date = new Date(job.timestamp).toLocaleString('sv').substring(0, 10);
 
+        console.log(new Date(job.timestamp).getUTCDate());
+
         if (output[date] == undefined) output[date] = [];
 
         output[date].push(job);

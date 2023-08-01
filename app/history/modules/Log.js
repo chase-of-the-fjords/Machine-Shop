@@ -37,7 +37,7 @@ export default function Log( { start, end } ) {
 
 function CreatedJob( {entry} ) {
 
-    let time = new Date(entry.timestamp).toLocaleTimeString();
+    let time = new Date(entry.timestamp).toTimeString();
 
     return <>
         <div className={log_style.entry}>
@@ -58,7 +58,7 @@ function CreatedJob( {entry} ) {
 
 function UpdatedJob( {entry} ) {
 
-    let time = new Date(entry.timestamp).toLocaleTimeString();
+    let time = new Date(entry.timestamp).toTimeString();
 
     return <>
         <div className={log_style.entry}>
@@ -89,7 +89,7 @@ function UpdatedJob( {entry} ) {
 
 function DeletedJob( {entry} ) {
 
-    let time = new Date(entry.timestamp).toLocaleTimeString();
+    let time = new Date(entry.timestamp).toTimeString();
 
     return <>
         <div className={log_style.entry}>
@@ -110,7 +110,7 @@ function DeletedJob( {entry} ) {
 
 function UpdatedMachine( {entry} ) {
 
-    let time = new Date(entry.timestamp).toLocaleTimeString();
+    let time = new Date(entry.timestamp).toTimeString();
 
     return <>
         <div className={log_style.entry}>
