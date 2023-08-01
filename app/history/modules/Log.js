@@ -3,6 +3,8 @@ import { getLog } from "../Helpers/Interface";
 
 import log_style from './Log.module.css'
 
+import moment from "moment";
+
 export default function Log( { start, end } ) {
 
     const [ log, setLog ] = useState([]);
@@ -37,7 +39,7 @@ export default function Log( { start, end } ) {
 
 function CreatedJob( {entry} ) {
 
-    let time = new Date(entry.timestamp).toTimeString();
+    let time = moment(entry.timestamp).format('h:mm:ss A');
 
     return <>
         <div className={log_style.entry}>
@@ -58,7 +60,7 @@ function CreatedJob( {entry} ) {
 
 function UpdatedJob( {entry} ) {
 
-    let time = new Date(entry.timestamp).toTimeString();
+    let time = moment(entry.timestamp).format('h:mm:ss A');
 
     return <>
         <div className={log_style.entry}>
@@ -89,7 +91,7 @@ function UpdatedJob( {entry} ) {
 
 function DeletedJob( {entry} ) {
 
-    let time = new Date(entry.timestamp).toTimeString();
+    let time = moment(entry.timestamp).format('h:mm:ss A');
 
     return <>
         <div className={log_style.entry}>
@@ -110,7 +112,7 @@ function DeletedJob( {entry} ) {
 
 function UpdatedMachine( {entry} ) {
 
-    let time = new Date(entry.timestamp).toTimeString();
+    let time = moment(entry.timestamp).format('h:mm:ss A');
 
     return <>
         <div className={log_style.entry}>

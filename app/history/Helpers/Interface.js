@@ -1,3 +1,5 @@
+import moment from "moment/moment";
+
 /**
  * Gets jobs from the SQL database for a given interval.
  * 
@@ -213,9 +215,7 @@ export async function getLog(start, end) {
 
         let job = merged_jobs[i];
 
-        let date = new Date(job.timestamp).toLocaleString('sv').substring(0, 10);
-
-        console.log(new Date(job.timestamp).getUTCDate());
+        let date = moment(job.timestamp).format('YYYY-MM-DD');
 
         if (output[date] == undefined) output[date] = [];
 
