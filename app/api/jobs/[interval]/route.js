@@ -24,9 +24,9 @@ export async function GET (request, { params }) {
         query: `SELECT entry, id, machine, op, notes, state, start, end, log, starter, ender FROM jobs WHERE (end >= ('${start_date} 00:00:00' - INTERVAL 5 MINUTE)) AND (end < ('${end_date} 00:00:00' + INTERVAL 1 DAY))`,
         values: [],
     });
-
+    
     // Combines both responses into one response.
-    const combined_jobs = {started: jobs_started, ended: jobs_ended};
+    const combined_jobs = {started: jobs_started, ended: jobs_ended, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone};
 
     // Returns a JSON representation of the data.
     return new Response(JSON.stringify(combined_jobs, null, 2));
