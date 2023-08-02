@@ -115,7 +115,8 @@ export async function getLog(start, end) {
 
         let job = created_job_entries[i];
 
-        console.log(moment.utc(job.start));
+        console.log(job.start);
+        console.log(Intl.DateTimeFormat().resolvedOptions().timeZone)
 
         let log = {timestamp: job.start, 
                    action: 'created job', 
