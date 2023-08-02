@@ -115,9 +115,6 @@ export async function getLog(start, end) {
 
         let job = created_job_entries[i];
 
-        console.log(job.start);
-        console.log(Intl.DateTimeFormat().resolvedOptions().timeZone)
-
         let log = {timestamp: job.start, 
                    action: 'created job', 
                    user: getUser(job.starter), 
@@ -218,7 +215,7 @@ export async function getLog(start, end) {
 
         let job = merged_jobs[i];
 
-        let date = moment(job.timestamp).format('YYYY-MM-DD');
+        let date = moment.utc(job.timestamp).format('YYYY-MM-DD');
 
         if (output[date] == undefined) output[date] = [];
 

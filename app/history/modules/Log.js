@@ -39,7 +39,7 @@ export default function Log( { start, end } ) {
 
 function CreatedJob( {entry} ) {
 
-    let time = moment(entry.timestamp).format('h:mm:ss A');
+    let time = moment.utc(entry.timestamp).format('h:mm:ss A');
 
     return <>
         <div className={log_style.entry}>
@@ -60,7 +60,7 @@ function CreatedJob( {entry} ) {
 
 function UpdatedJob( {entry} ) {
 
-    let time = moment(entry.timestamp).format('h:mm:ss A');
+    let time = moment.utc(entry.timestamp).format('h:mm:ss A');
 
     return <>
         <div className={log_style.entry}>
@@ -91,7 +91,7 @@ function UpdatedJob( {entry} ) {
 
 function DeletedJob( {entry} ) {
 
-    let time = moment(entry.timestamp).format('h:mm:ss A');
+    let time = moment.utc(entry.timestamp).format('h:mm:ss A');
 
     return <>
         <div className={log_style.entry}>
@@ -112,7 +112,7 @@ function DeletedJob( {entry} ) {
 
 function UpdatedMachine( {entry} ) {
 
-    let time = moment(entry.timestamp).format('h:mm:ss A');
+    let time = moment.utc(entry.timestamp).format('h:mm:ss A');
 
     return <>
         <div className={log_style.entry}>
