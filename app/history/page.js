@@ -1,14 +1,15 @@
 // This is an interactive component, so it's a client component.
 'use client'
 
+// The stylesheets.
 import styles from '../modules/App.module.css'
 import history_style from './History.module.css'
 
+// The log components (finds & shows the actual history.)
 import Log from './modules/Log';
 
+// Basic React hook.
 import { useState } from 'react';
-
-let buttonStart = new Date(Date.now()).toLocaleDateString('sv'), buttonEnd = new Date(Date.now()).toLocaleDateString('sv');
 
 /**
  * The default export for the edit page.
@@ -19,9 +20,11 @@ export default function App() {
 
         // HOOKS
 
+    // The value of the calendar buttons.
     const [ start, setStart ] = useState(new Date(Date.now()).toLocaleDateString('sv'));
     const [ end, setEnd ] = useState(new Date(Date.now()).toLocaleDateString('sv'));
 
+    // The submitted values (values being used).
     const [ submitStart, setSubmitStart ] = useState(new Date(Date.now()).toLocaleDateString('sv'));
     const [ submitEnd, setSubmitEnd ] = useState(new Date(Date.now()).toLocaleDateString('sv'));
 
@@ -37,6 +40,7 @@ export default function App() {
             {/* DATE SELECTOR */}
             <div className={history_style.date_selector}>
 
+                {/* STARTING DATE INPUT */}
                 <input type="date" className={history_style.date_input} 
                     defaultValue={new Date(Date.now()).toLocaleDateString('sv')} 
                     onChange={(e) => { setStart(e.target.value) }} 
@@ -47,8 +51,10 @@ export default function App() {
                         }
                     }} />
 
-                <span className={history_style.to}> to </span>
+                {/* "TO" */}
+                <div className={history_style.to}> to </div>
 
+                {/* ENDING DATE INPUT */}
                 <input type="date" className={history_style.date_input} 
                     defaultValue={new Date(Date.now()).toLocaleDateString('sv')} 
                     onChange={(e) => { setEnd(e.target.value) }} 
@@ -61,8 +67,10 @@ export default function App() {
 
             </div>
 
+            {/* "VIEW HISTORY" BUTTON (SUBMIT) */}
             <div className={`${history_style.button} ${start <= end || history_style.invalid_button}`} onClick={() => { setSubmitStart(start); setSubmitEnd(end); }}>View History</div>
 
+            {/* THE LOG ITSELF */}
             <Log start={submitStart} end={submitEnd} />
 
             {/* RIGHT MENU */}
@@ -85,7 +93,9 @@ export default function App() {
             </div>
 
         </>
+
     );
+
 }
 
 

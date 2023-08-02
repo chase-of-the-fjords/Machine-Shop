@@ -1,3 +1,4 @@
+// Helper library for processing time.
 import moment from "moment/moment";
 
 /**
@@ -31,7 +32,7 @@ export async function getJobsInterval(start, end) {
 
     } catch (e) { }
 
-    return null;
+    return { started: [], ended: [] };
 
 }
 
@@ -66,12 +67,14 @@ export async function getMachinesInterval(start, end) {
 
     } catch (e) { }
 
-    return null;
+    return { started: [], ended: [] };
 
 }
 
 /**
- * Gets machines from the SQL database and stores them in the machines hook. 
+ * Gets machines from the SQL database.
+ * 
+ * @returns Object containing machine data. 
  */
 export async function getMachines() {
 
@@ -95,26 +98,82 @@ export async function getMachines() {
         return response;
 
     } catch (e) { }
+
+    return [];
     
 }
 
+/**
+ * Gets buildings from the SQL database.
+ * 
+ * @returns Object containing building data.
+ */
+export async function getBuildings() {
+
+    // The data being passed into the API.
+    const postData = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": '*',
+        }
+    }
+
+    // Gets the data.
+    try {
+
+        // Accesses the jobs API.
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/buildings`, postData);
+        const response = await res.json();
+        
+        // Stores the value.
+        return response;
+
+    } catch (e) { }
+
+    return [];
+    
+}
+
+/**
+ * Finds a history of everything that happened in the shop between two dates.
+ * 
+ * @param {string} start - A string representation of the starting date ('YYYY-MM-DD'). 
+ * @param {string} end  - A string representation of the ending date ('YYYY-MM-DD').
+ * 
+ * @returns An object containing a log of everything that happened.
+ */
 export async function getLog(start, end) {
 
+    // Gets all jobs that started or ended in that interval.
     let jobs = await getJobsInterval(start, end);
+
+    // Gets all machines that started or ended in that interval.
     let machines = await getMachinesInterval(start, end);
     
+    // Gets all machines currently running.
     let current_machines = await getMachines();
 
-    // Get Created Jobs
+    // Gets all buildings.
+    let current_buildings = await getBuildings();
 
+
+
+        // FIND LOG OF "CREATED" JOBS:
+
+    // Array to hold the log.
     let created_jobs = [];
 
+    // Finds all job entries from the database that were "created".
     let created_job_entries = jobs.started.filter( (entry) => { return entry.log == 0 || entry.log == 2; } );
 
+    // Iterates through all the entries.
     for (let i = 0; i < created_job_entries.length; i++) {
 
+        // Stores the entry in an object.
         let job = created_job_entries[i];
 
+        // Creates a log for the entry.
         let log = {timestamp: job.start, 
                    action: 'created job', 
                    user: getUser(job.starter), 
@@ -123,47 +182,71 @@ export async function getLog(start, end) {
                    notes: job.notes, 
                    state: getJobState(job.state)};
         
+        // Adds it to the log.
         created_jobs.push(log);
         
     }
 
-    // Get Updated Jobs
 
+
+        // FIND LOG OF ALL "UPDATED" JOBS:
+
+    // Array to hold the log.
     let updated_jobs = [];
 
+    // Finds all job entries from the database that were "updated".
     let updated_job_entries = jobs.started.filter( (entry) => { return entry.log == 1 || entry.log == 3; } );
 
+    // Iterates through all the entries.
     for (let i = 0; i < updated_job_entries.length; i++) {
 
+        // Stores the entry in an object.
         let job = updated_job_entries[i];
 
+        // Find the last version of the job before it was updated.
         let old_versions = jobs.ended.filter( (entry) => { return entry.id == job.id && entry.start < job.start });
         let previous_version = old_versions[old_versions.length - 1];
 
+        // Create a log for the update.
         let log = {timestamp: job.start, 
                    action: 'updated job', 
                    user: getUser(job.starter), 
                    machine: getMachine(job.machine, {machines: current_machines}), 
                    changes: {}};
         
-        if (job.op != previous_version.op) log.changes.op = {new: job.op, old: previous_version.op};
-        if (job.notes != previous_version.notes) log.changes.notes = {new: job.notes, old: previous_version.notes};
-        if (job.state != previous_version.state) log.changes.state = {new: getJobState(job.state), old: getJobState(previous_version.state)};
-        
+        // Store all changes from the previous version.
+        if (previous_version != undefined) {
+            if (job.op != previous_version.op) log.changes.op = {new: job.op, old: previous_version.op};
+            if (job.notes != previous_version.notes) log.changes.notes = {new: job.notes, old: previous_version.notes};
+            if (job.state != previous_version.state) log.changes.state = {new: getJobState(job.state), old: getJobState(previous_version.state)};
+        } else {
+            log.changes.op = {new: job.op, old: "UNKNOWN"};
+            log.changes.notes = {new: job.notes, old: "UNKNOWN"};
+            log.changes.state = {new: getJobState(job.state), old: "UNKNOWN"};
+        }
+
+        // Add the object to the log.
         updated_jobs.push(log);
         
     }
 
-    // Get Deleted Jobs
 
+
+        // FIND LOG OF ALL "DELETED" JOBS:
+
+    // Array to hold the log.
     let deleted_jobs = [];
 
+    // Finds all job entries from the database that were "deleted".
     let deleted_job_entries = jobs.ended.filter( (entry) => { return entry.log == 2 || entry.log == 3; } );
 
+    // Iterates through all the entries.
     for (let i = 0; i < deleted_job_entries.length; i++) {
 
+        // Stores the entry in an object.
         let job = deleted_job_entries[i];
 
+        // Creates a log entry for the entry.
         let log = {timestamp: job.end, 
                    action: 'deleted job', 
                    user: getUser(job.ender), 
@@ -172,85 +255,194 @@ export async function getLog(start, end) {
                    notes: job.notes, 
                    state: getJobState(job.state)};
         
+        // Adds the entry to the log.
         deleted_jobs.push(log);
         
     }
 
-    // Get Updated Machines
 
+
+        // FIND LOG OF ALL "CREATED" MACHINES:
+
+    // The array to hold the log.
+    let created_machines = [];
+
+    // Finds all machine entries from the database that were "updated".
+    let created_machine_entries = machines.started.filter( (entry) => { return entry.log == 0 || entry.log == 2; } );
+
+    // Iterates through all the entries.
+    for (let i = 0; i < created_machine_entries.length; i++) {
+
+        // Stores the entry in an object.
+        let machine = created_machine_entries[i];
+
+        // Creates a log object for the entry.
+        let log = {timestamp: machine.start, 
+                   action: 'created machine', 
+                   name: machine.name,
+                   building: getBuilding( machine.building, { buildings: current_buildings } ),
+                   width: machine.width,
+                   height: machine.height,
+                   xpos: machine.xpos,
+                   ypos: machine.ypos,
+                   state: getMachineState(machine.state),
+                   user: getUser(machine.starter)};
+
+        // Adds the entry to the log.
+        created_machines.push(log);
+        
+    }
+
+
+
+        // FIND LOG OF ALL "UPDATED" MACHINES:
+
+    // The array to hold the log.
     let updated_machines = [];
 
+    // Finds all machine entries from the database that were "updated".
     let updated_machine_entries = machines.started.filter( (entry) => { return entry.log == 1 || entry.log == 3; } );
 
+    // Iterates through all the entries.
     for (let i = 0; i < updated_machine_entries.length; i++) {
 
+        // Stores the entry in an object.
         let machine = updated_machine_entries[i];
 
+        // Finds the last version of the machine before it was updated.
         let old_versions = machines.ended.filter( (entry) => { return entry.code == machine.code && entry.start < machine.start });
         let previous_version = old_versions[old_versions.length - 1];
 
+        // Creates a log object for the entry.
         let log = {timestamp: machine.start, 
                    action: 'updated machine', 
                    name: machine.name,
                    user: getUser(machine.starter), 
                    changes: {}};
         
-        if (machine.state != previous_version.state) log.changes.state = {new: getMachineState(machine.state), old: getMachineState(previous_version.state)};
-        
+        // Store all changes from the previous version.
+        if (previous_version != undefined) {
+            if (machine.state != previous_version.state) log.changes.state = {new: getMachineState(machine.state), old: getMachineState(previous_version.state)};
+        } else {
+            log.changes.state = {new: getMachineState(machine.state), old: "UNKNOWN"};
+        }
+
+        // Adds the entry to the log.
         updated_machines.push(log);
         
     }
 
-    // Merge All the Lists
 
-    let merged_jobs = [...created_jobs, ...updated_jobs, ...deleted_jobs, ...updated_machines];
 
-    merged_jobs = merged_jobs.sort((a, b) => { return new Date(a.timestamp) - new Date(b.timestamp) });
+        // MERGES "LIST" TOGETHER.
 
-    // Divide by date
+    // Create the merged list.
+    let merged = [...created_jobs, ...updated_jobs, ...deleted_jobs, ...created_machines, ...updated_machines];
 
+    // Sorts the log by timestamp.
+    merged = merged.sort((a, b) => { return new Date(a.timestamp) - new Date(b.timestamp) });
+
+
+
+        // ORGANIZE LOG BY DATE:
+
+    // The output object.
     let output = {};
 
-    for (let i = 0; i < merged_jobs.length; i++) {
+    // Iterates through the log in chronological order.
+    for (let i = 0; i < merged.length; i++) {
 
-        let job = merged_jobs[i];
+        // Stores the entry in an object.
+        let job = merged[i];
 
+        // Finds the date for the entry.
         let date = moment.utc(job.timestamp).format('YYYY-MM-DD');
 
+        // If this is the first entry for that date, create an array for that date in the output object.
         if (output[date] == undefined) output[date] = [];
 
+        // Push the job to its date in output.
         output[date].push(job);
 
     }
+
+    
+
+        // RETURN THE OUTPUT:
 
     return output;
 
 }
 
+/**
+ * Gets the user name given their ID.
+ * 
+ * @param {number} id - The ID of the user.
+ *  
+ * @returns The name of the user.
+ */
 function getUser( id ) {
 
+    // Based on user ID, return name.
     if (id == 1) return "Kevin";
     if (id == 2) return "Chase";
     if (id == 3) return "Ernie";
     if (id == 4) return "Rocky";
-    else return "N/A";
+    
+    // If the user isn't found, return N/A.
+    return "N/A";
 
 }
 
+/**
+ * Gets the name of a machine given its code.
+ * 
+ * @param {string} code - The code of the machine.
+ *  
+ * @returns The name of the machine.
+ */
 function getMachine( code, {machines} ) {
 
     return machines.find( (machine) => {return machine.code == code} ).name;
 
 }
 
+/**
+ * Gets the name of a building given its code.
+ * 
+ * @param {string} code - The code of the building.
+ *  
+ * @returns The name of the building.
+ */
+function getBuilding( code, {buildings} ) {
+
+    return buildings.find( (building) => {return building.code == code} ).name;
+
+}
+
+/**
+ * Gets a string version of a job's state given a number.
+ * 
+ * @param {number} state - The state of the job as a number.
+ *  
+ * @returns The name of the state.
+ */
 function getJobState( state ) {
 
     if (state == 0) return "Current";
+    if (state == 1) return "On Hold";
     if (state == 2) return "Queued";
     else return "N/A";
 
 }
 
+/**
+ * Gets a string version of a machine's state given a number.
+ * 
+ * @param {number} state - The state of the machine as a number.
+ *  
+ * @returns The name of the state.
+ */
 function getMachineState( state ) {
 
     if (state == 0) return "Operational";

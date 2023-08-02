@@ -26,7 +26,7 @@ export async function GET (request, { params }) {
     });
     
     // Combines both responses into one response.
-    const combined_jobs = {started: jobs_started, ended: jobs_ended, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone};
+    const combined_jobs = {started: jobs_started, ended: jobs_ended};
 
     // Returns a JSON representation of the data.
     return new Response(JSON.stringify(combined_jobs, null, 2));

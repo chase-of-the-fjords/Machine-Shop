@@ -175,7 +175,7 @@
 
 
 
-/*  */
+/* Formatting for mobile screens under 500px. */
 @media (max-width: 500px) {
     /* Styling for the op box of a job being viewed. */
     .op {
