@@ -340,37 +340,13 @@ export async function getLog(start, end) {
     let merged = [...created_jobs, ...updated_jobs, ...deleted_jobs, ...created_machines, ...updated_machines];
 
     // Sorts the log by timestamp.
-    merged = merged.sort((a, b) => { return new Date(a.timestamp) - new Date(b.timestamp) });
-
-
-
-        // ORGANIZE LOG BY DATE:
-
-    // The output object.
-    let output = {};
-
-    // Iterates through the log in chronological order.
-    for (let i = 0; i < merged.length; i++) {
-
-        // Stores the entry in an object.
-        let job = merged[i];
-
-        // Finds the date for the entry.
-        let date = moment.utc(job.timestamp).format('YYYY-MM-DD');
-
-        // If this is the first entry for that date, create an array for that date in the output object.
-        if (output[date] == undefined) output[date] = [];
-
-        // Push the job to its date in output.
-        output[date].push(job);
-
-    }
+    merged = merged.sort((a, b) => { return new Date(b.timestamp) - new Date(a.timestamp) });
 
     
 
         // RETURN THE OUTPUT:
 
-    return output;
+    return merged;
 
 }
 
@@ -450,4 +426,98 @@ function getMachineState( state ) {
     if (state == 2) return "Priority";
     else return "N/A";
 
+}
+
+export function sortLogByDate ( log ) {
+
+    // The output object.
+    let output = {};
+
+    // Iterates through the log in chronological order.
+    for (let i = 0; i < log.length; i++) {
+
+        // Stores the entry in an object.
+        let entry = log[i];
+
+        // Finds the date for the entry.
+        let date = moment.utc(entry.timestamp).format('YYYY-MM-DD');
+
+        // If this is the first entry for that date, create an array for that date in the output object.
+        if (output[date] == undefined) output[date] = [];
+
+        // Push the job to its date in output.
+        output[date].push(entry);
+
+    }
+
+    // Return the sorted object.
+    return output;
+
+}
+
+export function runFilter (log, filter) {
+
+    let filteredLog = [];
+
+    for (let i = 0; i < log.length; i++) {
+
+        let entry = log[i];
+
+        let date = moment.utc(entry.timestamp).format('MMMM DD, YYYY');
+        let time = moment.utc(entry.timestamp).format('h:mm:ss A');
+
+        if (entry.action == 'created job') {
+
+            if (listIncludes([date, time, entry.action, entry.machine, entry.op, entry.notes, entry.state, entry.user], filter)) filteredLog.push(log[i]);
+
+        }
+
+        else if (entry.action == 'updated job') {
+
+            let changes = [];
+            if (entry.changes.op != undefined) { changes.push(entry.changes.op.new); changes.push(entry.changes.op.old); }
+            if (entry.changes.notes != undefined) { changes.push(entry.changes.notes.new); changes.push(entry.changes.notes.old); }
+            if (entry.changes.state != undefined) { changes.push(entry.changes.state.new); changes.push(entry.changes.state.old); }
+
+            if (listIncludes([date, time, entry.action, entry.machine, entry.user, ...changes], filter)) 
+                filteredLog.push(log[i]);
+
+        }
+
+        else if (entry.action == 'deleted job') {
+
+            if (listIncludes([date, time, entry.action, entry.machine, entry.op, entry.notes, entry.state, entry.user], filter)) 
+                filteredLog.push(log[i]);
+
+        }
+
+        else if (entry.action == 'created machine') {
+
+            if (listIncludes([date, time, entry.action, entry.name, entry.building, entry.state, `(${entry.xpos}, ${entry.ypos})`, `${entry.width}x${entry.height}`, entry.user], filter)) 
+                filteredLog.push(log[i]);
+
+        }
+
+        else if (entry.action == 'updated machine') {
+
+            let changes = [];
+            if (entry.changes.state != undefined) { changes.push(entry.changes.state.new); changes.push(entry.changes.state.old); }
+
+            if (listIncludes([date, time, entry.action, entry.name, entry.user, ...changes], filter)) 
+                filteredLog.push(log[i]);
+
+        }
+
+    }
+
+    return filteredLog;
+
+}
+
+function listIncludes( list, text ) {
+    for (let i = 0; i < list.length; i++) {
+        let item = list[i];
+        if (item.toUpperCase().includes(text.toUpperCase())) return true;
+    }
+    return false;
 }

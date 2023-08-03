@@ -28,6 +28,9 @@ export default function App() {
     const [ submitStart, setSubmitStart ] = useState(new Date(Date.now()).toLocaleDateString('sv'));
     const [ submitEnd, setSubmitEnd ] = useState(new Date(Date.now()).toLocaleDateString('sv'));
 
+    // The filter for search results.
+    const [ filter, setFilter ] = useState("");
+
 
 
         // JSX (RETURN VALUE)
@@ -45,9 +48,14 @@ export default function App() {
                     defaultValue={new Date(Date.now()).toLocaleDateString('sv')} 
                     onChange={(e) => { setStart(e.target.value) }} 
                     onKeyDown={(e) => {
-                        if (e.key === 'Enter' && start <= end) {
-                            setSubmitStart(start);
-                            setSubmitEnd(end);
+                        if (e.key === 'Enter') {
+                            if (start <= end) {
+                                setSubmitStart(start);
+                                setSubmitEnd(end);
+                            } else {
+                                setSubmitStart(end);
+                                setSubmitEnd(start);
+                            }
                         }
                     }} />
 
@@ -59,19 +67,35 @@ export default function App() {
                     defaultValue={new Date(Date.now()).toLocaleDateString('sv')} 
                     onChange={(e) => { setEnd(e.target.value) }} 
                     onKeyDown={(e) => {
-                        if (e.key === 'Enter' && start <= end) {
-                            setSubmitStart(start);
-                            setSubmitEnd(end);
+                        if (e.key === 'Enter') {
+                            if (start <= end) {
+                                setSubmitStart(start);
+                                setSubmitEnd(end);
+                            } else {
+                                setSubmitStart(end);
+                                setSubmitEnd(start);
+                            }
                         }
                     }} />
+
+                <input className={history_style.filter} type="text" onChange={(e) => { setFilter(e.target.value) }} placeholder='Search' />
 
             </div>
 
             {/* "VIEW HISTORY" BUTTON (SUBMIT) */}
-            <div className={`${history_style.button} ${start <= end || history_style.invalid_button}`} onClick={() => { setSubmitStart(start); setSubmitEnd(end); }}>View History</div>
+            <div className={`${history_style.button}`} 
+                onClick={ () => 
+                { if (start <= end) {
+                    setSubmitStart(start);
+                    setSubmitEnd(end);
+                } else {
+                    setSubmitStart(end);
+                    setSubmitEnd(start);
+                } } }
+            >View History</div>
 
             {/* THE LOG ITSELF */}
-            <Log start={submitStart} end={submitEnd} />
+            <Log start={submitStart} end={submitEnd} filter={filter} />
 
             {/* RIGHT MENU */}
             <div className={styles.right_bar}>

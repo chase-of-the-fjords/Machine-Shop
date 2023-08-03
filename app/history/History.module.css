@@ -74,27 +74,21 @@
 
 }
 
+/* The search box. */
+.filter {
+    display: block;
+    margin: 24px auto;
+    /* Sets the font and its size & centers the text. */
+    font-family: 'OpenSans';
+    font-size: 16px;
+    text-align: center;
+}
+
 /* The "View History" button when hovering. */
 .button:hover {
 
     /* Darkens the background color. */
     background-color: rgb(222, 222, 222);
-
-}
-
-/* The "View History" button when dates input are invalid. */
-.invalid_button {
-
-    /* Changes the cursor to not be allowed. */
-    cursor: not-allowed;
-
-}
-
-/* The "View History" button when dates input are invalid & hovering. */
-.invalid_button:hover {
-
-    /* Disables background color change on hover. */
-    background-color: white;
 
 }
 

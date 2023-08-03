@@ -5,7 +5,7 @@ import log_style from './Log.module.css'
 import { useState, useEffect } from "react";
 
 // A function that gets a log given two dates.
-import { getLog } from "../Helpers/Interface";
+import { getLog, sortLogByDate, runFilter } from "../Helpers/Interface";
 
 // A class for managing time.
 import moment from "moment";
@@ -17,12 +17,14 @@ import moment from "moment";
  *  
  * @returns A JSX representation of a log between two dates.
  */
-export default function Log( { start, end } ) {
+export default function Log( { start, end, filter } ) {
 
         // HOOKS
 
     // The log object being displayed.
-    const [ log, setLog ] = useState({});
+    const [ log, setLog ] = useState([]);
+
+    const [ filteredLog, setFilteredLog ] = useState({});
 
     // Updates the log whenever the dates are updated.
     useEffect(() => {
@@ -31,6 +33,12 @@ export default function Log( { start, end } ) {
         }
         fetchData();
     }, [start, end])
+
+    useEffect(() => {
+        
+        setFilteredLog(sortLogByDate(runFilter(log, filter)));
+
+    }, [log, filter]);
 
 
 
@@ -42,7 +50,7 @@ export default function Log( { start, end } ) {
             {
 
                 // Iterates through every day in the log.
-                Object.entries(log).map(([key, value]) => {
+                Object.entries(filteredLog).map(([key, value]) => {
 
                     // For each day...
                     return <div key={key}>
@@ -236,8 +244,8 @@ function UpdatedMachine( {entry} ) {
 
             {/* STATE */}
             { entry.changes.state != undefined && <>
-                <div className={log_style.old_value}><b>STATE:</b> {entry.changes.state.new}</div>
-                <div className={log_style.new_value}>From: {entry.changes.state.old}</div>
+                <div className={log_style.new_value}><b>STATE:</b> {entry.changes.state.new}</div>
+                <div className={log_style.old_value}>From: {entry.changes.state.old}</div>
             </>}
 
         </div>
