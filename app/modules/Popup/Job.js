@@ -130,16 +130,36 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                          }
                     }/>
 
-                    {/* QUEUE/DEQUEUE BUTTON */}
-                    <img className={job_style.edit_button}
-                         src={job.state == 0 ? "/icons/google/down_arrow.svg" : "/icons/google/up_arrow.svg"}
-                         title={job.state == 0 ? "Queue" : "Set Current"}
-                         alt={job.state == 0 ? "Move to Queue" : "Set to Currently Running"}
+                    {/* COMPLETE BUTTON */}
+                    { job.state == 0 && <img className={job_style.edit_button}
+                         src={"/icons/google/golf_flag.svg"}
+                         title={"Mark as Complete"}
+                         alt={"Mark as Complete"}
                          onClick={() => {
-                            doAction("setJobState", [job.machine, job.id, (job.state + 2) % 4]);
+                            doAction("setJobState", [job.machine, job.id, 3]);
                             deselect();
                          }
-                    }/>
+                    }/>}
+
+                    {/* SET TO CURRENT BUTTON */}
+                    { job.state == 2 && <img className={job_style.edit_button}
+                         src={"/icons/google/up_arrow.svg"}
+                         title={"Move to Current"}
+                         alt={"Move to Current"}
+                         onClick={() => {
+                            doAction("setJobState", [job.machine, job.id, 0]);
+                         }
+                    }/>}
+
+                    {/* QUEUE BUTTON */}
+                    { job.state == 3 && <img className={job_style.edit_button}
+                         src={"/icons/google/up_arrow.svg"}
+                         title={"Move to Queue"}
+                         alt={"Move to Queue"}
+                         onClick={() => {
+                            doAction("setJobState", [job.machine, job.id, 2]);
+                         }
+                    }/>}
 
                     {/* DELETE BUTTON */}
                     <img className={job_style.edit_button}

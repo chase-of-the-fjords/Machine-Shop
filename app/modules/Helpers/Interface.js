@@ -246,7 +246,8 @@ export async function updateJob( id, { jobs, changes, user } ) {
     }
 
     // Sends the actual request.
-    const create_res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs/create`, createPostData);
+    if (job.state == 3) await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs/create/completed`, createPostData);
+    else await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs/create`, createPostData);
 
     // STEP 2: End the old job.
 

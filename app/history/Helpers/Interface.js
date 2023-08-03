@@ -408,6 +408,7 @@ function getJobState( state ) {
     if (state == 0) return "Current";
     if (state == 1) return "On Hold";
     if (state == 2) return "Queued";
+    if (state == 3) return "Completed";
     else return "N/A";
 
 }

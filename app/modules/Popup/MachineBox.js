@@ -229,6 +229,7 @@ function JobBox ( { popupState, machine, jobs, setJobOp, setJobNotes, selectedJo
     // Separates jobs into categories.
     let currentJobs = jobs.filter((job) => { return job.state == 0 });
     let queuedJobs = jobs.filter((job) => { return job.state == 2 });
+    let completedJobs = jobs.filter((job) => { return job.state == 3 });
 
     /**
      * Returns the JSX for one category of jobs.
@@ -261,7 +262,7 @@ function JobBox ( { popupState, machine, jobs, setJobOp, setJobNotes, selectedJo
             </ul>
 
             {/* ADD BUTTON (if in edit mode) */}
-            { popupState == 2 && <div className={machine_style.add}
+            { (popupState == 2 && state != 3) && <div className={machine_style.add}
                 title="Create New Job" 
                 onClick={
                     () => {
@@ -285,6 +286,9 @@ function JobBox ( { popupState, machine, jobs, setJobOp, setJobNotes, selectedJo
 
         {/* QUEUED JOB LIST */}
         { (queuedJobs.length > 0 || popupState == 2) && GetCategory("Queued:", queuedJobs, 2) }
+
+        {/* COMPLETED JOB LIST */}
+        { (completedJobs.length > 0 || popupState == 2) && GetCategory("Completed:", completedJobs, 3) }
 
     </>
 

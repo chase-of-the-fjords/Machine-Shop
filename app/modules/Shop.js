@@ -96,7 +96,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
                 // Sets the new shop record values for every machine.
                 newShop["machines"][machine.code] = {};
                 newShop["machines"][machine.code].id = machine.id;
-                newShop["machines"][machine.code].jobs = jobs.filter((job) => { return job.machine == machine.code; }).map((job) => { return job.entry });
+                newShop["machines"][machine.code].jobs = jobs.filter((job) => { return (job.machine == machine.code && job.state != 3); }).map((job) => { return job.entry });
                 newShop["machines"][machine.code].jobs.sort();
                 
                 // Only sets the updated list if it's not immune to displaying changes.

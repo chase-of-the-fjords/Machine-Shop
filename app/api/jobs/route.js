@@ -9,7 +9,7 @@ export async function GET (request) {
     // The request:
     const jobs = await query ({
         // The SQL query:
-        query: "SELECT * FROM jobs WHERE end IS NULL GROUP BY id",
+        query: `SELECT * FROM jobs WHERE (end IS NULL OR end > CONVERT_TZ(UTC_TIMESTAMP(), "+00:00", "America/Los_Angeles")) GROUP BY id`,
         values: [],
     })
 
