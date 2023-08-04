@@ -17,7 +17,6 @@ import { useState } from 'react';
 
 // Action functions to be passed into other components.
 import { clickMachine, setMachine, setJob, createJob, deleteJob, setJobState, closePopup, undo } from '../modules/Helpers/Actions';
-import SidePanel from '../modules/SidePanel/SidePanel';
 
 // Default export for the machine shop.
 export default function Shop( { type, machines, buildings, jobs, setMachines, setBuildings, setJobs, user, datetime, hasChanges, setHasChanges } ) {
