@@ -1,4 +1,8 @@
-
+/* Loads the OpenSans font. */
+@font-face {
+    font-family: OpenSans;
+    src: url(./../../fonts/OpenSans.ttf);
+}
 
 .container {
     display: flex;
@@ -27,4 +31,49 @@
     font-size: 16px;
     resize: none;
     width: 400px;
+}
+
+.clockin {
+    font-family: 'OpenSans';
+    font-size: 16px;
+    padding: 3px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.deleted {
+    text-decoration: line-through;
+}
+
+.created {
+    font-weight: bold;
+}
+
+.employee_flexbox {
+    display: flex;
+}
+
+.timeclock {
+    display: flexbox;
+    width: 400px;
+}
+
+.results {
+    display: flexbox;
+}
+
+.shift_time {
+    margin-top: 0px;
+    margin-bottom: 36px;
+}
+
+.employee_overview {
+    margin-bottom: 10px;
+}
+
+.graphic {
+    font-family: monospace;
+    font-size: 20px;
+    white-space: pre-wrap;
 }
