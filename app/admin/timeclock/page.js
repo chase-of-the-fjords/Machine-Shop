@@ -211,7 +211,7 @@ export default function App() {
                         return <option value={employee.id} key={employee.id}>{employee.name}</option>
                     })}
                 </select>
-                <button onClick={ () => {
+                <button className={styles.button} onClick={ () => {
                     let next_employee = employees.find((e) => e.id > selected );
                     if (next_employee == undefined) setSelected(0);
                     else setSelected(next_employee.id);
@@ -307,13 +307,13 @@ function EmployeeData ( {employee, data, deleteTime, addTime, setBreak, start, e
             <div className={styles.timeclock}>
                 <h2>Timeclock</h2>
                 <div>{timeclockRows}</div>
-                <input type="datetime-local" onChange={(e) => setDatetime(e.target.value)} />
-                <button onClick={(e) => addTime(employee.id, datetime)}>Add</button>
+                <input className={styles.input_clockin} type="datetime-local" onChange={(e) => setDatetime(e.target.value)} />
+                <button className={styles.button} onClick={(e) => addTime(employee.id, datetime)}>Add</button>
             </div>
             <div className={styles.results}>
                 <h2>Hours</h2>
                 <b>Total:</b> {findHours({data: data.filter((entry) => !entry.deleted)})}
-                <h2>Display:</h2>
+                <h2>Display</h2>
                 <p className={styles.graphic}>{generateGraphic({data: data.filter((entry) => !entry.deleted), start, end})}</p>
             </div>
         </div>
