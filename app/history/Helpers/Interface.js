@@ -405,10 +405,10 @@ function getBuilding( code, {buildings} ) {
  */
 function getJobState( state ) {
 
-    if (state == 0) return "Current";
-    if (state == 1) return "On Hold";
-    if (state == 2) return "Queued";
-    if (state == 3) return "Completed";
+    if (state == 0) return "NOW";
+    if (state == 1) return "ON HOLD";
+    if (state == 2) return "NEXT";
+    if (state == 3) return "DONE";
     else return "N/A";
 
 }

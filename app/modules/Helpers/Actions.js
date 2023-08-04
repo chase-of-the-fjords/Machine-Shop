@@ -8,12 +8,14 @@
 export function clickMachine( code, { type, updated, setUpdated, popupState, setPopupState, setCurrentMachine } ) {
 
     // Removes the "updated" notification on the machine.
-    let newUpdated = {...updated};
-    newUpdated[code] = false;
-    setUpdated(newUpdated);
+    if (type != "moment") {
+        let newUpdated = {...updated};
+        newUpdated[code] = false;
+        setUpdated(newUpdated);
+    }
 
     // Opens the popup box in either view or edit mode.
-    if (type == "view") openPopup(code, 1, { setPopupState, setCurrentMachine });
+    if (type == "view" || type == "moment") openPopup(code, 1, { setPopupState, setCurrentMachine });
     if (type == "edit") if (popupState != -1) openPopup(code, 2, { setPopupState, setCurrentMachine });
 
 }

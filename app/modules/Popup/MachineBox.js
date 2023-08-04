@@ -19,15 +19,9 @@ let newJobCounter = -1;
  * 
  * Contents for view/edit machine popup boxes.
  * 
- * @param {number} popupState - The state of the popup (edit or view).
- * @param {Object} machine - The Machine being displayed.
- * @param {Array} jobs - A list of the jobs on the current machine.
- * @param {Object} changes - A list of unsaved changes in the shop.
- * @param {Function} doAction - Does an action.
- * 
  * @returns A JSX representation of the Machine Box.
  */
-export default function MachineBox( { popupState, machine, jobs, changes, doAction } ) {
+export default function MachineBox( { popupState, machine, jobs, changes, user, doAction } ) {
 
         // REACT HOOKS
 
@@ -106,6 +100,7 @@ export default function MachineBox( { popupState, machine, jobs, changes, doActi
                 <JobBox         popupState={popupState} 
                                 machine={editedMachine} 
                                 jobs={editedJobs} 
+                                user={user} 
                                 setJobOp={setJobOp}
                                 setJobNotes={setJobNotes}
                                 selectedJob={selectedJob} 
@@ -224,7 +219,7 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
  * 
  * @returns A JSX representation of the job list.
  */
-function JobBox ( { popupState, machine, jobs, setJobOp, setJobNotes, selectedJob, setSelectedJob, deselect, doAction } ) {
+function JobBox ( { popupState, machine, jobs, user, setJobOp, setJobNotes, selectedJob, setSelectedJob, deselect, doAction } ) {
 
     // Separates jobs into categories.
     let currentJobs = jobs.filter((job) => { return job.state == 0 });
@@ -282,13 +277,13 @@ function JobBox ( { popupState, machine, jobs, setJobOp, setJobNotes, selectedJo
     return <>
         
         {/* CURRENT JOB LIST */}
-        { (currentJobs.length > 0 || popupState == 2) && GetCategory("Current Jobs:", currentJobs, 0) }
+        { (currentJobs.length > 0 || popupState == 2) && GetCategory("NOW", currentJobs, 0) }
 
         {/* QUEUED JOB LIST */}
-        { (queuedJobs.length > 0 || popupState == 2) && GetCategory("Queued:", queuedJobs, 2) }
+        { (queuedJobs.length > 0 || popupState == 2) && GetCategory("NEXT", queuedJobs, 2) }
 
         {/* COMPLETED JOB LIST */}
-        { (completedJobs.length > 0 || popupState == 2) && GetCategory("Completed:", completedJobs, 3) }
+        { (completedJobs.length > 0 || popupState == 2) && GetCategory("DONE", completedJobs, 3) }
 
     </>
 

@@ -95,11 +95,95 @@ export async function getJobs( { setJobs } ) {
 }
 
 /**
+ * Gets buildings from the SQL database and stores them in the buildings hook. 
+ */
+export async function getBuildingsMoment( { setBuildings, datetime } ) {
+
+    // The data being passed into the API.
+    const postData = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": '*',
+        }
+    }
+
+    // Gets the data.
+    try {
+
+        // Accesses the jobs API.
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/buildings/moment/${datetime}`, postData);
+        const response = await res.json();
+        
+        // Stores the value.
+        setBuildings(response);
+
+    } catch (e) { }
+    
+}
+
+/**
+ * Gets machines from the SQL database and stores them in the machines hook. 
+ */
+export async function getMachinesMoment( { setMachines, datetime } ) {
+
+    // The data being passed into the API.
+    const postData = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": '*',
+        }
+    }
+
+    // Gets the data.
+    try {
+
+        // Accesses the jobs API.
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines/moment/${datetime}`, postData);
+        const response = await res.json();
+        
+        // Stores the value.
+        setMachines(response);
+
+    } catch (e) { }
+    
+}
+
+/**
+ * Gets jobs from the SQL database and stores them in the jobs hook. 
+ */
+export async function getJobsMoment( { setJobs, datetime } ) {
+
+    // The data being passed into the API.
+    const postData = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": '*',
+        }
+    }
+
+    // Gets the data.
+    try {
+
+        // Accesses the jobs API.
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs/moment/${datetime}`, postData);
+        const response = await res.json();
+        
+        // Stores the value.
+        setJobs(response);
+
+    } catch (e) { }
+
+}
+
+/**
  * Reloads the data from the SQL database.
  * 
  * @param {string} param - The data being updated ("buildings", "machines", "jobs", "all"). 
  */
-export async function reload( param, { setBuildings, setMachines, setJobs } ) {
+export async function reload( param, { setBuildings, setMachines, setJobs, datetime } ) {
 
     // Update a specific hook.
     if (param == "buildings") await getBuildings( {setBuildings} );
@@ -108,6 +192,9 @@ export async function reload( param, { setBuildings, setMachines, setJobs } ) {
 
     // Update everything from the database.
     if (param == "all") await Promise.all([getBuildings( {setBuildings} ), getMachines( {setMachines} ), getJobs( {setJobs} )]);
+
+    // Update everything at a given moment.
+    if (param == "moment" && datetime != "") await Promise.all([getBuildingsMoment( {setBuildings, datetime} ), getMachinesMoment( {setMachines, datetime} ), getJobsMoment( {setJobs, datetime} )]);
 
 }
 

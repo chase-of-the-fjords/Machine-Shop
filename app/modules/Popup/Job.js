@@ -133,8 +133,8 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                     {/* COMPLETE BUTTON */}
                     { job.state == 0 && <img className={job_style.edit_button}
                          src={"/icons/google/golf_flag.svg"}
-                         title={"Mark as Complete"}
-                         alt={"Mark as Complete"}
+                         title={"Mark as DONE"}
+                         alt={"Mark as DONE"}
                          onClick={() => {
                             doAction("setJobState", [job.machine, job.id, 3]);
                             deselect();
@@ -144,8 +144,8 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                     {/* SET TO CURRENT BUTTON */}
                     { job.state == 2 && <img className={job_style.edit_button}
                          src={"/icons/google/up_arrow.svg"}
-                         title={"Move to Current"}
-                         alt={"Move to Current"}
+                         title={"Move to NOW"}
+                         alt={"Move to NOW"}
                          onClick={() => {
                             doAction("setJobState", [job.machine, job.id, 0]);
                          }
@@ -154,8 +154,8 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                     {/* QUEUE BUTTON */}
                     { job.state == 3 && <img className={job_style.edit_button}
                          src={"/icons/google/up_arrow.svg"}
-                         title={"Move to Queue"}
-                         alt={"Move to Queue"}
+                         title={"Move to NEXT"}
+                         alt={"Move to NEXT"}
                          onClick={() => {
                             doAction("setJobState", [job.machine, job.id, 2]);
                          }

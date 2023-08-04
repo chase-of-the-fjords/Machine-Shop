@@ -16,7 +16,7 @@ import MachineBox from './MachineBox';
  *  
  * @returns A JSX representation of the popup.
  */
-export default function Popup( { popupState, machine, jobs, changes, doAction } ) {
+export default function Popup( { popupState, machine, jobs, changes, user, doAction } ) {
 
         // JSX (RETURN VALUE)
 
@@ -31,7 +31,7 @@ export default function Popup( { popupState, machine, jobs, changes, doAction } 
 
             { /* If the popup state is 1 or 2, create a MachineBox (Edit or View Machine) */ }
 
-            { (popupState == 1 || popupState == 2) && <MachineBox popupState={popupState} machine={machine} jobs={jobs} changes={changes} doAction={doAction} /> }
+            { (popupState == 1 || popupState == 2) && <MachineBox popupState={popupState} machine={machine} jobs={jobs} changes={changes} user={user} doAction={doAction} /> }
 
         </div>
     )

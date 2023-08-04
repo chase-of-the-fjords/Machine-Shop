@@ -84,7 +84,7 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
     let className = 
        `${styles.machine}
         ${editedData.state == 1 && styles.out_of_order}
-        ${updated[data.code] && styles.updated}
+        ${editedData.state == 2 && styles.updated}
         ${editedData.unsaved && styles.unsaved}
         ${editedData.code == selectedMachine && styles.selected}`;
 
@@ -110,7 +110,7 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
                 onClick={ () => doAction("clickMachine", [data.code]) } >
 
                 { /* If the machine is a priority, adds a star. */ }
-                { editedData.state == 2 && <img className={styles.priority_star} src="/icons/star-filled.svg" alt="Priority"/> }
+                { updated[data.code] && <img className={styles.priority_star} src="/icons/google/alert.svg" alt="Priority"/> }
 
                 { /* The name of the machine in the top-right corner. */ }
                 <div className={`${styles.name}`}>{data.name}</div>
@@ -182,8 +182,8 @@ function getQueuedJobsText (jobs) {
         
         // Returns "X job(s) queued", or nothing, depending on the quantity.
         if (queuedJobs.length == 0) return "";
-        if (queuedJobs.length == 1) return "1 job queued";
-        return queuedJobs.length + " jobs queued";
+        if (queuedJobs.length == 1) return "1 job next";
+        return queuedJobs.length + " jobs next";
     }
 
     // If there are no jobs, return an empty string.
