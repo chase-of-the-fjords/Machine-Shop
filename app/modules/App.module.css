@@ -119,14 +119,17 @@
     width: 48px;
 }
 
+/* The input box for the "moment" page. */
 .datetime {
-    /* Uses the CastleTLig font with the following settings */
+    /* Sets the font & its size. */
     font-family: 'OpenSans';
     font-size: 16px;
 
+    /* Displays as a block, centers, and sets margins. */
     display: block;
     margin: 40px auto 40px auto;
 
+    /* Sets the box size. */
     width: 200px;
 }
 
