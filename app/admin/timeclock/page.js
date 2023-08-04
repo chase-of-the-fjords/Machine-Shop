@@ -164,7 +164,7 @@ function getClock (data, start, end) {
 
 function EmployeeData ( {employee, data} ) {
 
-    return <TextareaAutosize className={styles.textarea}>getClockText({data})</TextareaAutosize>
+    return <TextareaAutosize className={styles.textarea}></TextareaAutosize>
 
 }
 
