@@ -1,0 +1,22 @@
+/* Loads the OpenSans font. */
+@font-face {
+    font-family: OpenSans;
+    src: url(./../fonts/OpenSans.ttf);
+}
+
+.header {
+    font-family: 'OpenSans';
+    font-size: 36px;
+    margin-left: 20px;
+}
+
+.linkbox {
+    margin-left: 48px;
+    margin-bottom: 24px;
+}
+
+.link {
+    font-size: 24px;
+    color: darkred;
+    text-decoration: none;
+}
