@@ -223,9 +223,9 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
 function JobBox ( { popupState, machine, jobs, user, setJobOp, setJobNotes, selectedJob, setSelectedJob, deselect, doAction } ) {
 
     // Separates jobs into categories.
-    let currentJobs = jobs.filter((job) => { return job.state == 0 });
-    let queuedJobs = jobs.filter((job) => { return job.state == 2 });
-    let completedJobs = jobs.filter((job) => { return job.state == 3 });
+    let currentJobs = jobs.filter((job) => { return job.state == 0 }).sort( (a, b) => { return new Date(b.start) - new Date(a.start); });
+    let queuedJobs = jobs.filter((job) => { return job.state == 2 }).sort( (a, b) => { return new Date(b.start) - new Date(a.start); });
+    let completedJobs = jobs.filter((job) => { return job.state == 3 }).sort( (a, b) => { return new Date(b.start) - new Date(a.start); });
 
     /**
      * Returns the JSX for one category of jobs.
