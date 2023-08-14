@@ -65,7 +65,7 @@ function ViewJob ( { job } ) {
     } else if (moment.utc(job.start).add(1, 'day').format('MM/DD/YYYY') == moment.utc().format('MM/DD/YYYY')) {
         date = `${verb} yesterday at ${moment.utc(job.start).format('h:mm a')}`;
     } else {
-        date = `${verb} ${moment.utc(job.start).format('M/D/YY [at] h:mm a')}`;
+        date = `${verb} ${moment.utc(job.start).format('MMMM Do [at] h:mm a')}`;
     }
 
     // Returns a list entry with two paragraph elements for a job.
