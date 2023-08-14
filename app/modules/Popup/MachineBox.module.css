@@ -17,6 +17,11 @@
 
 /* STYLING */
 
+/* The styling for the header box */
+.header {
+    position: relative;
+}
+
 /* The styling for the machine name. */
 .name {
     /* Sets the font and its size. */
@@ -79,7 +84,7 @@
     position: absolute;
 
     /* Sets the position. */
-    top: 12px;
+    top: 0px;
     left: 12px;
 }
 
@@ -89,7 +94,7 @@
     position: absolute;
 
     /* Sets the position. */
-    top: 12px;
+    top: 0px;
     right: 12px;
 }
 
@@ -184,8 +189,7 @@
         position: absolute;
 
         /* Sets the position. */
-        top: 10px;
-        left: 10px;
+        left: 8px;
     }
 
     /* The styling for the right button menu container. */
@@ -194,8 +198,7 @@
         position: absolute;
 
         /* Sets the position. */
-        top: 10px;
-        right: 10px;
+        right: 8px;
     }
 
     /* The styling for all buttons in the top menu. */

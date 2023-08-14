@@ -18,18 +18,27 @@
     border-radius: 8px;
 }
 
+.op_box {
+    /* Sets the margins & padding. */
+    margin: none;
+    padding: 2px 6px 6px 6px;
+}
+
 /* Styling for the op box of a job being viewed. */
 .op {
     /* Sets the font and its size. */
     font-family: 'OpenSans';
     font-size: 18px;
     
-    /* Sets the margins & padding. */
-    margin: 0px 40px 0px 0px;
-    padding: 2px 6px 6px 6px;
-
     /* Enable extra white space. */
     white-space: pre;
+}
+
+.timestamp {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 12px;
+    font-style: italic;
 }
 
 /* Styling for the notes box of a job being viewed. */
@@ -187,10 +196,11 @@
     .op {
         /* Decreases font size. */
         font-size: 14px;
-        
-        /* Decreases margins & padding. */
-        margin: 0px 20px 0px 0px;
-        padding: 2px 6px 2px 2px;
+    }
+
+    .timestamp {
+        /* Decreases font size. */
+        font-size: 10px;
     }
 
     /* Styling for the notes box of a job being viewed. */

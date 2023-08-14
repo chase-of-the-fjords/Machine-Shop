@@ -143,12 +143,7 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
 
         // JSX (RETURN VALUE)
 
-    return <>
-        {/* Machine Name */}
-        <h1 className={machine_style.name} onClick={deselect}>{machine.name}</h1>
-
-        {/* Machine State */}
-        <h2 className={`${machine_style.state} ${machine.newState && machine_style.edited_state}`} onClick={deselect}>{state}</h2>
+    return <div className={machine_style.header}>
 
         {/* This includes the menu buttons if the popup is in edit mode. */}
 
@@ -198,7 +193,13 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
             
         </div>
 
-    </>
+        {/* Machine Name */}
+        <h1 className={machine_style.name} onClick={deselect}>{machine.name}</h1>
+
+        {/* Machine State */}
+        <h2 className={`${machine_style.state} ${machine.newState && machine_style.edited_state}`} onClick={deselect}>{state}</h2>
+
+    </div>
 
 }
 

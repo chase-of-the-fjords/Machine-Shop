@@ -4,6 +4,8 @@ import job_style from './Job.module.css'
 // Import used for the note input.
 import TextareaAutosize from 'react-textarea-autosize'
 
+import moment from 'moment'
+
 /**
  * JOB DEFAULT EXPORT
  * 
@@ -49,9 +51,29 @@ export default function Job ( { popupState, job, setJobOp, setJobNotes, selected
  */
 function ViewJob ( { job } ) {
 
+    let date = '';
+    let verb = 'Updated';
+
+    if (job.log == 0 || job.log == 2) {
+        verb = 'Created';
+    } else {
+        verb = 'Updated';
+    }
+
+    if (moment.utc(job.start).format('MM/DD/YYYY') == moment.utc().format('MM/DD/YYYY')) {
+        date = `${verb} today at ${moment.utc(job.start).format('h:mm a')}`;
+    } else if (moment.utc(job.start).add(1, 'day').format('MM/DD/YYYY') == moment.utc().format('MM/DD/YYYY')) {
+        date = `${verb} yesterday at ${moment.utc(job.start).format('h:mm a')}`;
+    } else {
+        date = `${verb} ${moment.utc(job.start).format('M/D/YY [at] h:mm a')}`;
+    }
+
     // Returns a list entry with two paragraph elements for a job.
     return <li key={job.id} className={job_style.job}>
-        <p className={job_style.op}>{job.op}</p>
+        <div className={job_style.op_box}>
+            <div className={job_style.op}>{job.op}</div>
+            <div className={job_style.timestamp}>{date}</div>
+        </div>
         {(job.notes == null || job.notes == "") || <p className={job_style.note}>{job.notes}</p>}
     </li>
 
@@ -74,6 +96,23 @@ function ViewJob ( { job } ) {
  */
 function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, deselect, doAction } ) {
 
+    let date = '';
+    let verb = 'Updated';
+
+    if (job.log == 0 || job.log == 2) {
+        verb = 'Created';
+    } else {
+        verb = 'Updated';
+    }
+
+    if (moment.utc(job.start).format('MM/DD/YYYY') == moment.utc().format('MM/DD/YYYY')) {
+        date = `${verb} today at ${moment.utc(job.start).format('h:mm a')}`;
+    } else if (moment.utc(job.start).add(1, 'day').format('MM/DD/YYYY') == moment.utc().format('MM/DD/YYYY')) {
+        date = `${verb} yesterday at ${moment.utc(job.start).format('h:mm a')}`;
+    } else {
+        date = `${verb} ${moment.utc(job.start).format('MMMM Do [at] h:mm a')}`;
+    }
+
         // UNSELECTED JOB
 
     if (selectedJob != job.id) {
@@ -86,7 +125,10 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                 setJobOp(job.op);
                 setJobNotes(job.notes);
             }}>
-            <p className={job_style.op}>{job.op}</p>
+            <div className={job_style.op_box}>
+                <div className={job_style.op}>{job.op}</div>
+                <div className={job_style.timestamp}>{date}</div>
+            </div>
             {(job.notes == null || job.notes == "") || <p className={job_style.note}>{job.notes}</p>}
         </li>
 
