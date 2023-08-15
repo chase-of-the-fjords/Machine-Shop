@@ -105,12 +105,25 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
         verb = 'Updated';
     }
 
-    if (moment.utc(job.start).format('MM/DD/YYYY') == moment.utc().format('MM/DD/YYYY')) {
-        date = `${verb} today at ${moment.utc(job.start).format('h:mm a')}`;
-    } else if (moment.utc(job.start).add(1, 'day').format('MM/DD/YYYY') == moment.utc().format('MM/DD/YYYY')) {
-        date = `${verb} yesterday at ${moment.utc(job.start).format('h:mm a')}`;
+    if (!job.unsaved) {
+        if (moment.utc(job.start).format('MM/DD/YYYY') == moment.utc().format('MM/DD/YYYY')) {
+            date = `${verb} today at ${moment.utc(job.start).format('h:mm a')}`;
+        } else if (moment.utc(job.start).add(1, 'day').format('MM/DD/YYYY') == moment.utc().format('MM/DD/YYYY')) {
+            date = `${verb} yesterday at ${moment.utc(job.start).format('h:mm a')}`;
+        } else {
+            date = `${verb} ${moment.utc(job.start).format('MMMM Do [at] h:mm a')}`;
+        }
     } else {
-        date = `${verb} ${moment.utc(job.start).format('MMMM Do [at] h:mm a')}`;
+        if (job.new) date = 'Unsaved New Job';
+        else {
+            if (moment.utc(job.start).format('MM/DD/YYYY') == moment.utc().format('MM/DD/YYYY')) {
+                date = `Unsaved (${verb} today at ${moment.utc(job.start).format('h:mm a')})`;
+            } else if (moment.utc(job.start).add(1, 'day').format('MM/DD/YYYY') == moment.utc().format('MM/DD/YYYY')) {
+                date = `Unsaved (${verb} yesterday at ${moment.utc(job.start).format('h:mm a')})`;
+            } else {
+                date = `Unsaved (${verb} ${moment.utc(job.start).format('MMMM Do [at] h:mm a')})`;
+            }
+        }
     }
 
         // UNSELECTED JOB
