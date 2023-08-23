@@ -31,7 +31,7 @@
     font-size: 18px;
     
     /* Enable extra white space. */
-    white-space: pre;
+    white-space: pre-wrap;
 }
 
 .timestamp {
