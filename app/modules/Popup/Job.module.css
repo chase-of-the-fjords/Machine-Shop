@@ -52,7 +52,7 @@
     padding: 0px 6px 6px 6px;
 
     /* Enable extra white space. */
-    white-space: pre;
+    white-space: pre-wrap;
 }
 
 /* For an editable job, it should have a pointer cursor. */
