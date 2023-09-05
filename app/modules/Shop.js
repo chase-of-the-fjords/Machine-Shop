@@ -225,7 +225,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             <div className="absolute flex space-x-1 top-2 left-2 sm:top-4 sm:left-4">
 
                 {/* SAVE BUTTON */}
-                {type == "edit" && <div className="w-8 sm:w-12" title="Save Changes" onClick={() => doAction('save', [])}><img className="" src="/icons/google/save.svg" /></div>}
+                {type == "edit" && <div className="w-8 cursor-pointer sm:w-12" title="Save Changes" onClick={() => doAction('save', [])}><img className="" src="/icons/google/save.svg" /></div>}
                 
                 {/* VIEW BUTTON */}
                 {(type == "view" || type == "edit") && <div className="w-8 cursor-pointer sm:w-12" title="Change View" onClick={ () => {
