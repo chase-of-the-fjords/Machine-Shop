@@ -23,7 +23,7 @@ export default function Popup( { popupState, machine, jobs, changes, user, doAct
     return (
 
         // The div for the box, which covers the whole screen.
-        <div className={styles.popup}>
+        <div className={`${styles.popup} z-10`}>
 
             { /* If the popup state is -1, create a SaveBox (Darken screen) */ }
 

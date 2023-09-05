@@ -70,7 +70,7 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
         height: `${machine_height}px`,
         top: `${y}px` ,
         left: `${x}px`,
-        zIndex: `${10 + (y * 10)}`
+        zIndex: `${editedData.ypos}`
     }
 
     // The set of styles applied based on the machine's state, etc.
