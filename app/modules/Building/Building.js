@@ -3,9 +3,6 @@
 // Imports the machine component.
 import Machine from '../Machine/Machine';
 
-// Stylesheet for the building component.
-import styles from './Building.module.css';
-
 // The imports for the react-spring library (animations).
 import { useSpring, animated } from '@react-spring/web'
 
@@ -70,13 +67,13 @@ export default function Building({data, machines, jobs, changes, updated, select
     return (
 
         // The main div for the building. It's animated with the springs animation defined above.
-        <animated.div className={styles.container} style={container_style}>
+        <animated.div className="inline-block mb-10" style={container_style}>
 
             { /* The header that contains the name of the building. */ }
-            <h2 className={styles.header}>{data.name}</h2>
+            <h2 className="mb-3 text-3xl font-bold text-center font-CastleTLig">{data.name}</h2>
 
             { /* The div that contains the actual building. */ }
-            <div className={styles.building} style={building_style}>
+            <div className="box-content relative p-[2.5px] rounded-md mx-auto bg-gray-300 shadow-lg" style={building_style}>
                 {
                     /* 
                      * Creates a machine component from each machine in the data.
