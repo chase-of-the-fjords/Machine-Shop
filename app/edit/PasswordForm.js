@@ -69,11 +69,11 @@ export default function PasswordForm( {setUser} ) {
             <div className="relative w-4/6 max-w-lg mx-auto mt-32 text-center bg-gray-300 rounded-lg shadow-xl h-80">
 
                 {/* PROMPT */}
-                <h1 className="relative pt-24 mb-4 text-3xl font-bold">Enter Password</h1>
+                <h1 className="relative pt-24 mb-4 text-2xl font-bold sm:text-3xl">Enter Password</h1>
 
                 {/* INPUT */}
                 <form onSubmit={e => { e.preventDefault(); }} >
-                    <input autoFocus type="password" className="text-3xl text-center" autoComplete="off" onChange={e => setPassword(e.target.value)} />
+                    <input autoFocus type="password" className="w-40 text-3xl text-center" autoComplete="off" onChange={e => setPassword(e.target.value)} />
                 </form>
 
             </div>
