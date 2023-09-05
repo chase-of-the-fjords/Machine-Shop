@@ -67,7 +67,7 @@ export default function Building({data, machines, jobs, changes, updated, select
     return (
 
         // The main div for the building. It's animated with the springs animation defined above.
-        <animated.div className="inline-block mb-10 transition-all" style={container_style}>
+        <animated.div className="inline-block mb-10 transition-[width]" style={container_style}>
 
             { /* The header that contains the name of the building. */ }
             <h2 className="mb-3 text-2xl font-semibold text-center">{data.name}</h2>
