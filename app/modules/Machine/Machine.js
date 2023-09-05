@@ -78,7 +78,13 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
     // - If the machine has been updated, the updated style is applied.
     // - If the machine has been modified & its unsaved, the unsaved style is applied.
     // - If the machine is currently selected, the selected style is applied.
-    let className = "absolute transition-colors bg-white rounded-md shadow-md hover:bg-gray-50";
+    let machineStyles = {
+        basic: "absolute transition-colors bg-white rounded-md shadow-md hover:bg-gray-50",
+        oos: "opacity-30 hover:bg-white cursor-not-allowed",
+        priority: "bg-yellow-200 hover:bg-yellow-300"
+    }
+    
+    let oos_machine = ""
     //     ${editedData.state == 1 && ""}
     //     ${editedData.state == 2 && styles.updated}
     //     ${editedData.unsaved && styles.unsaved}
@@ -101,7 +107,9 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
                */ }
             <button
                 key={data.code} 
-                className={className}
+                className={`${machineStyles.basic} 
+                            ${editedData.state == 1 && machineStyles.oos}
+                            ${editedData.state == 2 && machineStyles.priority}`}
                 style={style}
                 onClick={ () => doAction("clickMachine", [data.code]) } >
 
