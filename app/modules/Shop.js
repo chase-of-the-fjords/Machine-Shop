@@ -222,13 +222,13 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             {/* MENU BARS */}
 
             {/* LEFT MENU */}
-            <div className="absolute flex space-x-1 top-4 left-4">
+            <div className="absolute flex space-x-1 top-2 left-2 sm:top-4 sm:left-4">
 
                 {/* SAVE BUTTON */}
-                {type == "edit" && <div className="" title="Save Changes" onClick={() => doAction('save', [])}><img className="" src="/icons/google/save.svg" /></div>}
+                {type == "edit" && <div className="w-8 sm:w-12" title="Save Changes" onClick={() => doAction('save', [])}><img className="" src="/icons/google/save.svg" /></div>}
                 
                 {/* VIEW BUTTON */}
-                {(type == "view" || type == "edit") && <div className="cursor-pointer" title="Change View" onClick={ () => {
+                {(type == "view" || type == "edit") && <div className="w-8 cursor-pointer sm:w-12" title="Change View" onClick={ () => {
                     if (typeof window !== undefined) localStorage.setItem('view', (view + 1) % 3);
                     setView((view + 1) % 3);
                 }}><img className="" src="/icons/google/eye.svg" /></div>}
@@ -238,24 +238,24 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
 
 
             {/* RIGHT MENU */}
-            <div className="absolute flex space-x-1 top-4 right-4">
+            <div className="absolute flex space-x-1 top-2 right-2 sm:top-4 sm:right-4">
 
                 {/* EDIT BUTTON */}
-                {type == "view" && <div className="" title="Edit">
+                {type == "view" && <div className="w-8 cursor-pointer sm:w-12" title="Edit">
                     <a href="./edit">
                         <img className="" src="/icons/google/edit.svg" />
                     </a>
                 </div>}
 
                 {/* HISTORY BUTTON */}
-                {type == "edit" && <div className="" title="View History">
+                {type == "edit" && <div className="w-8 cursor-pointer sm:w-12" title="View History">
                     <a href="./history">
                         <img className="" src="/icons/google/history.svg" />
                     </a>
                 </div>}
 
                 {/* HOME BUTTON */}
-                {type == "edit" && <div className="" title="Return to Home">
+                {type == "edit" && <div className="w-8 cursor-pointer sm:w-12" title="Return to Home">
                     <a href="./">
                         <img className="" src="/icons/google/home.svg" />
                     </a>
