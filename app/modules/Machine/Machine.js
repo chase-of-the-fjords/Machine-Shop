@@ -80,7 +80,8 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
     // - If the machine has been modified & its unsaved, the unsaved style is applied.
     // - If the machine is currently selected, the selected style is applied.
     let machineStyles = {
-        basic: "absolute rounded-md shadow-md hover:mt-[-4px] transition-all",
+        basic: "absolute rounded-md",
+        working: "shadow-md hover:mt-[-4px] transition-all",
         oos: "opacity-40 cursor-not-allowed"
     }
 
@@ -144,7 +145,7 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
                 key={data.code} 
                 className={`${machineStyles.basic} 
                             ${machine_color}
-                            ${editedData.state == 1 && machineStyles.oos}`}
+                            ${editedData.state == 1 ? machineStyles.oos : machineStyles.working}`}
                 style={style}
                 onClick={ () => doAction("clickMachine", [data.code]) } >
 
@@ -152,10 +153,10 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
                 { updated[data.code] && <img className="" src="/icons/google/alert.svg" alt="Priority"/> }
 
                 { /* The name of the machine in the top-right corner. */ }
-                <div className={`absolute text-xs top-1 right-1 ${smalltext_color}`}>{data.name}</div>
+                <div className={`absolute text-xs top-0 right-1 md:top-1 ${smalltext_color}`}>{data.name}</div>
 
                 { /* The div that contains the text for the jobs. */ }
-                <div className="mb-0 text-lg font-bold">
+                <div className="mb-0 font-bold text-md md:text-lg">
                     { getCurrentJobsText(editedJobs) }
                 </div>
 
