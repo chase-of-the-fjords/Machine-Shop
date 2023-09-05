@@ -40,7 +40,7 @@ export default function App() {
             <div className="mx-auto w-fit">
 
                 {/* STARTING DATE INPUT */}
-                <input type="date" className="p-2 mx-8 text-xl border border-black rounded-md" 
+                <input type="date" className="block p-2 mx-8 text-xl border border-black rounded-md sm:inline-block" 
                     defaultValue={new Date(Date.now()).toLocaleDateString('sv')} 
                     onChange={(e) => { setStart(e.target.value) }} 
                     onKeyDown={(e) => {
@@ -56,10 +56,10 @@ export default function App() {
                     }} />
 
                 {/* "TO" */}
-                <div className="inline text-2xl"> to </div>
+                <div className="block text-2xl text-center sm:inline-block"> to </div>
 
                 {/* ENDING DATE INPUT */}
-                <input type="date" className="p-2 mx-8 text-xl border border-black rounded-md" 
+                <input type="date" className="block p-2 mx-8 text-xl border border-black rounded-md sm:inline-block" 
                     defaultValue={new Date(Date.now()).toLocaleDateString('sv')} 
                     onChange={(e) => { setEnd(e.target.value) }} 
                     onKeyDown={(e) => {
@@ -97,14 +97,14 @@ export default function App() {
             <div className="absolute flex space-x-1 top-2 right-2 sm:top-4 sm:right-4">
 
                 {/* EDIT BUTTON */}
-                <div className="" title="Edit">
+                <div className="w-8 cursor-pointer sm:w-12" title="Edit">
                     <a href="./edit">
                         <img className="" src="/icons/google/edit.svg" />
                     </a>
                 </div>
 
                 {/* HOME BUTTON */}
-                <div className="" title="Return to Home">
+                <div className="w-8 cursor-pointer sm:w-12" title="Return to Home">
                     <a href="./">
                         <img className="" src="/icons/google/home.svg" />
                     </a>
