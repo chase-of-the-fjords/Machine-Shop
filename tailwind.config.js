@@ -9,6 +9,9 @@ module.exports = {
     extend: {
       fontFamily: {
         CastleTLig: ['var(--font-castletlig)']
+      },
+      transitionProperty: {
+        box: "width, height, top, right, bottom, left"
       }
     },
   },
