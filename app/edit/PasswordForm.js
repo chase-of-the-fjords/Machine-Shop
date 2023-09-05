@@ -51,7 +51,7 @@ export default function PasswordForm( {setUser} ) {
 
     return (unlocked ||
 
-        <div className={styles.screen}>
+        <div className={`${styles.screen} z-10`}>
 
             {/* BACKGROUND */}
             <div className={styles.background}/>
