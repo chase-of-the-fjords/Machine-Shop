@@ -1,6 +1,3 @@
-// The stylesheet for the jobs.
-import job_style from './Job.module.css'
-
 // Import used for the note input.
 import TextareaAutosize from 'react-textarea-autosize'
 
@@ -69,12 +66,23 @@ function ViewJob ( { job } ) {
     }
 
     // Returns a list entry with two paragraph elements for a job.
-    return <li key={job.id} className={job_style.job}>
-        <div className={job_style.op_box}>
-            <div className={job_style.op}>{job.op}</div>
-            <div className={job_style.timestamp}>{date}</div>
+    return <li key={job.id} className="flex w-full rounded-md">
+        {/* BULLET POINT */}
+        <svg    className="inline-block w-5 h-5 mt-2 ml-2 align-top fill-black stroke-black"
+                xmlns="http://www.w3.org/2000/svg" 
+                height="24" 
+                viewBox="0 -960 960 960" 
+                width="24">
+            <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
+        </svg>
+        
+        {/* CONTENT */}
+        <div className="inline-block p-1 pl-2 m-0 ml-1">
+            <div className="text-lg whitespace-pre-wrap">{job.op}</div>
+            <div className="text-sm italic text-gray-500 whitespace-pre-wrap">{date}</div>
+            {(job.notes == null || job.notes == "") || <p className="ml-4 text-sm text-gray-800 whitespace-pre-wrap">{job.notes}</p>}
         </div>
-        {(job.notes == null || job.notes == "") || <p className={job_style.note}>{job.notes}</p>}
+        
     </li>
 
 }
@@ -131,18 +139,29 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
     if (selectedJob != job.id) {
 
         // Similar to the ViewJob, but can be deleted & unsaved, and selects the job on click.
-        return <li key={job.id} className={`${job_style.job} ${job_style.editable} ${job.unsaved && job_style.unsaved} ${job.deleted && job_style.deleted}`}
+        return <li key={job.id} className={`flex w-full rounded-md cursor-pointer ${job.unsaved && "bg-green-300"} ${job.deleted && "line-through"}`}
             onClick={() => {
                 deselect();
                 setSelectedJob(job.id);
                 setJobOp(job.op);
                 setJobNotes(job.notes);
             }}>
-            <div className={job_style.op_box}>
-                <div className={job_style.op}>{job.op}</div>
-                <div className={job_style.timestamp}>{date}</div>
+
+            {/* BULLET POINT */}
+            <svg    className="inline-block w-5 h-5 mt-2 ml-2 align-top fill-black stroke-black"
+                    xmlns="http://www.w3.org/2000/svg" 
+                    height="24" 
+                    viewBox="0 -960 960 960" 
+                    width="24">
+                <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
+            </svg>
+
+            {/* CONTENT */}
+            <div className="inline-block p-1 pl-2 m-0 ml-1">
+                <div className="text-lg whitespace-pre-wrap">{job.op}</div>
+                <div className="text-sm italic text-gray-500 whitespace-pre-wrap">{date}</div>
+                {(job.notes == null || job.notes == "") || <p className="ml-4 text-sm text-gray-800 whitespace-pre-wrap">{job.notes}</p>}
             </div>
-            {(job.notes == null || job.notes == "") || <p className={job_style.note}>{job.notes}</p>}
         </li>
 
     }
@@ -154,16 +173,16 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
     else {
 
         // The basic list entry.
-        return <li key={job.id} className={job_style.job}>
+        return <li key={job.id} className="w-full px-4 mx-auto rounded-md">
 
             {/* FORM FOR JOB ENTRY, DOES NOT SUBMIT. */}
             <form onSubmit={e => { e.preventDefault(); }} >
                 
                 {/* FIRST LINE of the edit form (OP, save, queue/unqueue, delete) */}
-                <div className={job_style.edit_line}>
+                <div className="flex flex-row pb-1 space-x-1">
                     
                     {/* JOB OP ENTRY */}
-                    <input className={job_style.edit_op}
+                    <input className="float-left pb-0 mr-2 text-lg leading-4 border-b-2 border-black outline-none grow"
                            autoFocus
                            onFocus={e => e.target.select()}
                            type="text" 
@@ -176,7 +195,7 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                            }} />                  
 
                     {/* SAVE BUTTON */}
-                    <img className={job_style.edit_button}
+                    <img className="float-right cursor-pointer w-9 h-9"
                          src="/icons/google/check.svg"
                          title="Save"
                          alt="Save Button"
@@ -186,7 +205,7 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                     }/>
 
                     {/* COMPLETE BUTTON */}
-                    { job.state == 0 && <img className={job_style.edit_button}
+                    { job.state == 0 && <img className="float-right cursor-pointer w-9 h-9"
                          src={"/icons/google/golf_flag.svg"}
                          title={"Mark as DONE"}
                          alt={"Mark as DONE"}
@@ -197,7 +216,7 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                     }/>}
 
                     {/* SET TO CURRENT BUTTON */}
-                    { job.state == 2 && <img className={job_style.edit_button}
+                    { job.state == 2 && <img className="float-right cursor-pointer w-9 h-9"
                          src={"/icons/google/up_arrow.svg"}
                          title={"Move to NOW"}
                          alt={"Move to NOW"}
@@ -207,7 +226,7 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                     }/>}
 
                     {/* QUEUE BUTTON */}
-                    { job.state == 3 && <img className={job_style.edit_button}
+                    { job.state == 3 && <img className="float-right cursor-pointer w-9 h-9"
                          src={"/icons/google/up_arrow.svg"}
                          title={"Move to NEXT"}
                          alt={"Move to NEXT"}
@@ -217,7 +236,7 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                     }/>}
 
                     {/* DELETE BUTTON */}
-                    <img className={job_style.edit_button}
+                    <img className="float-right cursor-pointer w-9 h-9"
                          src={"/icons/google/delete.svg"}
                          title="Delete" 
                          alt="Delete" 
@@ -230,18 +249,18 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                 </div>
 
                 {/* SECOND LINE of the edit form (Notes) */}
-                <div className={job_style.edit_line}>
+                <div className="flex flex-row pb-1 space-x-1">
                     
                     {/* JOB NOTES INPUT */}
                     <TextareaAutosize
-                        className={job_style.edit_notes}
+                        className="float-left pb-0 mr-2 border-b-2 border-black outline-none resize-none text-md grow"
                         onFocus={e => e.target.select()}
                         placeholder="Notes"
                         defaultValue={job.notes} 
                         onChange={(e) => setJobNotes(e.target.value)}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') deselect();
-                            if (e.key === 'Escape') setSelectedJob(0);
+                            if (e.key === 'Escape' || !e.shiftKey) setSelectedJob(0);
                         }} />
 
                 </div>
