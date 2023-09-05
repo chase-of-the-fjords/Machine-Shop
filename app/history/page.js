@@ -1,9 +1,6 @@
 // This is an interactive component, so it's a client component.
 'use client'
 
-// The stylesheets.
-import history_style from './History.module.css'
-
 // The log components (finds & shows the actual history.)
 import Log from './modules/Log';
 
@@ -40,10 +37,10 @@ export default function App() {
             <Menu />
 
             {/* DATE SELECTOR */}
-            <div className={history_style.date_selector}>
+            <div className="mx-auto w-fit">
 
                 {/* STARTING DATE INPUT */}
-                <input type="date" className={history_style.date_input} 
+                <input type="date" className="p-2 mx-8 text-xl border border-black rounded-md" 
                     defaultValue={new Date(Date.now()).toLocaleDateString('sv')} 
                     onChange={(e) => { setStart(e.target.value) }} 
                     onKeyDown={(e) => {
@@ -59,10 +56,10 @@ export default function App() {
                     }} />
 
                 {/* "TO" */}
-                <div className={history_style.to}> to </div>
+                <div className="inline text-2xl"> to </div>
 
                 {/* ENDING DATE INPUT */}
-                <input type="date" className={history_style.date_input} 
+                <input type="date" className="p-2 mx-8 text-xl border border-black rounded-md" 
                     defaultValue={new Date(Date.now()).toLocaleDateString('sv')} 
                     onChange={(e) => { setEnd(e.target.value) }} 
                     onKeyDown={(e) => {
@@ -77,12 +74,12 @@ export default function App() {
                         }
                     }} />
 
-                <input className={history_style.filter} type="text" onChange={(e) => { setFilter(e.target.value) }} placeholder='Search' />
+                <input className="block p-2 m-5 mx-auto text-center border border-black rounded-md" type="text" onChange={(e) => { setFilter(e.target.value) }} placeholder='Search' />
 
             </div>
 
             {/* "VIEW HISTORY" BUTTON (SUBMIT) */}
-            <div className={`${history_style.button}`} 
+            <div className="block p-2 m-5 mx-auto text-center transition-colors border border-black rounded-md cursor-pointer hover:bg-gray-100 w-36" 
                 onClick={ () => 
                 { if (start <= end) {
                     setSubmitStart(start);
@@ -97,7 +94,7 @@ export default function App() {
             <Log start={submitStart} end={submitEnd} filter={filter} />
 
             {/* RIGHT MENU */}
-            <div className="absolute flex space-x-1 top-4 right-4">
+            <div className="absolute flex space-x-1 top-2 right-2 sm:top-4 sm:right-4">
 
                 {/* EDIT BUTTON */}
                 <div className="" title="Edit">
@@ -125,6 +122,6 @@ export default function App() {
 // The menu bar component.
 function Menu() {
 
-    return <h1 className="pb-2 mx-auto mt-5 mb-6 text-3xl font-bold text-center border-b-2 border-black w-96 font-CastleTLig">Origin Golf Machine Shop</h1>
+    return <h1 className="mx-auto mt-2 mb-6 text-2xl font-bold text-center sm:mt-5 sm:w-96 sm:text-3xl sm:pb-2 w-36 font-CastleTLig">Origin Golf Machine Shop</h1>
 
 }
