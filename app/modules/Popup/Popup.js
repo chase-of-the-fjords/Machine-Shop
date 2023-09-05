@@ -44,11 +44,12 @@ export default function Popup( { popupState, machine, jobs, changes, user, doAct
 
                 { /* If the popup state is -1, create a SaveBox (Darken screen) */ }
 
-                { lastState == -1 && <SaveBox /> }
+                { (lastState == -1 && (popupState == 0 || popupState == -1)) && <SaveBox /> }
 
                 { /* If the popup state is 1 or 2, create a MachineBox (Edit or View Machine) */ }
 
-                { (lastState == 1 || lastState == 2) && <MachineBox popupState={popupState} machine={machine} jobs={jobs} changes={changes} user={user} doAction={doAction} /> }
+                { (lastState == 1 && (popupState == 0 || popupState == 1)) || 
+                  (lastState == 2 && (popupState == 0 || popupState == 2)) && <MachineBox popupState={popupState} machine={machine} jobs={jobs} changes={changes} user={user} doAction={doAction} /> }
 
             </motion.div> }
 
