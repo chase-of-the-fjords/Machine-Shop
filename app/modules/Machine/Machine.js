@@ -69,7 +69,8 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
         width: `${machine_width}px`,
         height: `${machine_height}px`,
         top: `${y}px` ,
-        left: `${x}px`
+        left: `${x}px`,
+        zIndex: `${10 + (y * 10)}`
     }
 
     // The set of styles applied based on the machine's state, etc.
@@ -79,16 +80,24 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
     // - If the machine has been modified & its unsaved, the unsaved style is applied.
     // - If the machine is currently selected, the selected style is applied.
     let machineStyles = {
-        basic: "absolute transition-colors bg-white rounded-md shadow-md hover:bg-gray-50",
-        oos: "opacity-30 hover:bg-white cursor-not-allowed",
-        priority: "bg-yellow-200 hover:bg-yellow-300"
+        basic: "absolute rounded-md shadow-md hover:mt-[-4px] transition-all",
+        oos: "opacity-30 cursor-not-allowed"
     }
-    
-    let oos_machine = ""
-    //     ${editedData.state == 1 && ""}
-    //     ${editedData.state == 2 && styles.updated}
-    //     ${editedData.unsaved && styles.unsaved}
-    //     ${editedData.code == selectedMachine && styles.selected}`;
+
+    let colorStyles = {
+        basic: "bg-gray-50 hover:bg-gray-100",
+        oos: "bg-gray-50",
+        priority: "bg-yellow-200 hover:bg-yellow-300",
+        unsaved: "bg-green-200 hover:bg-green-300",
+        selected: "bg-red-300",
+    }
+
+    let machine_color = colorStyles.basic;
+
+    if (editedData.code == selectedMachine) machine_color = colorStyles.selected;
+    else if (editedData.unsaved) machine_color = colorStyles.unsaved;
+    else if (editedData.state == 1) machine_color = colorStyles.oos;
+    else if (editedData.state == 2) machine_color = colorStyles.priority;
 
 
 
@@ -108,8 +117,8 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
             <button
                 key={data.code} 
                 className={`${machineStyles.basic} 
-                            ${editedData.state == 1 && machineStyles.oos}
-                            ${editedData.state == 2 && machineStyles.priority}`}
+                            ${machine_color}
+                            ${editedData.state == 1 && machineStyles.oos}`}
                 style={style}
                 onClick={ () => doAction("clickMachine", [data.code]) } >
 
