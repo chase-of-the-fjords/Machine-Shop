@@ -262,9 +262,9 @@ function Metadata( { entry } ) {
     let time = moment.utc(entry.timestamp).format('h:mm:ss A');
 
     // JSX (RETURN VALUE)
-    return <div className="basis-24 grow-0 shrink-0">
-        <div className="text-sm">{time}</div>
-        <div className="text-sm">{entry.user}</div>
+    return <div className="basis-20 sm:basis-24 grow-0 shrink-0">
+        <div className="text-xs sm:text-sm">{time}</div>
+        <div className="text-xs sm:text-sm">{entry.user}</div>
     </div>
 
 }
