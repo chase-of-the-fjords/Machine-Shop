@@ -5,7 +5,6 @@
 import Shop from '../modules/Shop';
 
 // The style sheet for the main page.
-import styles from '../modules/App.module.css';
 import PasswordForm from './PasswordForm';
 
 // Basic React hooks.
@@ -51,7 +50,7 @@ export default function App() {
     return (<>
 
             {/* BACKGROUND */}
-            <div className={styles.edit_background}></div>
+            <div className="bg-white -z-10 fixed top-0 left-0 w-full h-[150%]"></div>
 
             {/* FOREGROUND */}
             <div>
@@ -73,6 +72,6 @@ export default function App() {
 // The menu bar component.
 function Menu() {
 
-    return <h1 className={styles.menu}>Origin Golf Machine Shop</h1>
+    return <h1 className="pb-2 mx-auto mt-5 mb-6 text-3xl font-bold text-center border-b-2 border-black w-96 font-CastleTLig">Origin Golf Machine Shop</h1>
 
 }

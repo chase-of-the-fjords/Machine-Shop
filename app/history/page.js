@@ -2,7 +2,6 @@
 'use client'
 
 // The stylesheets.
-import styles from '../modules/App.module.css'
 import history_style from './History.module.css'
 
 // The log components (finds & shows the actual history.)
@@ -98,19 +97,19 @@ export default function App() {
             <Log start={submitStart} end={submitEnd} filter={filter} />
 
             {/* RIGHT MENU */}
-            <div className={styles.right_bar}>
+            <div className="absolute flex space-x-1 top-4 right-4">
 
                 {/* EDIT BUTTON */}
-                <div className={styles.right_button} title="Edit">
+                <div className="" title="Edit">
                     <a href="./edit">
-                        <img className={styles.button_image} src="/icons/google/edit.svg" />
+                        <img className="" src="/icons/google/edit.svg" />
                     </a>
                 </div>
 
                 {/* HOME BUTTON */}
-                <div className={styles.right_button} title="Return to Home">
+                <div className="" title="Return to Home">
                     <a href="./">
-                        <img className={styles.button_image} src="/icons/google/home.svg" />
+                        <img className="" src="/icons/google/home.svg" />
                     </a>
                 </div>
 
@@ -126,6 +125,6 @@ export default function App() {
 // The menu bar component.
 function Menu() {
 
-    return <h1 className={styles.menu}>Origin Golf Machine Shop</h1>
+    return <h1 className="pb-2 mx-auto mt-5 mb-6 text-3xl font-bold text-center border-b-2 border-black w-96 font-CastleTLig">Origin Golf Machine Shop</h1>
 
 }

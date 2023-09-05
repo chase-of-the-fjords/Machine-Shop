@@ -4,9 +4,6 @@
 // Imports the shop component.
 import Shop from './modules/Shop';
 
-// The style sheet for the main page.
-import styles from './modules/App.module.css';
-
 // Basic React hook.
 import { useState } from 'react';
 
@@ -27,10 +24,10 @@ export default function App() {
     return (<>
 
             {/* BACKGROUND */}
-            <div className={styles.view_background}></div>
+            <div className="bg-white -z-10 fixed top-0 left-0 w-full h-[150%]" />
 
             {/* FOREGROUND */}
-            <div className={styles.app}>
+            <div>
 
                 { /* The menu at the top of the screen. Likely to be updated later. */ }
                 <Menu />
@@ -47,6 +44,6 @@ export default function App() {
 // The menu bar component.
 function Menu() {
 
-    return <h1 className={styles.menu}>Origin Golf Machine Shop</h1>
+    return <h1 className="pb-2 mx-auto mt-5 mb-6 text-3xl font-bold text-center border-b-2 border-black w-96 font-CastleTLig">Origin Golf Machine Shop</h1>
 
 }
