@@ -1,8 +1,5 @@
     // IMPORTS
 
-// Stylesheet for the machine component.
-import styles from './Machine.module.css';
-
 // Two common React hooks.
 import { useEffect, useState } from 'react';
 
@@ -81,12 +78,11 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
     // - If the machine has been updated, the updated style is applied.
     // - If the machine has been modified & its unsaved, the unsaved style is applied.
     // - If the machine is currently selected, the selected style is applied.
-    let className = 
-       `${styles.machine}
-        ${editedData.state == 1 && styles.out_of_order}
-        ${editedData.state == 2 && styles.updated}
-        ${editedData.unsaved && styles.unsaved}
-        ${editedData.code == selectedMachine && styles.selected}`;
+    let className = "absolute transition-colors bg-white rounded-md shadow-md hover:bg-gray-50";
+    //     ${editedData.state == 1 && ""}
+    //     ${editedData.state == 2 && styles.updated}
+    //     ${editedData.unsaved && styles.unsaved}
+    //     ${editedData.code == selectedMachine && styles.selected}`;
 
 
 
@@ -110,18 +106,18 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
                 onClick={ () => doAction("clickMachine", [data.code]) } >
 
                 { /* If the machine is a priority, adds a star. */ }
-                { updated[data.code] && <img className={styles.priority_star} src="/icons/google/alert.svg" alt="Priority"/> }
+                { updated[data.code] && <img className="" src="/icons/google/alert.svg" alt="Priority"/> }
 
                 { /* The name of the machine in the top-right corner. */ }
-                <div className={`${styles.name}`}>{data.name}</div>
+                <div className="absolute text-xs text-gray-500 top-1 right-1">{data.name}</div>
 
                 { /* The div that contains the text for the jobs. */ }
-                <div className={`${styles.jobs}`}>
+                <div className="mb-0 text-lg font-bold">
                     { getCurrentJobsText(editedJobs) }
                 </div>
 
                 { /* The div that contains the text for the queued jobs. */ }
-                <div className={`${styles.queued}`}>
+                <div className="text-xs italic text-gray-700">
                     { getQueuedJobsText(editedJobs) }
                 </div>
 
