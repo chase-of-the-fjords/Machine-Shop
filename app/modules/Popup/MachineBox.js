@@ -1,14 +1,10 @@
-// The stylesheet for the infobox.
-import popup_style from './Popup.module.css';
-import machine_style from './MachineBox.module.css';
-
 // React hooks.
 import { useState, useEffect } from 'react';
 
 // Custom helper functions for dealing with changes.
 import { getEditedJobs, getEditedMachine } from '../Machine/DataHelper';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // Job components to be displayed.
 import Job from './Job';
@@ -67,7 +63,7 @@ export default function MachineBox( { popupState, machine, jobs, changes, user, 
 
         { /* BACKGROUND */ }
 
-        <div className={popup_style.background} onClick={() => { 
+        <div className="fixed w-full h-[120%] bg-black opacity-50" onClick={() => { 
 
             // If a job was being edited, save it and deselect it.
             if (popupState == 2 && selectedJob != 0) {
@@ -87,11 +83,11 @@ export default function MachineBox( { popupState, machine, jobs, changes, user, 
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0.9 }}
-            className={popup_style.standard_box}>
+            className="relative w-11/12 max-w-xl mx-auto bg-white top-[10%] h-[140vw] max-h-[80%] rounded-xl shadow-xl overflow-hidden">
             
             {/* CONTENT (largely to avoid problems with scroll bar.) */}
 
-            <div className={popup_style.content} onClick={(e) => { if (e.target == e.currentTarget) deselect(); }}>
+            <div className="w-full h-full overflow-auto" onClick={(e) => { if (e.target == e.currentTarget) deselect(); }}>
 
                 {/* THE HEADER (title, state, menu) */}
                 
@@ -149,15 +145,17 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
 
         // JSX (RETURN VALUE)
 
-    return <div className={machine_style.header}>
+    return <div className="relative">
 
         {/* This includes the menu buttons if the popup is in edit mode. */}
 
         {/* Left menu buttons */}
-        <div className={machine_style.left_button_menu}>
+        <div className="absolute top-0 flex left-2">
 
             {/* Priority Button */}
-            {popupState == 2 && <img className={machine_style.menu_button}
+            {popupState == 2 && 
+                <img 
+                className="cursor-pointer"
                 src={machine.state == 2 ? "/icons/google/star_filled.svg" : "/icons/google/star_empty.svg"} 
                 title={machine.state == 2 ? "Unset as Priority" : "Set as Priority"} 
                 alt="Priority Button" 
@@ -165,7 +163,9 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
             />}
 
             {/* Out of Order Button */}
-            {popupState == 2 && <img className={machine_style.menu_button}
+            {popupState == 2 && 
+                <img 
+                className="cursor-pointer"
                 src={machine.state == 1 ? "/icons/google/broken_filled.svg" : "/icons/google/broken_empty.svg"}
                 title={machine.state == 1 ? "Set as Operational" : "Set as Out of Order"} 
                 alt="Out of Order Button"
@@ -175,10 +175,12 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
         </div>
 
         {/* Right menu buttons */}
-        <div className={machine_style.right_button_menu}>
+        <div className="absolute top-0 flex right-2">
 
             {/* Undo Button */}
-            {popupState == 2 && <img className={machine_style.menu_button}
+            {popupState == 2 && 
+                <img 
+                className="cursor-pointer"
                 src="/icons/google/undo.svg"
                 title="Undo Changes" 
                 alt="Revert Button" onClick={() => {
@@ -188,7 +190,8 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
             />}
 
             {/* Close Button */}
-            <img className={machine_style.menu_button}
+            <img 
+                className="cursor-pointer"
                 src="/icons/google/close.svg"
                 title="Close" 
                 alt="Close Button" onClick={() => {
@@ -200,10 +203,10 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
         </div>
 
         {/* Machine Name */}
-        <h1 className={machine_style.name} onClick={deselect}>{machine.name}</h1>
+        <h1 className="m-3 mb-1 text-3xl font-bold text-center" onClick={deselect}>{machine.name}</h1>
 
         {/* Machine State */}
-        <h2 className={`${machine_style.state} ${machine.newState && machine_style.edited_state}`} onClick={deselect}>{state}</h2>
+        <h2 className={`px-3 w-fit rounded-md font-light text-center mx-auto text-xl ${machine.newState && "bg-green-300"}`} onClick={deselect}>{state}</h2>
 
     </div>
 
@@ -245,10 +248,10 @@ function JobBox ( { popupState, machine, jobs, user, setJobOp, setJobNotes, sele
     function GetCategory( title, list, state ) {
         return <>
             {/* HEADER */}
-            <h3 className={machine_style.subsection} onClick={deselect}>{title}</h3>
+            <h3 className="mt-3 ml-5 text-2xl font-bold" onClick={deselect}>{title}</h3>
 
             {/* JOB LIST */}
-            <ul className={machine_style.list}>
+            <ul className="mt-2 mb-5 ml-3 mr-3">
                 { /* Maps each current job to a list entry. */ }
                 { list.map(
                     job => <Job key={job.id} 
@@ -264,7 +267,8 @@ function JobBox ( { popupState, machine, jobs, user, setJobOp, setJobNotes, sele
             </ul>
 
             {/* ADD BUTTON (if in edit mode) */}
-            { (popupState == 2 && state != 3) && <div className={machine_style.add}
+            { (popupState == 2 && state != 3) && 
+            <div className="relative w-16 my-6 text-xl text-center transition-colors border border-black rounded-md shadow-md cursor-pointer left-7 hover:bg-green-300"
                 title="Create New Job" 
                 onClick={
                     () => {
