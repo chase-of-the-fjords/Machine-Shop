@@ -57,7 +57,8 @@ export default function Building({data, machines, jobs, changes, updated, select
     let building_style = {
         /* Width and height are set based off of data from the SQL database. */
         width: `${ data.width * machine_size }px`,
-        height: `${ data.height * machine_size }px`
+        height: `${ data.height * machine_size }px`,
+        padding: `${ machine_buffer / 2 }px`,
     };
 
 
@@ -73,7 +74,7 @@ export default function Building({data, machines, jobs, changes, updated, select
             <h2 className="mb-3 text-xl font-semibold text-center sm:text-2xl">{data.name}</h2>
 
             { /* The div that contains the actual building. */ }
-            <div className="box-content relative p-[2.5px] rounded-md mx-auto bg-gray-300 shadow-lg transition-all" style={building_style}>
+            <div className="box-content relative mx-auto transition-all bg-gray-300 rounded-md shadow-lg" style={building_style}>
                 {
                     /* 
                      * Creates a machine component from each machine in the data.
