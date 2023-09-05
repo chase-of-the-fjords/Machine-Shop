@@ -81,7 +81,7 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
     // - If the machine is currently selected, the selected style is applied.
     let machineStyles = {
         basic: "absolute rounded-md shadow-md hover:mt-[-4px] transition-all",
-        oos: "opacity-30 cursor-not-allowed"
+        oos: "opacity-40 cursor-not-allowed"
     }
 
     let colorStyles = {
