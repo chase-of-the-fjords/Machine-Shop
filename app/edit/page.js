@@ -72,6 +72,6 @@ export default function App() {
 // The menu bar component.
 function Menu() {
 
-    return <h1 className="pb-2 mx-auto mt-5 mb-6 text-3xl font-bold text-center border-b-2 border-black w-96 font-CastleTLig">Origin Golf Machine Shop</h1>
+    return <h1 className="mx-auto mt-2 mb-6 text-2xl font-bold text-center sm:mt-5 sm:w-96 sm:text-3xl sm:pb-2 w-36 font-CastleTLig">Origin Golf Machine Shop</h1>
 
 }
