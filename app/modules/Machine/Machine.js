@@ -89,15 +89,41 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
         oos: "bg-gray-50",
         priority: "bg-yellow-200 hover:bg-yellow-300",
         unsaved: "bg-green-200 hover:bg-green-300",
-        selected: "bg-red-300",
+        selected: "bg-blue-400",
+    }
+
+    let smalltextStyles = {
+        basic: "text-gray-600",
+        oos: "text-gray-600",
+        priority: "text-yellow-800",
+        unsaved: "text-green-800",
+        selected: "text-blue-800",
     }
 
     let machine_color = colorStyles.basic;
+    let smalltext_color = smalltextStyles.basic;
 
-    if (editedData.code == selectedMachine) machine_color = colorStyles.selected;
-    else if (editedData.unsaved) machine_color = colorStyles.unsaved;
-    else if (editedData.state == 1) machine_color = colorStyles.oos;
-    else if (editedData.state == 2) machine_color = colorStyles.priority;
+    if (editedData.code == selectedMachine) {
+
+        machine_color = colorStyles.selected;
+        smalltext_color = smalltextStyles.selected;
+
+    } else if (editedData.unsaved) {
+
+        machine_color = colorStyles.unsaved;
+        smalltext_color = smalltextStyles.unsaved;
+
+    } else if (editedData.state == 1) {
+
+        machine_color = colorStyles.oos;
+        smalltext_color = smalltextStyles.oos;
+
+    } else if (editedData.state == 2) {
+
+        machine_color = colorStyles.priority;
+        smalltext_color = smalltextStyles.priority;
+
+    }
 
 
 
@@ -126,7 +152,7 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
                 { updated[data.code] && <img className="" src="/icons/google/alert.svg" alt="Priority"/> }
 
                 { /* The name of the machine in the top-right corner. */ }
-                <div className="absolute text-xs text-gray-500 top-1 right-1">{data.name}</div>
+                <div className={`absolute text-xs top-1 right-1 ${smalltext_color}`}>{data.name}</div>
 
                 { /* The div that contains the text for the jobs. */ }
                 <div className="mb-0 text-lg font-bold">
@@ -134,7 +160,7 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
                 </div>
 
                 { /* The div that contains the text for the queued jobs. */ }
-                <div className="text-xs italic text-gray-700">
+                <div className={`text-xs italic text-gray-700 ${smalltext_color}`}>
                     { getQueuedJobsText(editedJobs) }
                 </div>
 
