@@ -155,7 +155,7 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
             {/* Priority Button */}
             {popupState == 2 && 
                 <img 
-                className="cursor-pointer"
+                className="w-8 cursor-pointer sm:w-12"
                 src={machine.state == 2 ? "/icons/google/star_filled.svg" : "/icons/google/star_empty.svg"} 
                 title={machine.state == 2 ? "Unset as Priority" : "Set as Priority"} 
                 alt="Priority Button" 
@@ -165,7 +165,7 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
             {/* Out of Order Button */}
             {popupState == 2 && 
                 <img 
-                className="cursor-pointer"
+                className="w-8 cursor-pointer sm:w-12"
                 src={machine.state == 1 ? "/icons/google/broken_filled.svg" : "/icons/google/broken_empty.svg"}
                 title={machine.state == 1 ? "Set as Operational" : "Set as Out of Order"} 
                 alt="Out of Order Button"
@@ -180,7 +180,7 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
             {/* Undo Button */}
             {popupState == 2 && 
                 <img 
-                className="cursor-pointer"
+                className="w-8 cursor-pointer sm:w-12"
                 src="/icons/google/undo.svg"
                 title="Undo Changes" 
                 alt="Revert Button" onClick={() => {
@@ -191,7 +191,7 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
 
             {/* Close Button */}
             <img 
-                className="cursor-pointer"
+                className="w-8 cursor-pointer sm:w-12"
                 src="/icons/google/close.svg"
                 title="Close" 
                 alt="Close Button" onClick={() => {
@@ -203,10 +203,10 @@ function MachineHeader ( { popupState, machine, setSelectedJob, deselect, doActi
         </div>
 
         {/* Machine Name */}
-        <h1 className="m-3 mb-1 text-3xl font-bold text-center" onClick={deselect}>{machine.name}</h1>
+        <h1 className="m-3 mb-0 text-2xl font-bold text-center sm:mb-1 sm:text-3xl" onClick={deselect}>{machine.name}</h1>
 
         {/* Machine State */}
-        <h2 className={`px-3 w-fit rounded-md font-light text-center mx-auto text-xl ${machine.newState && "bg-green-300"}`} onClick={deselect}>{state}</h2>
+        <h2 className={`px-3 w-fit rounded-md font-light text-center mx-auto text-lg sm:text-xl ${machine.newState && "bg-green-300"}`} onClick={deselect}>{state}</h2>
 
     </div>
 
@@ -248,7 +248,7 @@ function JobBox ( { popupState, machine, jobs, user, setJobOp, setJobNotes, sele
     function GetCategory( title, list, state ) {
         return <>
             {/* HEADER */}
-            <h3 className="mt-3 ml-5 text-2xl font-bold" onClick={deselect}>{title}</h3>
+            <h3 className="mt-3 ml-3 text-xl font-bold sm:ml-5 sm:text-2xl" onClick={deselect}>{title}</h3>
 
             {/* JOB LIST */}
             <ul className="mt-2 mb-5 ml-3 mr-3 space-y-1">
@@ -268,7 +268,7 @@ function JobBox ( { popupState, machine, jobs, user, setJobOp, setJobNotes, sele
 
             {/* ADD BUTTON (if in edit mode) */}
             { (popupState == 2 && state != 3) && 
-            <div className="relative w-16 my-6 text-xl text-center transition-colors border border-black rounded-md shadow-md cursor-pointer left-7 hover:bg-green-300"
+            <div className="relative w-16 my-6 text-xl text-center transition-colors border border-black rounded-md shadow-md cursor-pointer left-5 sm:left-7 hover:bg-green-300"
                 title="Create New Job" 
                 onClick={
                     () => {
