@@ -128,6 +128,11 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
 
     }
 
+    const buttonVariants = {
+        workingHover: { marginTop: "-4px" },
+        oosHover: {}
+    }
+
 
 
 
@@ -144,9 +149,10 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
                * onClick: Does a "clickMachine" action upon being clicked.
                */ }
             <motion.button
-                whileHover={{ marginTop: "-4px" }}
+                whileHover={ editedData.state == 1 ? "oosHover" : "workingHover" }
                 whileTap={{ marginTop: "0px" }}
                 transition={{ duration: 0.15 }}
+                variants={buttonVariants}
                 key={data.code} 
                 className={`${machineStyles.basic} 
                             ${machine_color}
