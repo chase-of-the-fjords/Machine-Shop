@@ -9,6 +9,8 @@ import useWindowDimensions from '../CustomHooks/useWindowDimensions';
 // Custom functions for finding edits machine & jobs data.
 import { getEditedJobs, getEditedMachine } from './DataHelper';
 
+import { motion } from 'framer-motion';
+
 /**
  * MACHINE: DEFAULT EXPORT
  * 
@@ -68,9 +70,9 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
     let style = {
         width: `${machine_width}px`,
         height: `${machine_height}px`,
-        top: `${y}px` ,
+        top: `${y}px`,
         left: `${x}px`,
-        zIndex: `${editedData.ypos}`
+        zIndex: `${editedData.ypos}`,
     }
 
     // The set of styles applied based on the machine's state, etc.
@@ -80,8 +82,8 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
     // - If the machine has been modified & its unsaved, the unsaved style is applied.
     // - If the machine is currently selected, the selected style is applied.
     let machineStyles = {
-        basic: "absolute rounded-md transition-all",
-        working: "shadow-md hover:mt-[-4px]",
+        basic: "absolute rounded-md",
+        working: "shadow-md",
         oos: "opacity-40 cursor-not-allowed"
     }
 
@@ -141,7 +143,10 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
                * style: Sets the height, width, and position.
                * onClick: Does a "clickMachine" action upon being clicked.
                */ }
-            <button
+            <motion.button
+                whileHover={{ marginTop: "-4px" }}
+                whileTap={{ marginTop: "0px" }}
+                transition={{ duration: 0.15 }}
                 key={data.code} 
                 className={`${machineStyles.basic} 
                             ${machine_color}
@@ -165,7 +170,7 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
                     { getQueuedJobsText(editedJobs) }
                 </div>
 
-            </button>
+            </motion.button>
         </>
     )
 }
