@@ -1,6 +1,3 @@
-// The stylesheet for the popup.
-import styles from './Popup.module.css';
-
 // Boxes available to use.
 import SaveBox from './SaveBox';
 import MachineBox from './MachineBox';
@@ -40,7 +37,7 @@ export default function Popup( { popupState, machine, jobs, changes, user, doAct
                 animate={{opacity: 1}}
                 exit={{opacity: 0}}
                 transition={{duration: 0.1}}
-                className={`${styles.popup} z-10`}>
+                className="fixed top-0 left-0 z-10 w-full h-full">
 
                 { /* If the popup state is -1, create a SaveBox (Darken screen) */ }
 
@@ -48,8 +45,8 @@ export default function Popup( { popupState, machine, jobs, changes, user, doAct
 
                 { /* If the popup state is 1 or 2, create a MachineBox (Edit or View Machine) */ }
 
-                { (lastState == 1 && (popupState == 0 || popupState == 1)) || 
-                  (lastState == 2 && (popupState == 0 || popupState == 2)) && <MachineBox popupState={popupState} machine={machine} jobs={jobs} changes={changes} user={user} doAction={doAction} /> }
+                { ((lastState == 1 && (popupState == 0 || popupState == 1)) || 
+                  (lastState == 2 && (popupState == 0 || popupState == 2))) && <MachineBox popupState={popupState} machine={machine} jobs={jobs} changes={changes} user={user} doAction={doAction} /> }
 
             </motion.div> }
 

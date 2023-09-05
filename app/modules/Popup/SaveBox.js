@@ -1,6 +1,3 @@
-// The Stylesheet for the SaveBox
-import styles from './Popup.module.css'
-
 /**
  * SAVE BOX DEFAULT EXPORT
  * 
