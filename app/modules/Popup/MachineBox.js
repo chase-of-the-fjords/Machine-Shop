@@ -8,6 +8,8 @@ import { useState, useEffect } from 'react';
 // Custom helper functions for dealing with changes.
 import { getEditedJobs, getEditedMachine } from '../Machine/DataHelper';
 
+import { AnimatePresence, motion } from 'framer-motion';
+
 // Job components to be displayed.
 import Job from './Job';
 
@@ -81,7 +83,11 @@ export default function MachineBox( { popupState, machine, jobs, changes, user, 
 
         { /* BOX */ }
 
-        <div className={popup_style.standard_box}>
+        <motion.div 
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0.9 }}
+            className={popup_style.standard_box}>
             
             {/* CONTENT (largely to avoid problems with scroll bar.) */}
 
@@ -110,7 +116,7 @@ export default function MachineBox( { popupState, machine, jobs, changes, user, 
 
             </div>
 
-        </div>
+        </motion.div>
 
     </>);
 }

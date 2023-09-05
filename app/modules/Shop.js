@@ -12,6 +12,8 @@ import { reload, save } from './Helpers/Interface';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
+import { motion } from 'framer-motion';
+
 // Action functions to be passed into other components.
 import { clickMachine, setMachine, setJob, createJob, deleteJob, setJobState, closePopup, undo } from './Helpers/Actions';
 
@@ -263,14 +265,13 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
 
             </div>
             
-            { /* POPUP */
-            popupState != 0 && 
+            {/* POPUP */}
             <Popup 
                 doAction={(action, params) => { doAction(action, params) }}
                 popupState={popupState}
                 machine={machines.find((machine) => { return machine.code == currentMachine })}
                 jobs={jobs.filter((job) => { return job.machine == currentMachine})} 
-                changes={changes} />}
+                changes={changes} />
         </>
     )
 }
