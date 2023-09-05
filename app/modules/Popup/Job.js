@@ -68,7 +68,7 @@ function ViewJob ( { job } ) {
     // Returns a list entry with two paragraph elements for a job.
     return <li key={job.id} className="flex w-full rounded-md">
         {/* BULLET POINT */}
-        <svg    className="inline-block w-5 h-5 mt-2 ml-2 align-top fill-black stroke-black"
+        <svg    className="flex-grow-0 flex-shrink-0 inline-block mt-1 ml-0 align-top sm:mt-2 sm:ml-2 basis-4 sm:basis-5"
                 xmlns="http://www.w3.org/2000/svg" 
                 height="24" 
                 viewBox="0 -960 960 960" 
@@ -77,10 +77,10 @@ function ViewJob ( { job } ) {
         </svg>
         
         {/* CONTENT */}
-        <div className="inline-block p-1 pl-2 m-0 ml-1">
-            <div className="text-lg whitespace-pre-wrap">{job.op}</div>
-            <div className="text-sm italic text-gray-500 whitespace-pre-wrap">{date}</div>
-            {(job.notes == null || job.notes == "") || <p className="ml-4 text-sm text-gray-800 whitespace-pre-wrap">{job.notes}</p>}
+        <div className="inline-block p-1 m-0 ml-0 sm:ml-2">
+            <div className="leading-5 whitespace-pre-wrap text-md sm:text-lg sm:leading-6">{job.op}</div>
+            <div className="text-xs italic text-gray-500 whitespace-pre-wrap sm:text-sm">{date}</div>
+            {(job.notes == null || job.notes == "") || <p className="ml-2 text-xs text-gray-800 whitespace-pre-wrap sm:text-sm sm:ml-4">{job.notes}</p>}
         </div>
         
     </li>
@@ -148,7 +148,7 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
             }}>
 
             {/* BULLET POINT */}
-            <svg    className="inline-block w-5 h-5 mt-2 ml-2 align-top fill-black stroke-black"
+            <svg    className="flex-grow-0 flex-shrink-0 inline-block mt-1 ml-0 align-top sm:mt-2 sm:ml-2 basis-4 sm:basis-5"
                     xmlns="http://www.w3.org/2000/svg" 
                     height="24" 
                     viewBox="0 -960 960 960" 
@@ -157,10 +157,10 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
             </svg>
 
             {/* CONTENT */}
-            <div className="inline-block p-1 pl-2 m-0 ml-1">
-                <div className="text-lg whitespace-pre-wrap">{job.op}</div>
-                <div className="text-sm italic text-gray-500 whitespace-pre-wrap">{date}</div>
-                {(job.notes == null || job.notes == "") || <p className="ml-4 text-sm text-gray-800 whitespace-pre-wrap">{job.notes}</p>}
+            <div className="inline-block p-1 m-0 ml-0 sm:ml-2">
+                <div className="leading-5 whitespace-pre-wrap text-md sm:text-lg sm:leading-6">{job.op}</div>
+                <div className="text-xs italic text-gray-500 whitespace-pre-wrap sm:text-sm">{date}</div>
+                {(job.notes == null || job.notes == "") || <p className="ml-2 text-xs text-gray-800 whitespace-pre-wrap sm:text-sm sm:ml-4">{job.notes}</p>}
             </div>
         </li>
 
@@ -173,16 +173,16 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
     else {
 
         // The basic list entry.
-        return <li key={job.id} className="w-full px-4 mx-auto rounded-md">
+        return <li key={job.id} className="w-full mx-auto rounded-md sm:px-4">
 
             {/* FORM FOR JOB ENTRY, DOES NOT SUBMIT. */}
             <form onSubmit={e => { e.preventDefault(); }} >
                 
                 {/* FIRST LINE of the edit form (OP, save, queue/unqueue, delete) */}
-                <div className="flex flex-row pb-1 space-x-1">
+                <div className="flex flex-row pb-1 sm:space-x-1">
                     
                     {/* JOB OP ENTRY */}
-                    <input className="float-left pb-0 mr-2 text-lg leading-4 border-b-2 border-black outline-none grow"
+                    <input className="float-left min-w-0 pb-0 mr-2 text-lg leading-4 border-b-2 border-black outline-none grow"
                            autoFocus
                            onFocus={e => e.target.select()}
                            type="text" 
@@ -195,7 +195,7 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                            }} />                  
 
                     {/* SAVE BUTTON */}
-                    <img className="float-right cursor-pointer w-9 h-9"
+                    <img className="float-right cursor-pointer w-7 h-7 sm:w-9 sm:h-9"
                          src="/icons/google/check.svg"
                          title="Save"
                          alt="Save Button"
@@ -205,7 +205,7 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                     }/>
 
                     {/* COMPLETE BUTTON */}
-                    { job.state == 0 && <img className="float-right cursor-pointer w-9 h-9"
+                    { job.state == 0 && <img className="float-right cursor-pointer w-7 h-7 sm:w-9 sm:h-9"
                          src={"/icons/google/golf_flag.svg"}
                          title={"Mark as DONE"}
                          alt={"Mark as DONE"}
@@ -216,7 +216,7 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                     }/>}
 
                     {/* SET TO CURRENT BUTTON */}
-                    { job.state == 2 && <img className="float-right cursor-pointer w-9 h-9"
+                    { job.state == 2 && <img className="float-right cursor-pointer w-7 h-7 sm:w-9 sm:h-9"
                          src={"/icons/google/up_arrow.svg"}
                          title={"Move to NOW"}
                          alt={"Move to NOW"}
@@ -226,7 +226,7 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                     }/>}
 
                     {/* QUEUE BUTTON */}
-                    { job.state == 3 && <img className="float-right cursor-pointer w-9 h-9"
+                    { job.state == 3 && <img className="float-right cursor-pointer w-7 h-7 sm:w-9 sm:h-9"
                          src={"/icons/google/up_arrow.svg"}
                          title={"Move to NEXT"}
                          alt={"Move to NEXT"}
@@ -236,7 +236,7 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                     }/>}
 
                     {/* DELETE BUTTON */}
-                    <img className="float-right cursor-pointer w-9 h-9"
+                    <img className="float-right cursor-pointer w-7 h-7 sm:w-9 sm:h-9"
                          src={"/icons/google/delete.svg"}
                          title="Delete" 
                          alt="Delete" 
@@ -259,8 +259,8 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                         defaultValue={job.notes} 
                         onChange={(e) => setJobNotes(e.target.value)}
                         onKeyDown={(e) => {
-                            if (e.key === 'Enter') deselect();
-                            if (e.key === 'Escape' || !e.shiftKey) setSelectedJob(0);
+                            if (e.key === 'Enter' && !e.shiftKey) deselect();
+                            if (e.key === 'Escape') setSelectedJob(0);
                         }} />
 
                 </div>
