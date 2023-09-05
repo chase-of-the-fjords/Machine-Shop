@@ -251,7 +251,7 @@ function JobBox ( { popupState, machine, jobs, user, setJobOp, setJobNotes, sele
             <h3 className="mt-3 ml-5 text-2xl font-bold" onClick={deselect}>{title}</h3>
 
             {/* JOB LIST */}
-            <ul className="mt-2 mb-5 ml-3 mr-3">
+            <ul className="mt-2 mb-5 ml-3 mr-3 space-y-1">
                 { /* Maps each current job to a list entry. */ }
                 { list.map(
                     job => <Job key={job.id} 
