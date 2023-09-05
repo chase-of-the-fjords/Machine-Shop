@@ -4,9 +4,6 @@
 // Imports the shop component.
 import Shop from './Shop';
 
-// The style sheet for the main page.
-import styles from '../modules/App.module.css';
-
 // Basic React hooks.
 import { useState, useEffect } from 'react';
 
@@ -32,7 +29,7 @@ export default function App() {
     return (<>
 
             {/* BACKGROUND */}
-            <div className={styles.background}></div>
+            <div className="bg-blue-300 -z-10 fixed top-0 left-0 w-full h-[150%]"></div>
 
             {/* FOREGROUND */}
             <div>
@@ -53,7 +50,7 @@ export default function App() {
 function Menu( {setDatetime} ) {
 
     return <div>
-        <input className={styles.datetime} type="datetime-local" onChange={(e) => { setDatetime(e.target.value) } } />
+        <input className="block mx-auto my-6 text-xl" type="datetime-local" onChange={(e) => { setDatetime(e.target.value) } } />
     </div>
 
 }
