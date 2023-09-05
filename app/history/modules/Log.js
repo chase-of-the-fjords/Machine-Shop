@@ -1,6 +1,3 @@
-// The stylesheet.
-import log_style from './Log.module.css'
-
 // Basic React hooks.
 import { useState, useEffect } from "react";
 
@@ -46,7 +43,7 @@ export default function Log( { start, end, filter } ) {
 
     return <>
         {/* Object containing the full log. */}
-        <div className={log_style.log}>
+        <div className="w-11/12 max-w-2xl p-3 mx-auto mb-16 bg-gray-300 rounded-md shadow-lg h-fit">
             {
 
                 // Iterates through every day in the log.
@@ -56,7 +53,7 @@ export default function Log( { start, end, filter } ) {
                     return <div key={key}>
 
                         {/* DAY HEADER */}
-                        <h1 className={log_style.date}>{new Date(key + " ").toLocaleDateString('en-US', {day: "2-digit", month: "long", year: "numeric"})}</h1>
+                        <h1 className="mt-3 mb-5 text-3xl font-bold text-center">{new Date(key + " ").toLocaleDateString('en-US', {day: "2-digit", month: "long", year: "numeric"})}</h1>
                         
                         {/* LIST OF ENTRIES */}
                         {value.map((entry) => {
@@ -91,22 +88,22 @@ function CreatedJob( {entry} ) {
 
         // JSX (RETURN VALUE)
 
-    return <div className={log_style.entry}>
+    return <div className="flex mb-8">
 
         {/* METADATA */}
         <Metadata entry={entry} />
         
         {/* ENTRY DATA */}
-        <div className={log_style.entry_info}>
+        <div className="float-right grow">
 
             {/* MAIN LINE */}
-            <div className={log_style.action}><b>CREATED JOB</b> on <b>{entry.machine}</b> ({entry.state})</div>
+            <div><b>CREATED JOB</b> on <b>{entry.machine}</b> ({entry.state})</div>
             
             {/* OP */}
-            <div className={log_style.op}>{entry.op}</div>
+            <div className="ml-4">{entry.op}</div>
             
             {/* NOTES */}
-            {entry.notes != "" && <><div className={log_style.notes}>{entry.notes}</div></>}
+            {entry.notes != "" && <><div className="ml-5 text-xs">{entry.notes}</div></>}
        
         </div>
 
@@ -123,33 +120,33 @@ function UpdatedJob( {entry} ) {
 
         // JSX (RETURN VALUE)
 
-    return <div className={log_style.entry}>
+    return <div className="flex mb-8">
 
         {/* METADATA */}
         <Metadata entry={entry} />
         
         {/* ENTRY DATA */}
-        <div className={log_style.entry_info}>
+        <div className="float-right grow">
 
             {/* MAIN LINE */}
-            <div className={log_style.action}><b>UPDATED JOB</b> on <b>{entry.machine}</b></div>
+            <div className=""><b>UPDATED JOB</b> on <b>{entry.machine}</b></div>
             
             {/* OP */}
             { entry.changes.op != undefined && <>
-                <div className={log_style.new_value}><b>OP:</b> {entry.changes.op.new}</div>
-                <div className={log_style.old_value}>From: {entry.changes.op.old}</div>
+                <div className="ml-4"><b>OP:</b> {entry.changes.op.new}</div>
+                <div className="ml-6 italic">From: {entry.changes.op.old}</div>
             </>}
 
             {/* NOTES */}
             { entry.changes.notes != undefined && <>
-                <div className={log_style.new_value}><b>NOTES:</b> {entry.changes.notes.new}</div>
-                <div className={log_style.old_value}>From: {entry.changes.notes.old}</div>
+                <div className="ml-4"><b>NOTES:</b> {entry.changes.notes.new}</div>
+                <div className="ml-6 italic">From: {entry.changes.notes.old}</div>
             </>}
 
             {/* STATE */}
             { entry.changes.state != undefined && <>
-                <div className={log_style.new_value}><b>STATE:</b> {entry.changes.state.new}</div>
-                <div className={log_style.old_value}>From: {entry.changes.state.old}</div>
+                <div className="ml-4"><b>STATE:</b> {entry.changes.state.new}</div>
+                <div className="ml-6 italic">From: {entry.changes.state.old}</div>
             </>}
 
         </div>
@@ -167,22 +164,22 @@ function DeletedJob( {entry} ) {
 
         // JSX (RETURN VALUE)
 
-    return <div className={log_style.entry}>
+    return <div className="flex mb-8">
 
         {/* METADATA */}
         <Metadata entry={entry} />
         
         {/* ENTRY DATA */}
-        <div className={log_style.entry_info}>
+        <div className="float-right grow">
 
             {/* MAIN LINE */}
-            <div className={log_style.action}><b>DELETED JOB</b> on <b>{entry.machine}</b> ({entry.state})</div>
+            <div className=""><b>DELETED JOB</b> on <b>{entry.machine}</b> ({entry.state})</div>
             
             {/* NAME */}
-            <div className={log_style.op}>{entry.op}</div>
+            <div className="ml-4">{entry.op}</div>
             
             {/* NOTES */}
-            {entry.notes != "" && <div className={log_style.notes}>{entry.notes}</div>}
+            {entry.notes != "" && <div className="ml-5 text-xs">{entry.notes}</div>}
 
         </div>
 
@@ -199,22 +196,22 @@ function CreatedMachine( {entry} ) {
 
         // JSX (RETURN VALUE)
 
-    return <div className={log_style.entry}>
+    return <div className="flex mb-8">
 
         {/* METADATA */}
         <Metadata entry={entry} />
         
         {/* ENTRY DATA */}
-        <div className={log_style.entry_info}>
+        <div className="float-right grow">
 
             {/* MAIN LINE */}
-            <div className={log_style.action}><b>CREATED MACHINE:</b> {entry.name} in {entry.building}</div>
+            <div className=""><b>CREATED MACHINE:</b> {entry.name} in {entry.building}</div>
             
             {/* DIMENSIONS & POSITION */}
-            <div className={log_style.new_value}><b>DIMENSIONS & POSITION:</b> {entry.width}x{entry.height} at ({entry.xpos}, {entry.ypos})</div>
+            <div className="ml-4"><b>DIMENSIONS & POSITION:</b> {entry.width}x{entry.height} at ({entry.xpos}, {entry.ypos})</div>
             
             {/* STATE */}
-            <div className={log_style.new_value}><b>STATE:</b> {entry.state}</div>
+            <div className="ml-4"><b>STATE:</b> {entry.state}</div>
         
         </div>
 
@@ -231,21 +228,21 @@ function UpdatedMachine( {entry} ) {
 
         // JSX (RETURN VALUE)
 
-    return <div className={log_style.entry}>
+    return <div className="flex mb-8">
 
         {/* METADATA */}
         <Metadata entry={entry} />
         
         {/* ENTRY DATA */}
-        <div className={log_style.entry_info}>
+        <div className="float-right grow">
 
             {/* MAIN LINE */}
-            <div className={log_style.action}><b>UPDATED MACHINE: {entry.name}</b></div>
+            <div className=""><b>UPDATED MACHINE: {entry.name}</b></div>
 
             {/* STATE */}
             { entry.changes.state != undefined && <>
-                <div className={log_style.new_value}><b>STATE:</b> {entry.changes.state.new}</div>
-                <div className={log_style.old_value}>From: {entry.changes.state.old}</div>
+                <div className="ml-4"><b>STATE:</b> {entry.changes.state.new}</div>
+                <div className="ml-6 italic">From: {entry.changes.state.old}</div>
             </>}
 
         </div>
@@ -265,9 +262,9 @@ function Metadata( { entry } ) {
     let time = moment.utc(entry.timestamp).format('h:mm:ss A');
 
     // JSX (RETURN VALUE)
-    return <div className={log_style.metadata}>
-        <div className={log_style.timestamp}>{time}</div>
-        <div className={log_style.user}>{entry.user}</div>
+    return <div className="basis-24 grow-0 shrink-0">
+        <div className="text-sm">{time}</div>
+        <div className="text-sm">{entry.user}</div>
     </div>
 
 }
