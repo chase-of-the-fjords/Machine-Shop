@@ -1,9 +1,6 @@
 // This is an interactive component, so it's a client component.
 'use client'
 
-// Style sheets.
-import styles from './PasswordForm.module.css';
-
 // Basic React hooks.
 import { useState, useEffect } from 'react';
 
@@ -51,31 +48,33 @@ export default function PasswordForm( {setUser} ) {
 
     return (unlocked ||
 
-        <div className={`${styles.screen} z-10`}>
+        <div className="fixed top-0 left-0 z-10 w-full h-full">
 
             {/* BACKGROUND */}
-            <div className={styles.background}/>
+            <div className="fixed top-0 left-0 w-full h-full bg-blue-300" />
 
             {/* RIGHT MENU */}
-            <div className={styles.right_bar}>
+            <div className="absolute flex space-x-1 top-2 right-2 sm:top-4 sm:right-4">
 
                 {/* HOME BUTTON */}
-                <div className={styles.right_button} title="Return to Home">
+                <div className="w-8 cursor-pointer sm:w-12" title="Return to Home">
                     <a href="./">
-                        <img className={styles.button_image} src="/icons/google/home.svg" />
+                        <img src="/icons/google/home.svg" />
                     </a>
                 </div>
 
             </div>
 
             {/* PASSWORD BOX */}
-            <div className={styles.password_box}>
+            <div className="relative w-4/6 max-w-lg mx-auto mt-32 text-center bg-gray-300 rounded-lg shadow-xl h-80">
 
                 {/* PROMPT */}
-                <h1 className={styles.prompt}>Enter Password</h1>
+                <h1 className="relative pt-24 mb-4 text-3xl font-bold">Enter Password</h1>
 
                 {/* INPUT */}
-                <form onSubmit={e => { e.preventDefault(); }} ><input autoFocus type="password" className={styles.input} autoComplete="off" onChange={e => setPassword(e.target.value)} /></form>
+                <form onSubmit={e => { e.preventDefault(); }} >
+                    <input autoFocus type="password" className="text-3xl text-center" autoComplete="off" onChange={e => setPassword(e.target.value)} />
+                </form>
 
             </div>
 
