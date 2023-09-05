@@ -44,8 +44,8 @@ export default function Building({data, machines, jobs, changes, updated, select
 
         // SIZING AND STYLING
 
-    let machine_size = (width <= 700 ? (width <= 500 ? 75 : 100) : 120);
-    let machine_buffer = (width <= 700 ? (width <= 500 ? 3 : 4) : 5);
+    let machine_size = (width <= 640 ? (width <= 500 ? 75 : 100) : 120);
+    let machine_buffer = (width <= 640 ? (width <= 500 ? 3 : 4) : 5);
 
     let container_style = {
         // Sets the width based off the JSON data for the building. 100px is added as padding.

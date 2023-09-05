@@ -53,8 +53,8 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
 
     // The size of the machine in pixels, and the buffer size around the edges of the machines.
     // Changes based on the width of the screen.
-    let machine_size = (width <= 700 ? (width <= 500 ? 75 : 100) : 120);
-    let machine_buffer = (width <= 700 ? (width <= 500 ? 3 : 4) : 5);
+    let machine_size = (width <= 640 ? (width <= 500 ? 75 : 100) : 120);
+    let machine_buffer = (width <= 640 ? (width <= 500 ? 3 : 4) : 5);
 
     // The height and width of the machine in pixels.
     let machine_width = (editedData.width * machine_size) - machine_buffer;
@@ -153,10 +153,10 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
                 { updated[data.code] && <img className="" src="/icons/google/alert.svg" alt="Priority"/> }
 
                 { /* The name of the machine in the top-right corner. */ }
-                <div className={`absolute text-xs top-0 right-1 md:top-1 ${smalltext_color}`}>{data.name}</div>
+                <div className={`absolute text-xs top-1 right-1 ${smalltext_color}`}>{data.name}</div>
 
                 { /* The div that contains the text for the jobs. */ }
-                <div className="mb-0 font-bold text-md md:text-lg">
+                <div className="mb-0 font-bold text-md sm:text-lg">
                     { getCurrentJobsText(editedJobs) }
                 </div>
 
