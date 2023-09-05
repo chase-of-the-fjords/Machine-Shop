@@ -70,7 +70,7 @@ export default function Building({data, machines, jobs, changes, updated, select
         <animated.div className="inline-block mb-10 transition-[width]" style={container_style}>
 
             { /* The header that contains the name of the building. */ }
-            <h2 className="mb-3 text-2xl font-semibold text-center">{data.name}</h2>
+            <h2 className="mb-3 text-xl font-semibold text-center sm:text-2xl">{data.name}</h2>
 
             { /* The div that contains the actual building. */ }
             <div className="box-content relative p-[2.5px] rounded-md mx-auto bg-gray-300 shadow-lg transition-all" style={building_style}>
