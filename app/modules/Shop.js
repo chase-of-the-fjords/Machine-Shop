@@ -1,9 +1,6 @@
 // This is an interactive component, so it's a client component.
 'use client'
 
-// Stylesheet for the main page.
-import styles from './App.module.css';
-
 // Imports other modules.
 import Building from './Building/Building';
 import Popup from './Popup/Popup';
@@ -189,7 +186,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
     return (
         <>
             { /* This div sets the style for the whole shop. */ }
-            <div className={styles.shop}>
+            <div className="w-full mx-auto text-center">
 
                 {
                     // Creates building components.
@@ -225,42 +222,42 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
             {/* MENU BARS */}
 
             {/* LEFT MENU */}
-            <div className={styles.left_bar}>
+            <div className="absolute flex space-x-1 top-4 left-4">
 
                 {/* SAVE BUTTON */}
-                {type == "edit" && <div className={styles.left_button} title="Save Changes" onClick={() => doAction('save', [])}><img className={styles.button_image} src="/icons/google/save.svg" /></div>}
+                {type == "edit" && <div className="" title="Save Changes" onClick={() => doAction('save', [])}><img className="" src="/icons/google/save.svg" /></div>}
                 
                 {/* VIEW BUTTON */}
-                {(type == "view" || type == "edit") && <div className={styles.right_button} title="Change View" onClick={ () => {
+                {(type == "view" || type == "edit") && <div className="cursor-pointer" title="Change View" onClick={ () => {
                     if (typeof window !== undefined) localStorage.setItem('view', (view + 1) % 3);
                     setView((view + 1) % 3);
-                }}><img className={styles.button_image} src="/icons/google/eye.svg" /></div>}
+                }}><img className="" src="/icons/google/eye.svg" /></div>}
 
             </div>
 
 
 
             {/* RIGHT MENU */}
-            <div className={styles.right_bar}>
+            <div className="absolute flex space-x-1 top-4 right-4">
 
                 {/* EDIT BUTTON */}
-                {type == "view" && <div className={styles.right_button} title="Edit">
+                {type == "view" && <div className="" title="Edit">
                     <a href="./edit">
-                        <img className={styles.button_image} src="/icons/google/edit.svg" />
+                        <img className="" src="/icons/google/edit.svg" />
                     </a>
                 </div>}
 
                 {/* HISTORY BUTTON */}
-                {type == "edit" && <div className={styles.right_button} title="View History">
+                {type == "edit" && <div className="" title="View History">
                     <a href="./history">
-                        <img className={styles.button_image} src="/icons/google/history.svg" />
+                        <img className="" src="/icons/google/history.svg" />
                     </a>
                 </div>}
 
                 {/* HOME BUTTON */}
-                {type == "edit" && <div className={styles.right_button} title="Return to Home">
+                {type == "edit" && <div className="" title="Return to Home">
                     <a href="./">
-                        <img className={styles.button_image} src="/icons/google/home.svg" />
+                        <img className="" src="/icons/google/home.svg" />
                     </a>
                 </div>}
 
