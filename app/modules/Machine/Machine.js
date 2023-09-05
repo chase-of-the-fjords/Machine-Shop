@@ -156,7 +156,7 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
                 <div className={`absolute text-xs top-1 right-1 ${smalltext_color}`}>{data.name}</div>
 
                 { /* The div that contains the text for the jobs. */ }
-                <div className="mb-0 font-bold text-md sm:text-lg">
+                <div className="mb-0 text-sm font-bold sm:text-lg">
                     { getCurrentJobsText(editedJobs) }
                 </div>
 
