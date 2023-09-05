@@ -80,8 +80,8 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
     // - If the machine has been modified & its unsaved, the unsaved style is applied.
     // - If the machine is currently selected, the selected style is applied.
     let machineStyles = {
-        basic: "absolute rounded-md",
-        working: "shadow-md hover:mt-[-4px] transition-all",
+        basic: "absolute rounded-md transition-all",
+        working: "shadow-md hover:mt-[-4px]",
         oos: "opacity-40 cursor-not-allowed"
     }
 
