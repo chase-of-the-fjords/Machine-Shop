@@ -161,7 +161,7 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
                 onClick={ () => doAction("clickMachine", [data.code]) } >
 
                 { /* If the machine is a priority, adds a star. */ }
-                { updated[data.code] && <img className="" src="/icons/google/alert.svg" alt="Priority"/> }
+                { updated[data.code] && <img className="absolute w-3 right-1 bottom-1 sm:w-4" src="/icons/google/alert.svg" alt="Updated"/> }
 
                 { /* The name of the machine in the top-right corner. */ }
                 <div className={`absolute text-xs top-1 right-1 ${smalltext_color}`}>{data.name}</div>
