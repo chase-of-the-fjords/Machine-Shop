@@ -159,8 +159,8 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
             {/* CONTENT */}
             <div className="inline-block p-1 m-0 ml-0 sm:ml-2">
                 <div className="leading-5 whitespace-pre-wrap text-md sm:text-lg sm:leading-6">{job.op}</div>
-                <div className="text-xs italic text-gray-500 whitespace-pre-wrap sm:text-sm">{date}</div>
-                {(job.notes == null || job.notes == "") || <p className="ml-2 text-xs text-gray-800 whitespace-pre-wrap sm:text-sm sm:ml-4">{job.notes}</p>}
+                <div className={`text-xs italic ${job.unsaved ? "text-green-700" : "text-gray-500"} whitespace-pre-wrap sm:text-sm`}>{date}</div>
+                {(job.notes == null || job.notes == "") || <p className={`ml-2 text-xs ${job.unsaved ? "text-green-900" : "text-gray-800"} whitespace-pre-wrap sm:text-sm sm:ml-4`}>{job.notes}</p>}
             </div>
         </li>
 
