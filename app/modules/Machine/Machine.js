@@ -55,8 +55,8 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
 
     // The size of the machine in pixels, and the buffer size around the edges of the machines.
     // Changes based on the width of the screen.
-    let machine_size = (width <= 640 ? (width <= 500 ? 75 : 100) : 120);
-    let machine_buffer = (width <= 640 ? (width <= 500 ? 3 : 4) : 5);
+    let machine_size = (width < 640 ? (width <= 500 ? 75 : 100) : 120);
+    let machine_buffer = (width < 640 ? (width <= 500 ? 3 : 4) : 5);
 
     // The height and width of the machine in pixels.
     let machine_width = (editedData.width * machine_size) - machine_buffer;
