@@ -37,7 +37,7 @@ export default function Popup( { popupState, machine, jobs, changes, user, doAct
                 animate={{opacity: 1}}
                 exit={{opacity: 0}}
                 transition={{duration: 0.1}}
-                className="fixed top-0 left-0 z-10 w-full h-full">
+                className="fixed top-0 left-0 z-20 w-full h-full">
 
                 { /* If the popup state is -1, create a SaveBox (Darken screen) */ }
 

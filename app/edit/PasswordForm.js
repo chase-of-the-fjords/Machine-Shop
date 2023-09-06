@@ -48,7 +48,7 @@ export default function PasswordForm( {setUser} ) {
 
     return (unlocked ||
 
-        <div className="fixed top-0 left-0 z-10 w-full h-full">
+        <div className="fixed top-0 left-0 z-20 w-full h-full">
 
             {/* BACKGROUND */}
             <div className="fixed top-0 left-0 w-full h-full bg-blue-300" />
