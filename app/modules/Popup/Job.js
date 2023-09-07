@@ -68,13 +68,21 @@ function ViewJob ( { job } ) {
     // Returns a list entry with two paragraph elements for a job.
     return <li key={job.id} className="flex w-full rounded-md">
         {/* BULLET POINT */}
-        <svg    className="flex-grow-0 flex-shrink-0 inline-block mt-1 ml-0 align-top sm:mt-2 sm:ml-2 basis-4 sm:basis-5"
-                xmlns="http://www.w3.org/2000/svg" 
-                height="24" 
-                viewBox="0 -960 960 960" 
-                width="24">
-            <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
-        </svg>
+        { job.priority ? 
+            <svg    className="flex-grow-0 flex-shrink-0 inline-block mt-1 ml-0 align-top sm:mt-2 sm:ml-2 basis-4 sm:basis-5"
+                    xmlns="http://www.w3.org/2000/svg" 
+                    height="24" 
+                    viewBox="0 -960 960 960" 
+                    width="24">
+                <path d="m233-80 65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Z"/>
+            </svg>
+            : <svg    className="flex-grow-0 flex-shrink-0 inline-block mt-1 ml-0 align-top sm:mt-2 sm:ml-2 basis-4 sm:basis-5"
+                    xmlns="http://www.w3.org/2000/svg" 
+                    height="24" 
+                    viewBox="0 -960 960 960" 
+                    width="24">
+                <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
+            </svg> }
         
         {/* CONTENT */}
         <div className="inline-block p-1 m-0 ml-0 sm:ml-2">
@@ -148,13 +156,21 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
             }}>
 
             {/* BULLET POINT */}
+            { job.priority ? 
             <svg    className="flex-grow-0 flex-shrink-0 inline-block mt-1 ml-0 align-top sm:mt-2 sm:ml-2 basis-4 sm:basis-5"
                     xmlns="http://www.w3.org/2000/svg" 
                     height="24" 
                     viewBox="0 -960 960 960" 
                     width="24">
-                <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
+                <path d="m233-80 65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Z"/>
             </svg>
+            : <svg    className="flex-grow-0 flex-shrink-0 inline-block mt-1 ml-0 align-top sm:mt-2 sm:ml-2 basis-4 sm:basis-5"
+                    xmlns="http://www.w3.org/2000/svg" 
+                    height="24" 
+                    viewBox="0 -960 960 960" 
+                    width="24">
+                <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
+            </svg> }
 
             {/* CONTENT */}
             <div className="inline-block p-1 m-0 ml-0 sm:ml-2">
