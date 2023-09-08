@@ -51,6 +51,27 @@ function ViewJob ( { job } ) {
     let date = '';
     let verb = 'Updated';
 
+    let jobStyles = {
+        standardBackground: "",
+        priorityBackground: "bg-yellow-300",
+        standardTimestamp: "text-gray-500",
+        priorityTimestamp: "text-yellow-700",
+        standardNotes: "text-gray-800",
+        priorityNotes: "text-yellow-900",
+    }
+
+    let backgroundColor = jobStyles.standardBackground;
+    let timestampColor = jobStyles.standardTimestmap;
+    let notesColor = jobStyles.standardNotes;
+
+    if (job.priority) {
+
+        backgroundColor = jobStyles.priorityBackground;
+        timestampColor = jobStyles.priorityTimestamp;
+        notesColor = jobStyles.priorityNotes;
+
+    }
+
     if (job.log == 0 || job.log == 2) {
         verb = 'Created';
     } else {
@@ -66,7 +87,7 @@ function ViewJob ( { job } ) {
     }
 
     // Returns a list entry with two paragraph elements for a job.
-    return <li key={job.id} className="flex w-full rounded-md">
+    return <li key={job.id} className={`flex w-full rounded-md ${backgroundColor}`}>
         {/* BULLET POINT */}
         { job.priority ? 
             <svg    className="flex-grow-0 flex-shrink-0 inline-block mt-1 ml-0 align-top sm:mt-2 sm:ml-2 basis-4 sm:basis-5"
@@ -87,8 +108,8 @@ function ViewJob ( { job } ) {
         {/* CONTENT */}
         <div className="inline-block p-1 m-0 ml-0 sm:ml-2">
             <div className="leading-5 whitespace-pre-wrap text-md sm:text-lg sm:leading-6">{job.op}</div>
-            <div className="text-xs italic text-gray-500 whitespace-pre-wrap sm:text-sm">{date}</div>
-            {(job.notes == null || job.notes == "") || <p className="ml-2 text-xs text-gray-800 whitespace-pre-wrap sm:text-sm sm:ml-4">{job.notes}</p>}
+            <div className={`text-xs italic ${timestampColor} whitespace-pre-wrap sm:text-sm`}>{date}</div>
+            {(job.notes == null || job.notes == "") || <p className={`ml-2 text-xs ${notesColor} whitespace-pre-wrap sm:text-sm sm:ml-4`}>{job.notes}</p>}
         </div>
         
     </li>
@@ -114,6 +135,36 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
 
     let date = '';
     let verb = 'Updated';
+
+    let jobStyles = {
+        standardBackground: "hover:bg-gray-100",
+        unsavedBackground: "bg-green-300 hover:bg-green-400",
+        priorityBackground: "bg-yellow-300 hover:bg-yellow-400",
+        standardTimestamp: "text-gray-500",
+        unsavedTimestamp: "text-green-700",
+        priorityTimestamp: "text-yellow-700",
+        standardNotes: "text-gray-800",
+        unsavedNotes: "text-green-900",
+        priorityNotes: "text-yellow-900",
+    }
+
+    let backgroundColor = jobStyles.standardBackground;
+    let timestampColor = jobStyles.standardTimestmap;
+    let notesColor = jobStyles.standardNotes;
+
+    if (job.unsaved) {
+
+        backgroundColor = jobStyles.unsavedBackground;
+        timestampColor = jobStyles.unsavedTimestamp;
+        notesColor = jobStyles.unsavedNotes;
+
+    } else if (job.priority) {
+
+        backgroundColor = jobStyles.priorityBackground;
+        timestampColor = jobStyles.priorityTimestamp;
+        notesColor = jobStyles.priorityNotes;
+
+    }
 
     if (job.log == 0 || job.log == 2) {
         verb = 'Created';
@@ -147,7 +198,7 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
     if (selectedJob != job.id) {
 
         // Similar to the ViewJob, but can be deleted & unsaved, and selects the job on click.
-        return <li key={job.id} className={`flex w-full rounded-md cursor-pointer ${job.unsaved && "bg-green-300"} ${job.deleted && "line-through"}`}
+        return <li key={job.id} className={`flex w-full rounded-md cursor-pointer transition-colors ${backgroundColor} ${job.deleted && "line-through"}`}
             onClick={() => {
                 deselect();
                 setSelectedJob(job.id);
@@ -175,8 +226,8 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
             {/* CONTENT */}
             <div className="inline-block p-1 m-0 ml-0 sm:ml-2">
                 <div className="leading-5 whitespace-pre-wrap text-md sm:text-lg sm:leading-6">{job.op}</div>
-                <div className={`text-xs italic ${job.unsaved ? "text-green-700" : "text-gray-500"} whitespace-pre-wrap sm:text-sm`}>{date}</div>
-                {(job.notes == null || job.notes == "") || <p className={`ml-2 text-xs ${job.unsaved ? "text-green-900" : "text-gray-800"} whitespace-pre-wrap sm:text-sm sm:ml-4`}>{job.notes}</p>}
+                <div className={`text-xs italic ${timestampColor} whitespace-pre-wrap sm:text-sm`}>{date}</div>
+                {(job.notes == null || job.notes == "") || <p className={`ml-2 text-xs ${notesColor} whitespace-pre-wrap sm:text-sm sm:ml-4`}>{job.notes}</p>}
             </div>
         </li>
 
