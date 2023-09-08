@@ -233,8 +233,16 @@ function JobBox ( { popupState, machine, jobs, user, setJobOp, setJobNotes, sele
 
     // Separates jobs into categories.
     let currentJobs = jobs.filter((job) => { return job.state == 0 }).sort( (a, b) => { return new Date(b.start) - new Date(a.start); });
+
+    currentJobs = [ ...currentJobs.filter((job) => job.priority == 1 ), ...currentJobs.filter((job) => job.priority == 0 )]
+
     let queuedJobs = jobs.filter((job) => { return job.state == 2 }).sort( (a, b) => { return new Date(b.start) - new Date(a.start); });
+    
+    queuedJobs = [ ...queuedJobs.filter((job) => job.priority == 1 ), ...queuedJobs.filter((job) => job.priority == 0 )]
+
     let completedJobs = jobs.filter((job) => { return job.state == 3 }).sort( (a, b) => { return new Date(b.start) - new Date(a.start); });
+
+    completedJobs = [ ...completedJobs.filter((job) => job.priority == 1 ), ...completedJobs.filter((job) => job.priority == 0 )]
 
     /**
      * Returns the JSX for one category of jobs.
