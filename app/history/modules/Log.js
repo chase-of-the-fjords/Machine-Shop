@@ -149,6 +149,12 @@ function UpdatedJob( {entry} ) {
                 <div className="ml-6 italic">From: {entry.changes.state.old}</div>
             </>}
 
+            {/* PRIORITY */}
+            { entry.changes.priority != undefined && <>
+                <div className="ml-4"><b>PRIORITY:</b> {entry.changes.priority.new}</div>
+                <div className="ml-6 italic">From: {entry.changes.priority.old}</div>
+            </>}
+
         </div>
 
     </div>
@@ -244,7 +250,6 @@ function UpdatedMachine( {entry} ) {
                 <div className="ml-4"><b>STATE:</b> {entry.changes.state.new}</div>
                 <div className="ml-6 italic">From: {entry.changes.state.old}</div>
             </>}
-
         </div>
 
     </div>

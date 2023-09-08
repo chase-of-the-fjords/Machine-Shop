@@ -180,7 +180,8 @@ export async function getLog(start, end) {
                    machine: getMachine(job.machine, {machines: current_machines}), 
                    op: job.op, 
                    notes: job.notes, 
-                   state: getJobState(job.state)};
+                   state: getJobState(job.state),
+                   priority: getJobPriority(job.priority)};
         
         // Adds it to the log.
         created_jobs.push(log);
@@ -219,10 +220,12 @@ export async function getLog(start, end) {
             if (job.op != previous_version.op) log.changes.op = {new: job.op, old: previous_version.op};
             if (job.notes != previous_version.notes) log.changes.notes = {new: job.notes, old: previous_version.notes};
             if (job.state != previous_version.state) log.changes.state = {new: getJobState(job.state), old: getJobState(previous_version.state)};
+            if (job.priority != previous_version.priority) log.changes.priority = {new: getJobPriority(job.priority), old: getJobPriority(previous_version.priority)};
         } else {
             log.changes.op = {new: job.op, old: "UNKNOWN"};
             log.changes.notes = {new: job.notes, old: "UNKNOWN"};
             log.changes.state = {new: getJobState(job.state), old: "UNKNOWN"};
+            log.changes.priority = {new: getJobPriority(job.priority), old: "UNKNOWN"};
         }
 
         // Add the object to the log.
@@ -253,7 +256,8 @@ export async function getLog(start, end) {
                    machine: getMachine(job.machine, {machines: current_machines}), 
                    op: job.op, 
                    notes: job.notes, 
-                   state: getJobState(job.state)};
+                   state: getJobState(job.state),
+                   priority: getJobPriority(job.priority)};
         
         // Adds the entry to the log.
         deleted_jobs.push(log);
@@ -409,6 +413,21 @@ function getJobState( state ) {
     if (state == 1) return "ON HOLD";
     if (state == 2) return "NEXT";
     if (state == 3) return "DONE";
+    else return "N/A";
+
+}
+
+/**
+ * Gets a string version of a job's priority given a number.
+ * 
+ * @param {number} priority - The priority of the job as a number.
+ *  
+ * @returns The name of the priority.
+ */
+function getJobPriority( priority ) {
+
+    if (priority == 0) return "FALSE";
+    if (priority == 1) return "TRUE";
     else return "N/A";
 
 }
