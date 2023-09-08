@@ -317,6 +317,7 @@ export async function updateJob( id, { jobs, changes, user } ) {
     if (changes["jobs"][job.machine][id].op != undefined) job.op = changes["jobs"][job.machine][id].op;
     if (changes["jobs"][job.machine][id].notes != undefined) job.notes = changes["jobs"][job.machine][id].notes;
     if (changes["jobs"][job.machine][id].state != undefined) job.state = changes["jobs"][job.machine][id].state;
+    if (changes["jobs"][job.machine][id].priority != undefined) job.priority = changes["jobs"][job.machine][id].priority;
     job.starter = user;
     job.ender = user;
     job.log = 1;

@@ -91,6 +91,7 @@ export function getEditedJobs ({data, jobs, changes}) {
                         if (value.op != undefined) match.op = value.op;
                         if (value.notes != undefined) match.notes = value.notes;
                         if (value.state != undefined) match.state = value.state;
+                        if (value.priority != undefined) match.priority = value.priority;
                         if (value.deleted == true) match.deleted = true;
 
                         // Mark the machine as unsaved, as it had changes listed.

@@ -207,6 +207,40 @@ export function setJobState( machine, id, state, { changes, setChanges, jobs } )
 }
 
 /**
+ * SET JOB PRIORITY ACTION
+ * 
+ * Sets a job's priority.
+ * 
+ * @param {string} machine - The code of the machine of the job.
+ * @param {number} id - The ID for the job.
+ * @param {number} priority - The new priority for the job.
+ */
+export function setJobPriority( machine, id, priority, { changes, setChanges, jobs } ) {
+
+    // Gets a copy of the changes to modify
+    let updatedChanges = {...changes};
+    let sqlValue = jobs.find((job) => { return job.id == id });
+
+    // If the current machine hasn't been logged, creates an object for it.
+    if (updatedChanges["jobs"][machine] == undefined) {
+        updatedChanges["jobs"][machine] = {};
+    }
+
+    // If the current job hasn't been logged, creates an object for it.
+    if (updatedChanges["jobs"][machine][id] == undefined) {
+        updatedChanges["jobs"][machine][id] = {};
+    }
+
+    // If the machine is already in the database, and the new state matches it, delete that field. Otherwise, store the new value.
+    if (sqlValue != undefined && sqlValue.priority == priority) delete updatedChanges["jobs"][machine][id].priority;
+    else updatedChanges["jobs"][machine][id].priority = priority;
+
+    // Update the changes list to match.
+    setChanges(updatedChanges);
+
+}
+
+/**
  * UNDO ACTION
  * 
  * Clears all changes on a machine.

@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 // Action functions to be passed into other components.
-import { clickMachine, setMachine, setJob, createJob, deleteJob, setJobState, closePopup, undo } from './Helpers/Actions';
+import { clickMachine, setMachine, setJob, createJob, deleteJob, setJobState, setJobPriority, closePopup, undo } from './Helpers/Actions';
 
 // Default export for the machine shop.
 export default function Shop( { type, machines, buildings, jobs, setMachines, setBuildings, setJobs, user, hasChanges, setHasChanges } ) {
@@ -168,15 +168,16 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
 
     function doAction ( act, params ) {
 
-        if (act == 'clickMachine')  clickMachine(params[0], { type, updated, setUpdated, popupState, setPopupState, setCurrentMachine });
-        if (act == 'setMachine')    setMachine(params[0], params[1], { machines, changes, setChanges, currentMachine });
-        if (act == 'setJob')        setJob(params[0], params[1], params[2], params[3], { changes, setChanges, jobs });
-        if (act == 'createJob')     createJob(params[0], params[1], params[2], params[3], params[4], { changes, setChanges });
-        if (act == 'deleteJob')     deleteJob(params[0], params[1], { changes, setChanges });
-        if (act == 'setJobState')   setJobState(params[0], params[1], params[2], { changes, setChanges, jobs });
-        if (act == 'closePopup')    closePopup({ setPopupState, setCurrentMachine });
-        if (act == 'undo')          undo(params[0], { changes, setChanges });
-        if (act == 'save')          save({ user, changes, setChanges, setBuildings, machines, setMachines, jobs, setJobs, setPopupState });
+        if (act == 'clickMachine')   clickMachine(params[0], { type, updated, setUpdated, popupState, setPopupState, setCurrentMachine });
+        if (act == 'setMachine')     setMachine(params[0], params[1], { machines, changes, setChanges, currentMachine });
+        if (act == 'setJob')         setJob(params[0], params[1], params[2], params[3], { changes, setChanges, jobs });
+        if (act == 'createJob')      createJob(params[0], params[1], params[2], params[3], params[4], { changes, setChanges });
+        if (act == 'deleteJob')      deleteJob(params[0], params[1], { changes, setChanges });
+        if (act == 'setJobState')    setJobState(params[0], params[1], params[2], { changes, setChanges, jobs });
+        if (act == 'setJobPriority') setJobPriority(params[0], params[1], params[2], { changes, setChanges, jobs });
+        if (act == 'closePopup')     closePopup({ setPopupState, setCurrentMachine });
+        if (act == 'undo')           undo(params[0], { changes, setChanges });
+        if (act == 'save')           save({ user, changes, setChanges, setBuildings, machines, setMachines, jobs, setJobs, setPopupState });
 
     }
 
