@@ -104,7 +104,7 @@ export function getEditedJobs ({data, jobs, changes}) {
             else {
 
                 // Creates the new job object.
-                let newJob = {id: key, machine: data.code, op: value.op, notes: value.notes, state: value.state, new: true, unsaved: true};
+                let newJob = {id: key, machine: data.code, op: value.op, notes: value.notes, state: value.state, priority: value.priority, new: true, unsaved: true};
 
                 // Adds it to the list.
                 editedJobs.push(newJob);
