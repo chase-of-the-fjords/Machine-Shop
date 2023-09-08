@@ -251,17 +251,6 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                          }
                     }/>}
 
-                    {/* DELETE BUTTON */}
-                    <img className="float-right cursor-pointer w-7 h-7 sm:w-9 sm:h-9"
-                         src={"/icons/google/delete.svg"}
-                         title="Delete" 
-                         alt="Delete" 
-                         onClick={() => {
-                            doAction("deleteJob", [job.machine, job.id]);
-                            setSelectedJob(0);
-                         }
-                    }/>
-
                 </div>
 
                 {/* SECOND LINE of the edit form (Notes) */}
@@ -278,6 +267,27 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
                             if (e.key === 'Enter' && !e.shiftKey) deselect();
                             if (e.key === 'Escape') setSelectedJob(0);
                         }} />
+
+                    {/* PRIORITY BUTTON */}
+                    <img className="float-right cursor-pointer w-7 h-7 sm:w-9 sm:h-9"
+                         src={job.priority ? "/icons/google/star_filled.svg" : "/icons/google/star_empty.svg"}
+                         title={job.priority ? "Remove as Priority" : "Set as Priority"}
+                         alt={job.priority ? "Remove as Priority" : "Set as Priority"}
+                         onClick={() => {
+                            doAction("setJobPriority", [job.machine, job.id, (job.priority + 1) % 2]);
+                         }
+                    }/>
+
+                    {/* DELETE BUTTON */}
+                    <img className="float-right cursor-pointer w-7 h-7 sm:w-9 sm:h-9"
+                         src={"/icons/google/delete.svg"}
+                         title="Delete" 
+                         alt="Delete" 
+                         onClick={() => {
+                            doAction("deleteJob", [job.machine, job.id]);
+                            setSelectedJob(0);
+                         }
+                    }/>
 
                 </div>
 
