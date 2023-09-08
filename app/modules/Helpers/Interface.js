@@ -284,7 +284,7 @@ export async function createJob( id, job, code, { user } ) {
 
     // Create a new, updated job.
 
-    job = {id: id, machine: code, op: job.op, notes: job.notes, state: job.state, starter: user, log: 0};
+    job = {id: id, machine: code, op: job.op, notes: job.notes, state: job.state, priority: job.priority, starter: user, log: 0};
 
     // Sets the post-data for the job, including its body.
     const postData = {
