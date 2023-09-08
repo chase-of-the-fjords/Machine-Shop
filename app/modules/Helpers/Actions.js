@@ -114,8 +114,9 @@ export function setJob( machine, id, op, notes, { changes, setChanges, jobs } ) 
  * @param {string} op - The text for the op.
  * @param {string} notes - The text for the notes.
  * @param {number} state - The state of the job (0 or 2).
+ * @param {number} priority - The priority of the job (0 or 1).
  */
-export function createJob ( machine, id, op, notes, state, { changes, setChanges } ) {
+export function createJob ( machine, id, op, notes, state, priority, { changes, setChanges } ) {
 
     // Gets a copy of the changes to modify
     let updatedChanges = {...changes};
@@ -132,6 +133,7 @@ export function createJob ( machine, id, op, notes, state, { changes, setChanges
     updatedChanges["jobs"][machine][id].op = op;
     updatedChanges["jobs"][machine][id].notes = notes;
     updatedChanges["jobs"][machine][id].state = state;
+    updatedChanges["jobs"][machine][id].priority = priority;
 
     // Update the changes list to match.
     setChanges(updatedChanges);
@@ -231,7 +233,7 @@ export function setJobPriority( machine, id, priority, { changes, setChanges, jo
         updatedChanges["jobs"][machine][id] = {};
     }
 
-    // If the machine is already in the database, and the new state matches it, delete that field. Otherwise, store the new value.
+    // If the machine is already in the database, and the new priority matches it, delete that field. Otherwise, store the new value.
     if (sqlValue != undefined && sqlValue.priority == priority) delete updatedChanges["jobs"][machine][id].priority;
     else updatedChanges["jobs"][machine][id].priority = priority;
 

@@ -171,7 +171,7 @@ export default function Shop( { type, machines, buildings, jobs, setMachines, se
         if (act == 'clickMachine')   clickMachine(params[0], { type, updated, setUpdated, popupState, setPopupState, setCurrentMachine });
         if (act == 'setMachine')     setMachine(params[0], params[1], { machines, changes, setChanges, currentMachine });
         if (act == 'setJob')         setJob(params[0], params[1], params[2], params[3], { changes, setChanges, jobs });
-        if (act == 'createJob')      createJob(params[0], params[1], params[2], params[3], params[4], { changes, setChanges });
+        if (act == 'createJob')      createJob(params[0], params[1], params[2], params[3], params[4], params[5], { changes, setChanges });
         if (act == 'deleteJob')      deleteJob(params[0], params[1], { changes, setChanges });
         if (act == 'setJobState')    setJobState(params[0], params[1], params[2], { changes, setChanges, jobs });
         if (act == 'setJobPriority') setJobPriority(params[0], params[1], params[2], { changes, setChanges, jobs });

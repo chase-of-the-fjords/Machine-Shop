@@ -281,7 +281,7 @@ function JobBox ( { popupState, machine, jobs, user, setJobOp, setJobNotes, sele
                 onClick={
                     () => {
                         deselect();
-                        doAction("createJob", [machine.code, newJobCounter, "New Job", "", state]);
+                        doAction("createJob", [machine.code, newJobCounter, "New Job", "", state, 0]);
                         setSelectedJob(newJobCounter);
                         setJobOp("New Job");
                         setJobNotes("");
