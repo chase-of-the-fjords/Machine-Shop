@@ -61,7 +61,7 @@ function ViewJob ( { job } ) {
     }
 
     let backgroundColor = jobStyles.standardBackground;
-    let timestampColor = jobStyles.standardTimestmap;
+    let timestampColor = jobStyles.standardTimestamp;
     let notesColor = jobStyles.standardNotes;
 
     if (job.priority) {
@@ -149,7 +149,7 @@ function EditJob ( { job, setJobOp, setJobNotes, selectedJob, setSelectedJob, de
     }
 
     let backgroundColor = jobStyles.standardBackground;
-    let timestampColor = jobStyles.standardTimestmap;
+    let timestampColor = jobStyles.standardTimestamp;
     let notesColor = jobStyles.standardNotes;
 
     if (job.unsaved) {
