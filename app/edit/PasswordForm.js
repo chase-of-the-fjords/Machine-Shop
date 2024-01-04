@@ -42,6 +42,12 @@ export default function PasswordForm( {setUser} ) {
             setUnlocked(true);
         }
 
+        // Gerardo
+        if (password == "1773") {
+            setUser(5);
+            setUnlocked(true);
+        }
+
     }, [password])
 
         // JSX (RETURN VALUE) - only displays if locked.

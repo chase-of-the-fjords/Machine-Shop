@@ -368,6 +368,7 @@ function getUser( id ) {
     if (id == 2) return "Chase";
     if (id == 3) return "Ernie";
     if (id == 4) return "Rocky";
+    if (id == 5) return "Gerardo";
     
     // If the user isn't found, return N/A.
     return "N/A";
