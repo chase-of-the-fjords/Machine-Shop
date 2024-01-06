@@ -78,9 +78,9 @@ function ViewJob ( { job } ) {
         verb = 'Updated';
     }
 
-    if (moment.utc(job.start).format('MM/DD/YYYY') == moment.utc().format('MM/DD/YYYY')) {
+    if (moment.utc(job.start).format('MM/DD/YYYY') == moment().utcOffset(-8).format('MM/DD/YYYY')) {
         date = `${verb} today at ${moment.utc(job.start).format('h:mm a')}`;
-    } else if (moment.utc(job.start).add(1, 'day').format('MM/DD/YYYY') == moment.utc().format('MM/DD/YYYY')) {
+    } else if (moment.utc(job.start).add(1, 'day').format('MM/DD/YYYY') == moment().utcOffset(-8).format('MM/DD/YYYY')) {
         date = `${verb} yesterday at ${moment.utc(job.start).format('h:mm a')}`;
     } else {
         date = `${verb} ${moment.utc(job.start).format('MMMM Do [at] h:mm a')}`;
