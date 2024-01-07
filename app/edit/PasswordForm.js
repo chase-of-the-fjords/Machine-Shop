@@ -18,35 +18,34 @@ export default function PasswordForm( {setUser} ) {
     // Updates the user if the password matches any of the following.
     useEffect(() => {
 
-        // Kevin
-        if (password == "4432") {
-            setUser(1);
-            setUnlocked(true);
+        async function tryPassword() {
+
+            // The data being passed into the API.
+            const postData = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": '*',
+                }
+            }
+
+            // Gets the data.
+            try {
+
+                // Accesses the jobs API.
+                const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user/${password}/`, postData);
+                const response = await res.json();
+                
+                if (response != 0) {
+                    setUser(response);
+                    setUnlocked(true);
+                }
+
+            } catch (e) { }
+
         }
 
-        // Chase
-        if (password == "april") {
-            setUser(2);
-            setUnlocked(true);
-        }
-
-        // Ernie
-        if (password == "1973") {
-            setUser(3);
-            setUnlocked(true);
-        }
-
-        // Rocky
-        if (password == "ykcor") {
-            setUser(4);
-            setUnlocked(true);
-        }
-
-        // Gerardo
-        if (password == "1773") {
-            setUser(5);
-            setUnlocked(true);
-        }
+        tryPassword();
 
     }, [password])
 
