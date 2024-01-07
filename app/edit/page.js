@@ -58,7 +58,7 @@ export default function App() {
                 <Menu></Menu>
 
                 { /* The rest of the machine shop. */ }
-                <Shop type="edit" buildings={buildings} machines={machines} jobs={jobs} 
+                <Shop type={user == 0 ? "view" : "edit"} buildings={buildings} machines={machines} jobs={jobs} 
                     setBuildings={setBuildings} setMachines={setMachines} setJobs={setJobs} 
                     user={user} hasChanges={hasChanges} setHasChanges={setHasChanges} />
             </div>
