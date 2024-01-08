@@ -112,7 +112,7 @@ export async function getBuildingsMoment( { setBuildings, datetime } ) {
     try {
 
         // Accesses the jobs API.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/buildings/moment/${datetime}`, postData);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/buildings/${datetime}`, postData);
         const response = await res.json();
         
         // Stores the value.
