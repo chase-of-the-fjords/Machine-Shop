@@ -24,7 +24,7 @@ export async function getJobsInterval(start, end) {
     try {
 
         // Accesses the jobs API.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs/${start}:${end}`, postData);
+        const res = await fetch(`${window.location.origin}/api/jobs/${start}:${end}`, postData);
         const response = await res.json();
         
         // Stores the value.
@@ -59,7 +59,7 @@ export async function getMachinesInterval(start, end) {
     try {
 
         // Accesses the jobs API.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines/${start}:${end}`, postData);
+        const res = await fetch(`${window.location.origin}/api/machines/${start}:${end}`, postData);
         const response = await res.json();
         
         // Stores the value.
@@ -91,7 +91,7 @@ export async function getMachines() {
     try {
 
         // Accesses the jobs API.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines`, postData);
+        const res = await fetch(`${window.location.origin}/api/machines`, postData);
         const response = await res.json();
         
         // Stores the value.
@@ -123,7 +123,7 @@ export async function getBuildings() {
     try {
 
         // Accesses the jobs API.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/buildings`, postData);
+        const res = await fetch(`${window.location.origin}/api/buildings`, postData);
         const response = await res.json();
         
         // Stores the value.
