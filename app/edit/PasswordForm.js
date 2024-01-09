@@ -33,7 +33,7 @@ export default function PasswordForm( {setUser} ) {
             try {
 
                 // Accesses the jobs API.
-                const res = await fetch(`${window.location.hostname}/api/user/${password}/`, postData);
+                const res = await fetch(`${window.location.origin}/api/user/${password}/`, postData);
                 const response = await res.json();
                 
                 if (response != 0) {
