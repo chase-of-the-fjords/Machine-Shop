@@ -227,7 +227,7 @@ export async function updateMachine( code, { machines, changes, user } ) {
     }
 
     // Sends the actual request.
-    const create_res = await fetch(`${window.location.origin}/api/machines/create`, createPostData);
+    const create_res = await fetch(`${window.location.origin}/api/machines`, createPostData);
 
     // STEP 2: End the old machine.
 
@@ -238,12 +238,13 @@ export async function updateMachine( code, { machines, changes, user } ) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            machine
+            operation: "update",
+            machine,
         })
     }
 
     // Sends the actual request.
-    const end_res = await fetch(`${window.location.origin}/api/machines/updateEnd`, endPostData);
+    const end_res = await fetch(`${window.location.origin}/api/machines`, endPostData);
 }
 
 /**
@@ -265,12 +266,13 @@ export async function deleteMachine( code, { machines } ) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            machine
+            operation: "delete",
+            machine,
         })
     }
 
     // Sends the actual request.
-    const res = await fetch(`${window.location.origin}/api/machines/deleteEnd`, postData);
+    const res = await fetch(`${window.location.origin}/api/machines`, postData);
 }
 
 /**
@@ -293,12 +295,13 @@ export async function createJob( id, job, code, { user } ) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            job
+            completed: false,
+            job,
         })
     }
 
     // Sends the actual request.
-    const res = await fetch(`${window.location.origin}/api/jobs/create`, postData);
+    const res = await fetch(`${window.location.origin}/api/jobs`, postData);
 }
 
 /**
@@ -322,6 +325,8 @@ export async function updateJob( id, { jobs, changes, user } ) {
     job.ender = user;
     job.log = 1;
 
+    let jobCompleted = job.state == 3
+
     // Sets the post-data for the job, including its body.
     const createPostData = {
         method: "POST",
@@ -329,13 +334,13 @@ export async function updateJob( id, { jobs, changes, user } ) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            job
+            completed: jobCompleted,
+            job,
         })
     }
 
     // Sends the actual request.
-    if (job.state == 3) await fetch(`${window.location.origin}/api/jobs/create/completed`, createPostData);
-    else await fetch(`${window.location.origin}/api/jobs/create`, createPostData);
+    await fetch(`${window.location.origin}/api/jobs`, createPostData);
 
     // STEP 2: End the old job.
 
@@ -346,12 +351,13 @@ export async function updateJob( id, { jobs, changes, user } ) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            job
+            operation: "update",
+            job,
         })
     }
 
     // Sends the actual request.
-    const end_res = await fetch(`${window.location.origin}/api/jobs/updateEnd`, endPostData);
+    const end_res = await fetch(`${window.location.origin}/api/jobs`, endPostData);
 }
 
 /**
@@ -378,12 +384,13 @@ export async function deleteJob( id, { jobs, user } ) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            job
+            operation: "delete",
+            job,
         })
     }
 
     // Sends the actual request.
-    const res = await fetch(`${window.location.origin}/api/jobs/deleteEnd`, postData);
+    const res = await fetch(`${window.location.origin}/api/jobs`, postData);
 }
 
 /**
