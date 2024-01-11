@@ -19,7 +19,7 @@ export async function getBuildings( { setBuildings } ) {
     try {
 
         // Accesses the jobs API.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/buildings`, postData);
+        const res = await fetch(`${window.location.origin}/api/buildings`, postData);
         const response = await res.json();
         
         // Stores the value.
@@ -50,7 +50,7 @@ export async function getMachines( { setMachines } ) {
     try {
 
         // Accesses the jobs API.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines`, postData);
+        const res = await fetch(`${window.location.origin}/api/machines`, postData);
         const response = await res.json();
         
         // Stores the value.
@@ -81,7 +81,7 @@ export async function getJobs( { setJobs } ) {
     try {
 
         // Accesses the jobs API.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs`, postData);
+        const res = await fetch(`${window.location.origin}/api/jobs`, postData);
         const response = await res.json();
         
         // Stores the value.
@@ -112,7 +112,7 @@ export async function getBuildingsMoment( { setBuildings, datetime } ) {
     try {
 
         // Accesses the jobs API.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/buildings/${datetime}`, postData);
+        const res = await fetch(`${window.location.origin}/api/buildings/moment/${datetime}`, postData);
         const response = await res.json();
         
         // Stores the value.
@@ -140,7 +140,7 @@ export async function getMachinesMoment( { setMachines, datetime } ) {
     try {
 
         // Accesses the jobs API.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines/moment/${datetime}`, postData);
+        const res = await fetch(`${window.location.origin}/api/machines/moment/${datetime}`, postData);
         const response = await res.json();
         
         // Stores the value.
@@ -168,7 +168,7 @@ export async function getJobsMoment( { setJobs, datetime } ) {
     try {
 
         // Accesses the jobs API.
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs/moment/${datetime}`, postData);
+        const res = await fetch(`${window.location.origin}/api/jobs/moment/${datetime}`, postData);
         const response = await res.json();
         
         // Stores the value.
@@ -227,7 +227,7 @@ export async function updateMachine( code, { machines, changes, user } ) {
     }
 
     // Sends the actual request.
-    const create_res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines/create`, createPostData);
+    const create_res = await fetch(`${window.location.origin}/api/machines/create`, createPostData);
 
     // STEP 2: End the old machine.
 
@@ -243,7 +243,7 @@ export async function updateMachine( code, { machines, changes, user } ) {
     }
 
     // Sends the actual request.
-    const end_res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines/updateEnd`, endPostData);
+    const end_res = await fetch(`${window.location.origin}/api/machines/updateEnd`, endPostData);
 }
 
 /**
@@ -270,7 +270,7 @@ export async function deleteMachine( code, { machines } ) {
     }
 
     // Sends the actual request.
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/machines/deleteEnd`, postData);
+    const res = await fetch(`${window.location.origin}/api/machines/deleteEnd`, postData);
 }
 
 /**
@@ -298,7 +298,7 @@ export async function createJob( id, job, code, { user } ) {
     }
 
     // Sends the actual request.
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs/create`, postData);
+    const res = await fetch(`${window.location.origin}/api/jobs/create`, postData);
 }
 
 /**
@@ -334,8 +334,8 @@ export async function updateJob( id, { jobs, changes, user } ) {
     }
 
     // Sends the actual request.
-    if (job.state == 3) await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs/create/completed`, createPostData);
-    else await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs/create`, createPostData);
+    if (job.state == 3) await fetch(`${window.location.origin}/api/jobs/create/completed`, createPostData);
+    else await fetch(`${window.location.origin}/api/jobs/create`, createPostData);
 
     // STEP 2: End the old job.
 
@@ -351,7 +351,7 @@ export async function updateJob( id, { jobs, changes, user } ) {
     }
 
     // Sends the actual request.
-    const end_res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs/updateEnd`, endPostData);
+    const end_res = await fetch(`${window.location.origin}/api/jobs/updateEnd`, endPostData);
 }
 
 /**
@@ -383,7 +383,7 @@ export async function deleteJob( id, { jobs, user } ) {
     }
 
     // Sends the actual request.
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/jobs/deleteEnd`, postData);
+    const res = await fetch(`${window.location.origin}/api/jobs/deleteEnd`, postData);
 }
 
 /**
