@@ -227,7 +227,7 @@ export async function updateMachine( code, { machines, changes, user } ) {
     }
 
     // Sends the actual request.
-    const create_res = await fetch(`${window.location.origin}/api/machines/create`, createPostData);
+    const create_res = await fetch(`${window.location.origin}/api/machines`, createPostData);
 
     // STEP 2: End the old machine.
 
@@ -238,12 +238,13 @@ export async function updateMachine( code, { machines, changes, user } ) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            machine
+            operation: "update",
+            machine,
         })
     }
 
     // Sends the actual request.
-    const end_res = await fetch(`${window.location.origin}/api/machines/updateEnd`, endPostData);
+    const end_res = await fetch(`${window.location.origin}/api/machines`, endPostData);
 }
 
 /**
@@ -265,12 +266,13 @@ export async function deleteMachine( code, { machines } ) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            machine
+            operation: "delete",
+            machine,
         })
     }
 
     // Sends the actual request.
-    const res = await fetch(`${window.location.origin}/api/machines/deleteEnd`, postData);
+    const res = await fetch(`${window.location.origin}/api/machines`, postData);
 }
 
 /**
