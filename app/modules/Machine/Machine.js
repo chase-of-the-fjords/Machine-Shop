@@ -166,6 +166,9 @@ export default function Machine( {data, jobs, changes, updated, selectedMachine,
                 { /* The name of the machine in the top-right corner. */ }
                 <div className={`absolute text-xs top-1 right-1 ${smalltext_color}`}>{data.name}</div>
 
+                {/* The star for prioritized machines */}
+                { editedData.state == 2 && <img className={`absolute w-3 top-1 left-1 sm:w-4`} src="/icons/google/star_filled.svg" /> }
+
                 { /* The div that contains the text for the jobs. */ }
                 <div className="mb-0 text-sm font-bold sm:text-lg">
                     { getCurrentJobsText(editedJobs) }
