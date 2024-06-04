@@ -306,7 +306,7 @@ function Menu({
 		<>
 			<div className="invisible h-16 font-RobotoMono" />
 			<div
-				className={`fixed z-10 w-screen h-16 m-auto shadow-xl bg-cool-grey-50 transition-[top] ${
+				className={`fixed z-50 w-screen h-16 m-auto shadow-xl bg-cool-grey-50 transition-[top] ${
 					show ? "top-0" : "-top-20"
 				}`}
 			>
