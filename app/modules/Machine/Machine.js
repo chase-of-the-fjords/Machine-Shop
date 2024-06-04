@@ -32,6 +32,7 @@ export default function Machine({
 	updated,
 	selectedMachine,
 	doAction,
+	jobDisplay,
 }) {
 	// REACT HOOKS
 
@@ -52,7 +53,6 @@ export default function Machine({
 	// Whenever the data, jobs, or changes object change, updates the editedJobs hook.
 	useEffect(() => {
 		setEditedJobs(getEditedJobs({ data, jobs, changes }));
-		console.log(data.name + ": " + lineHeight);
 	}, [data, jobs, changes]);
 
 	// SIZING AND STYLING
@@ -94,13 +94,11 @@ export default function Machine({
 		}).length;
 		let totalspace = machine_height - 15 - (jobcount - 1) * 8;
 		let totallines = Math.floor(totalspace / 12);
-		console.log(data.name + ": " + Math.floor(totallines / jobcount));
 		return Math.floor(totallines / jobcount);
 	}, [data, jobs, changes, machine_height]);
 
 	const maxJobs = useMemo(() => {
 		let totalspace = Math.floor((machine_height - 15) / 18);
-		console.log(data.name + " max: " + totalspace);
 		return totalspace;
 	}, [data, jobs, changes, machine_height]);
 
@@ -228,33 +226,16 @@ export default function Machine({
 					/>
 				)}
 
-				{/* The div that contains the text for the jobs. */}
-				<div className="mb-0 text-sm font-bold sm:text-lg font-roboto-mono">
-					{getCurrentJobsText(editedJobs)}
-				</div>
-
-				{/* <div className="flex-col w-full text-black font-medium px-1 pt-3 space-y-[2px] text-xs text-[10px] leading-none text-center align-middle sm:leading-3 sm:space-y-2 sm:text-sm gap-y-2">
-					{editedJobs.map((job, i) => {
-						if (job.state == 0)
-							if (i < maxJobs - 1)
-								return (
-									<Dotdotdot
-										clamp={lineHeight == 0 ? 1 : lineHeight}
-										key={job.id + "/" + lineHeight}
-									>
-										{job.op}
-									</Dotdotdot>
-								);
-							else if (i == maxJobs - 1) return <div>+ more</div>;
-					})}
-				</div> */}
-
 				{data.code != "SAW" ? (
 					<svg
-						width="150px"
-						height="150px"
 						viewBox="0 0 45.973 45.973"
-						className={`absolute -bottom-16 -right-16 -z-10 animate-[spin_12s_linear_infinite] transition-colors ${accent_color}`}
+						className={`absolute w-36 h-36 -bottom-14 -right-14 -z-10 animate-[spin_12s_linear_infinite] transition-colors ${accent_color}`}
+						style={{
+							right: machine_size * -0.5,
+							bottom: machine_size * -0.5,
+							width: machine_size * 1.2,
+							height: machine_size * 1.2,
+						}}
 					>
 						<g>
 							<g>
@@ -278,22 +259,50 @@ export default function Machine({
 					</svg>
 				) : (
 					<svg
-						fill="#000000"
-						width="150px"
-						height="150px"
 						viewBox="0 0 32 32"
-						version="1.1"
-						xmlns="http://www.w3.org/2000/svg"
-						className={`absolute -bottom-16 -right-16 -z-10 group-hover/machine:animate-[spin_0.2s_linear_infinite] transition-colors ${accent_color}`}
+						className={`absolute -z-10 animate-[spin_12s_linear_infinite] group-hover/machine:animate-[spin_0.2s_linear_infinite] transition-colors ${accent_color}`}
+						style={{
+							right: machine_size * -0.4,
+							bottom: machine_size * -0.4,
+							width: machine_size * 1.2,
+							height: machine_size * 1.2,
+						}}
 					>
 						<path d="M16 1v4.5h-10.5l3 3-7.5 7.5h4.5v10.5l3-3 7.5 7.5v-4.5h10.5l-3-3 7.5-7.5h-4.5v-10.5l-3 3-7.5-7.5zM16 8.5c4.142 0 7.5 3.358 7.5 7.5s-3.358 7.5-7.5 7.5-7.5-3.358-7.5-7.5c0-4.142 3.358-7.5 7.5-7.5zM19 16c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"></path>
 					</svg>
 				)}
 
-				{/* The div that contains the text for the queued jobs. */}
-				<div className={`text-xs italic text-gray-700 ${smalltext_color}`}>
-					{getQueuedJobsText(editedJobs)}
-				</div>
+				{jobDisplay == 1 && (
+					<div className="flex-col w-full font-inter text-black font-medium px-1 pt-3 space-y-[2px] text-xs text-[10px] leading-none text-center align-middle sm:leading-3 sm:space-y-2 sm:text-sm gap-y-2">
+						{editedJobs.map((job, i) => {
+							if (job.state == 0)
+								if (i < maxJobs - 1)
+									return (
+										<Dotdotdot
+											clamp={lineHeight == 0 ? 1 : lineHeight}
+											key={job.id + "/" + lineHeight}
+										>
+											{job.op}
+										</Dotdotdot>
+									);
+								else if (i == maxJobs - 1) return <div key="more">+ more</div>;
+						})}
+					</div>
+				)}
+
+				{jobDisplay == 0 && (
+					<>
+						{/* The div that contains the text for the jobs. */}
+						<div className="mb-0 text-sm font-bold sm:text-lg font-roboto-mono">
+							{getCurrentJobsText(editedJobs)}
+						</div>
+
+						{/* The div that contains the text for the queued jobs. */}
+						<div className={`text-xs italic text-gray-700 ${smalltext_color}`}>
+							{getQueuedJobsText(editedJobs)}
+						</div>
+					</>
+				)}
 			</motion.button>
 		</>
 	);

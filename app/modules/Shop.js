@@ -29,6 +29,42 @@ import {
 	undo,
 } from "./Helpers/Actions";
 
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+	DialogFooter,
+} from "@/components/ui/dialog";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+import {
+	Form,
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
 // Default export for the machine shop.
 export default function Shop({
 	type,
@@ -39,6 +75,7 @@ export default function Shop({
 	setBuildings,
 	setJobs,
 	user,
+	setUser,
 	hasChanges,
 	setHasChanges,
 }) {
@@ -62,6 +99,7 @@ export default function Shop({
 
 	// Tracks which shops are on display.
 	const [view, setView] = useState(0);
+	const [jobDisplay, setJobDisplay] = useState(0);
 
 	// Tracks the state of the popup (saving, view, edit).
 	const [popupState, setPopupState] = useState(0);
@@ -106,6 +144,12 @@ export default function Shop({
 			localStorage.getItem("view")
 				? JSON.parse(localStorage.getItem("view"))
 				: 1
+		);
+
+		setJobDisplay(
+			localStorage.getItem("jobDisplay")
+				? JSON.parse(localStorage.getItem("jobDisplay"))
+				: 0
 		);
 
 		// Marks that the page has been loaded.
@@ -258,7 +302,7 @@ export default function Shop({
 		if (act == "undo") undo(params[0], { changes, setChanges });
 		if (act == "save")
 			save({
-				user,
+				user: user.id,
 				changes,
 				setChanges,
 				setBuildings,
@@ -274,7 +318,16 @@ export default function Shop({
 
 	return (
 		<>
-			<Menu />
+			<Menu
+				view={view}
+				setView={setView}
+				jobDisplay={jobDisplay}
+				setJobDisplay={setJobDisplay}
+				type={type}
+				user={user}
+				setUser={setUser}
+				doAction={doAction}
+			/>
 
 			{/* This div sets the style for the whole shop. */}
 			<div className="w-full mt-6 text-center">
@@ -305,6 +358,7 @@ export default function Shop({
 										doAction(action, params);
 									}}
 									selectedMachine={currentMachine}
+									jobDisplay={jobDisplay}
 								/>
 							);
 						})
@@ -330,14 +384,27 @@ export default function Shop({
 }
 
 // The menu bar component.
-function Menu() {
+function Menu({
+	view,
+	setView,
+	jobDisplay,
+	setJobDisplay,
+	type,
+	user,
+	setUser,
+	doAction,
+}) {
+	const [loginPopup, setLoginPopup] = useState(false);
+
 	return (
 		<>
 			<div className="invisible h-16 font-RobotoMono" />
-			<div className="fixed top-0 z-10 w-screen h-16 m-auto shadow-xl bg-cool-grey-50">
+			<div
+				className={`fixed top-0 z-10 w-screen h-16 m-auto shadow-xl bg-cool-grey-50`}
+			>
 				<div className="relative max-w-[1000px] mx-auto">
 					<div className="absolute invisible w-full mx-auto mt-1 text-lg font-semibold text-center sm:visible top-4">
-						Machine Shop
+						{user.active ? `${user.name} is now editing` : "Machine Shop"}
 					</div>
 					<Link
 						href="./"
@@ -345,8 +412,169 @@ function Menu() {
 					>
 						<img src="./inverted-logo.png" className="h-12" />
 					</Link>
+					<div>
+						<DropdownMenu>
+							<DropdownMenuTrigger className="absolute mt-1 mr-8 font-semibold transition-colors cursor-pointer right-1 top-4 hover:text-cool-grey-900 text-cool-grey-500">
+								Menu
+							</DropdownMenuTrigger>
+							<DropdownMenuContent>
+								{type == "view" && (
+									<DropdownMenuItem
+										onSelect={(e) => {
+											setLoginPopup(true);
+										}}
+									>
+										Log in
+									</DropdownMenuItem>
+								)}
+								{type == "edit" && (
+									<DropdownMenuItem
+										onSelect={(e) => {
+											doAction("save", []);
+										}}
+									>
+										Save
+									</DropdownMenuItem>
+								)}
+								{type == "edit" && (
+									<a href="./">
+										<DropdownMenuItem>Log Out</DropdownMenuItem>
+									</a>
+								)}
+								<DropdownMenuItem
+									onSelect={(e) => {
+										e.preventDefault();
+										if (typeof window !== undefined)
+											localStorage.setItem("view", (view + 1) % 3);
+										setView((view + 1) % 3);
+									}}
+								>
+									Switch View
+								</DropdownMenuItem>
+								<DropdownMenuItem
+									onSelect={(e) => {
+										e.preventDefault();
+										if (typeof window !== undefined)
+											localStorage.setItem("jobDisplay", (jobDisplay + 1) % 2);
+										setJobDisplay((jobDisplay + 1) % 2);
+									}}
+								>
+									Switch Job Display
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
+					</div>
 				</div>
 			</div>
+			<LoginForm
+				loginPopup={loginPopup}
+				setLoginPopup={setLoginPopup}
+				user={user}
+				setUser={setUser}
+			/>
 		</>
 	);
+}
+
+function LoginForm({ loginPopup, setLoginPopup, user, setUser }) {
+	const [invalidLogin, setInvalidLogin] = useState(false);
+
+	const formSchema = z.object({
+		password: z.string(),
+	});
+
+	const form = useForm({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			password: "",
+		},
+	});
+
+	useEffect(() => {
+		form.reset();
+		setInvalidLogin(false);
+	}, [loginPopup]);
+
+	const onSubmit = async (data) => {
+		let newUser = await getLoginInfo({
+			user: { password: data.password },
+			setUser,
+		});
+		if (newUser.active == 1) {
+			setLoginPopup(false);
+			setInvalidLogin(false);
+		} else {
+			setInvalidLogin(true);
+		}
+	};
+
+	return (
+		<Dialog open={loginPopup} onOpenChange={setLoginPopup}>
+			<DialogContent className="sm:max-w-[425px] bg-white">
+				<DialogHeader>
+					<DialogTitle>Log in</DialogTitle>
+				</DialogHeader>
+				<Form {...form}>
+					<form onSubmit={form.handleSubmit(onSubmit)}>
+						{/* PASSWORD */}
+						<FormField
+							name="password"
+							control={form.control}
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel htmlFor="password" className="text-left">
+										Password <span className="text-red-500">*</span>
+									</FormLabel>
+									<FormControl>
+										<div>
+											<Input
+												{...form.register("password")}
+												placeholder="abc123"
+												type="password"
+												onFocus={(e) => e.target.select()}
+												autoComplete="new-password"
+											/>
+											<FormMessage className="mt-2">
+												{invalidLogin && "Invalid login"}
+											</FormMessage>
+										</div>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+						<DialogFooter className="mt-4">
+							<Button type="submit">Submit</Button>
+						</DialogFooter>
+					</form>
+				</Form>
+			</DialogContent>
+		</Dialog>
+	);
+}
+
+async function getLoginInfo({ user, setUser }) {
+	// The data being passed into the API.
+	const postData = {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			"Access-Control-Allow-Origin": "*",
+		},
+	};
+
+	// Gets the data.
+	try {
+		// Accesses the companies API.
+		const res = await fetch(
+			`${window.location.origin}/api/user/${user.password}`,
+			postData
+		);
+		const response = await res.json();
+
+		setUser(response);
+
+		return response;
+	} catch (e) {
+		console.error(e);
+	}
 }

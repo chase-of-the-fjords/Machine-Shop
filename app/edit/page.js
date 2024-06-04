@@ -46,7 +46,7 @@ export default function App() {
 	return (
 		<>
 			{/* BACKGROUND */}
-			<div className="bg-blue-100 -z-10 fixed top-0 left-0 w-full h-[150%]"></div>
+			<div className="bg-green-200 -z-10 fixed top-0 left-0 w-full h-[150%]"></div>
 
 			{/* FOREGROUND */}
 			<div>
