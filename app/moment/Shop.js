@@ -275,13 +275,40 @@ function Menu({
 	doAction,
 	setDatetime,
 }) {
+	const [show, setShow] = useState(true);
+	const [lastScrollY, setLastScrollY] = useState(0);
+
+	const controlNavbar = () => {
+		if (window.scrollY > lastScrollY) {
+			// if scroll down hide the navbar
+			setShow(false);
+		} else {
+			// if scroll up show the navbar
+			setShow(true);
+		}
+
+		// remember current page location to use in the next move
+		setLastScrollY(window.scrollY);
+	};
+
+	useEffect(() => {
+		window.addEventListener("scroll", controlNavbar);
+
+		// cleanup function
+		return () => {
+			window.removeEventListener("scroll", controlNavbar);
+		};
+	}, [lastScrollY]);
+
 	const [loginPopup, setLoginPopup] = useState(false);
 
 	return (
 		<>
 			<div className="invisible h-16 font-RobotoMono" />
 			<div
-				className={`fixed top-0 z-10 w-screen h-16 m-auto shadow-xl bg-cool-grey-50`}
+				className={`fixed z-10 w-screen h-16 m-auto shadow-xl bg-cool-grey-50 transition-[top] ${
+					show ? "top-0" : "-top-20"
+				}`}
 			>
 				<div className="relative max-w-[1000px] mx-auto">
 					<div className="absolute w-full ml-4 sm:mx-none">
