@@ -31,7 +31,7 @@ export default function Building({
 	doAction,
 	jobDisplay,
 }) {
-	const decorations = data.decorations;
+	const decorations = data.decorations ? data.decorations : [];
 
 	// REACT HOOKS
 
