@@ -1,49 +1,76 @@
 // This is an interactive component, so it's a client component.
-'use client'
+"use client";
 
 // Imports the shop component.
-import Shop from './modules/Shop';
+import Shop from "./modules/Shop";
 
 // Basic React hook.
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 
 /**
  * The default export for the view page.
- * 
+ *
  * @returns JSX representation of the edit page.
  */
 export default function App() {
+	// These 3 hooks contain the buildings, machines, and jobs.
+	const [buildings, setBuildings] = useState([]);
+	const [machines, setMachines] = useState([]);
+	const [jobs, setJobs] = useState([]);
 
-    // These 3 hooks contain the buildings, machines, and jobs.
-    const [buildings, setBuildings] = useState([]);
-    const [machines, setMachines] = useState([]);
-    const [jobs, setJobs] = useState([]);
+	// Tracks the user editing based on the password form.
+	const [user, setUser] = useState({
+		name: "",
+		id: 0,
+		password: "",
+		active: 0,
+	});
 
-        // JSX (RETURN VALUE)
+	// Tracks if the user has any unsaved changes.
+	const [hasChanges, setHasChanges] = useState(false);
 
-    return (<>
+	// Prevents reloading/leaving if there are unsaved changes.
+	useEffect(() => {
+		const unloadCallback = (event) => {
+			if (hasChanges) {
+				event.preventDefault();
+				event.returnValue = "";
+				return "";
+			}
+		};
 
-            {/* BACKGROUND */}
-            <div className="bg-white -z-10 fixed top-0 left-0 w-full h-[150%]" />
+		window.addEventListener("beforeunload", unloadCallback);
+		return () => window.removeEventListener("beforeunload", unloadCallback);
+	}, [hasChanges]);
 
-            {/* FOREGROUND */}
-            <div>
+	// JSX (RETURN VALUE)
 
-                { /* The menu at the top of the screen. Likely to be updated later. */ }
-                <Menu />
+	return (
+		<>
+			{/* BACKGROUND */}
+			<div
+				className={`${
+					user.active ? "bg-blue-100" : "bg-cool-grey-100"
+				} -z-10 fixed top-0 left-0 w-full h-[150%]`}
+			/>
 
-                { /* The rest of the machine shop. */ }
-                <Shop type="view" buildings={buildings} machines={machines} jobs={jobs} 
-                    setBuildings={setBuildings} setMachines={setMachines} setJobs={setJobs}></Shop>
-
-            </div>
-        </>
-    );
-}
-
-// The menu bar component.
-function Menu() {
-
-    return <h1 className="mx-auto mt-2 mb-6 text-2xl font-bold text-center sm:mt-5 sm:w-96 sm:text-3xl sm:pb-2 w-36 font-CastleTLig">Origin Golf Machine Shop</h1>
-
+			{/* FOREGROUND */}
+			<div>
+				{/* The rest of the machine shop. */}
+				<Shop
+					type={user.active != 0 ? "edit" : "view"}
+					buildings={buildings}
+					machines={machines}
+					jobs={jobs}
+					setBuildings={setBuildings}
+					setMachines={setMachines}
+					setJobs={setJobs}
+					user={user}
+					setUser={setUser}
+					hasChanges={hasChanges}
+					setHasChanges={setHasChanges}
+				/>
+			</div>
+		</>
+	);
 }
