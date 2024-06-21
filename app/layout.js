@@ -34,7 +34,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body className={`${inter.className}`}>{children}</body>
+			<body
+				className={`${inter.variable} ${CastleTLig.variable} ${roboto_mono.variable} ${poppins.variable}`}
+			>
+				{children}
+			</body>
 		</html>
 	);
 }
