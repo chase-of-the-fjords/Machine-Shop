@@ -37,10 +37,10 @@ export default function Machine({
 	// REACT HOOKS
 
 	// A hook containing JSON data for the machine, edited with changes from the "changes" object.
-	const [editedData, setEditedData] = useState({});
+	const [editedData, setEditedData] = useState(data);
 
 	// A hook containing JSON data for the machine's jobs, edited with changes from the "changes" object.
-	const [editedJobs, setEditedJobs] = useState([]);
+	const [editedJobs, setEditedJobs] = useState(jobs);
 
 	// A hook containing the height and width of the window.
 	const { height, width } = useWindowDimensions();
