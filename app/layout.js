@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Inter, Roboto_Mono } from "next/font/google";
+import { Inter, Roboto_Mono, Poppins } from "next/font/google";
 import localFont from "next/font/local";
 
 const CastleTLig = localFont({
@@ -19,6 +19,13 @@ const roboto_mono = Roboto_Mono({
 	variable: "--font-roboto-mono",
 });
 
+const poppins = Poppins({
+	subsets: ["latin"],
+	display: "swap",
+	weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+	variable: "--font-poppins",
+});
+
 export const metadata = {
 	title: "Origin Golf Machine Shop",
 	description: "A consistently updated representation of the machine shop",
@@ -27,11 +34,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body
-				className={`${inter.variable} ${CastleTLig.variable} ${roboto_mono.variable}`}
-			>
-				{children}
-			</body>
+			<body className={`${inter.className}`}>{children}</body>
 		</html>
 	);
 }
