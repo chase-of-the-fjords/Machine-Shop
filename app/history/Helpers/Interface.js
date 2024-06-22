@@ -436,7 +436,7 @@ export async function getClusterLog(start, end, filter = "") {
 		currentCluster.entries.push(entry);
 	});
 
-	clusters.push(currentCluster);
+	if (currentCluster.entries.length > 0) clusters.push(currentCluster);
 
 	clusters.forEach((cluster) => {
 		let groupedEntries = Object.groupBy(
@@ -670,7 +670,6 @@ export function runFilter(log, filter) {
 function listIncludes(list, text) {
 	for (let i = 0; i < list.length; i++) {
 		let item = list[i];
-		console.log(list[i]);
 		if (item.toUpperCase().includes(text.toUpperCase())) return true;
 	}
 	return false;

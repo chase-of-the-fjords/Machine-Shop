@@ -1,10 +1,15 @@
 export default function Action({ action }) {
+	if (action.action == "created machine") return CreatedMachine({ action });
 	if (action.action == "updated machine") return UpdatedMachine({ action });
 	if (action.action == "created job") return CreatedJob({ action });
 	if (action.action == "updated job") return UpdatedJob({ action });
 	if (action.action == "deleted job") return DeletedJob({ action });
 
 	return <p className="ml-2 sm:ml-4">{action.action}</p>;
+}
+
+function CreatedMachine({ action }) {
+	return <h4 className="mb-1 ml-2 sm:ml-4">Created machine</h4>;
 }
 
 function UpdatedMachine({ action }) {

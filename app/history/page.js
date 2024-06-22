@@ -45,7 +45,7 @@ function Menu() {
 	const [lastScrollY, setLastScrollY] = useState(0);
 
 	const controlNavbar = () => {
-		if (window.scrollY > lastScrollY) {
+		if (window.scrollY > lastScrollY && window.scrollY > 150) {
 			// if scroll down hide the navbar
 			setShow(false);
 		} else {
@@ -135,7 +135,7 @@ function History() {
 						setFilter={setFilter}
 						setLoading={setLoading}
 					/>
-					<Log log={log} />
+					<Log log={log} loading={loading} />
 				</div>
 			</div>
 		</div>
@@ -144,7 +144,7 @@ function History() {
 
 function Filter({ setStart, setEnd, setFilter, setLoading }) {
 	return (
-		<div className="w-full p-4 rounded-md shadow-lg sm:w-96 sm:mx-auto sm:p-6 md:w-80 h-fit bg-cool-grey-50">
+		<div className="w-full p-4 rounded-md shadow-lg sm:w-96 sm:mx-auto sm:p-6 md:w-64 h-fit bg-cool-grey-50">
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
@@ -158,7 +158,7 @@ function Filter({ setStart, setEnd, setFilter, setLoading }) {
 					</h2>
 					<input
 						type="date"
-						className="block w-full px-2 py-1 rounded-md bg-cool-grey-100 text-md"
+						className="block w-full px-2 py-1 rounded-md bg-cool-grey-100 text-md focus:outline-2 focus:outline-yellow-500"
 						defaultValue={new Date(
 							Date.now() - 7 * 24 * 60 * 60 * 1000
 						).toLocaleDateString("sv")}
@@ -173,18 +173,17 @@ function Filter({ setStart, setEnd, setFilter, setLoading }) {
 					</h2>
 					<input
 						type="date"
-						className="block w-full px-2 py-1 rounded-md bg-cool-grey-100 text-md"
+						className="block w-full px-2 py-1 rounded-md bg-cool-grey-100 text-md focus:outline-2 focus:outline-yellow-500"
 						defaultValue={new Date(Date.now()).toLocaleDateString("sv")}
 						onChange={(e) => {
-							console.log(e.target.value);
-							setEnd(e.value);
+							setEnd(e.target.value);
 						}}
 					/>
 				</div>
 				<div className="mb-4">
 					<h2 className="mb-1 ml-1 text-xl font-medium font-Poppins">Filter</h2>
 					<input
-						className="block w-full px-2 py-1 transition-all rounded-md text-md bg-cool-grey-100 focus:outline focus:outline-cool-grey-500"
+						className="block w-full px-2 py-1 transition-all rounded-md text-md bg-cool-grey-100 focus:outline-2 focus:outline-yellow-500"
 						type="text"
 						onChange={(e) => {
 							setFilter(e.target.value);
@@ -193,7 +192,7 @@ function Filter({ setStart, setEnd, setFilter, setLoading }) {
 					/>
 				</div>
 				<button
-					className="block px-2 py-1 mx-auto mt-8 font-medium transition-colors bg-yellow-300 rounded-md hover:bg-yellow-400 font-Poppins text-md"
+					className="block px-2 py-1 mx-auto mt-8 font-medium transition-colors bg-yellow-300 rounded-md hover:bg-yellow-400 font-Poppins text-md focus:outline-2 focus:outline-yellow-500"
 					type="submit"
 				>
 					Submit
@@ -203,9 +202,26 @@ function Filter({ setStart, setEnd, setFilter, setLoading }) {
 	);
 }
 
-function Log({ log }) {
+function Log({ log, loading }) {
+	if (loading)
+		return (
+			<div className="flex-grow p-4 sm:min-w-[480px] rounded-md shadow-lg sm:p-6 h-fit bg-cool-grey-50">
+				<div className="mx-auto text-xl font-semibold sm:mx-0 w-fit font-Poppins animate-pulse">
+					Generating History...
+				</div>
+			</div>
+		);
+	else if (log.length == 0)
+		return (
+			<div className="flex-grow p-4 sm:min-w-[480px] rounded-md shadow-lg sm:p-6 h-fit bg-cool-grey-50">
+				<div className="mx-auto text-xl font-semibold sm:mx-0 w-fit font-Poppins">
+					No Results
+				</div>
+			</div>
+		);
+
 	return (
-		<div className="flex-grow p-4 rounded-md shadow-lg sm:p-6 h-fit bg-cool-grey-50">
+		<div className="flex-grow p-4 sm:min-w-[480px] rounded-md shadow-lg sm:p-6 h-fit bg-cool-grey-50">
 			{log.map((cluster) => {
 				return (
 					<div key={cluster.date + " " + cluster.time + " " + cluster.user}>
