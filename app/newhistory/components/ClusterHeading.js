@@ -1,10 +1,10 @@
 export default function ClusterHeading({ name, date, time }) {
 	return (
 		<>
-			<div className="relative h-16 bg-yellow-300 rounded-lg shadow-md w-80 overflow-clip">
+			<div className="relative h-12 bg-yellow-300 rounded-lg shadow-md w-96 overflow-clip">
 				<svg
 					viewBox="0 0 45.973 45.973"
-					className={`absolute w-72 h-72 fill-yellow-400 -bottom-36 -left-36 animate-[spin_12s_linear_infinite] transition-colors`}
+					className={`absolute w-72 h-72 fill-yellow-400 -bottom-40 -left-16 animate-[spin_12s_linear_infinite] transition-colors`}
 				>
 					<g>
 						<g>
