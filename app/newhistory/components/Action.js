@@ -1,5 +1,3 @@
-import { useMemo } from "react";
-
 export default function Action({ action }) {
 	if (action.action == "updated machine") return UpdatedMachine({ action });
 	if (action.action == "created job") return CreatedJob({ action });
