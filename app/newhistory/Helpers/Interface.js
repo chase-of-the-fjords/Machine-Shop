@@ -368,6 +368,9 @@ export async function getLog(start, end, filter = "") {
 		...updated_machines,
 	];
 
+	// Filters the log.
+	merged = runFilter(merged, filter);
+
 	// Sorts the log by timestamp.
 	merged = merged.sort((a, b) => {
 		return new Date(b.timestamp) - new Date(a.timestamp);
@@ -600,7 +603,15 @@ export function runFilter(log, filter) {
 
 			if (
 				listIncludes(
-					[date, time, entry.action, entry.machine, entry.user, ...changes],
+					[
+						date,
+						time,
+						entry.action,
+						entry.machine,
+						entry.op,
+						entry.user,
+						...changes,
+					],
 					filter
 				)
 			)
@@ -629,7 +640,6 @@ export function runFilter(log, filter) {
 						date,
 						time,
 						entry.action,
-						entry.name,
 						entry.building,
 						entry.state,
 						`(${entry.xpos}, ${entry.ypos})`,
@@ -648,10 +658,7 @@ export function runFilter(log, filter) {
 			}
 
 			if (
-				listIncludes(
-					[date, time, entry.action, entry.name, entry.user, ...changes],
-					filter
-				)
+				listIncludes([date, time, entry.action, entry.user, ...changes], filter)
 			)
 				filteredLog.push(log[i]);
 		}
@@ -663,6 +670,7 @@ export function runFilter(log, filter) {
 function listIncludes(list, text) {
 	for (let i = 0; i < list.length; i++) {
 		let item = list[i];
+		console.log(list[i]);
 		if (item.toUpperCase().includes(text.toUpperCase())) return true;
 	}
 	return false;

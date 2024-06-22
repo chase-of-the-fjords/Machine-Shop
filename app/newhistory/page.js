@@ -66,8 +66,6 @@ function Menu() {
 		};
 	}, [lastScrollY]);
 
-	const [loginPopup, setLoginPopup] = useState(false);
-
 	return (
 		<>
 			<div className="invisible h-16 font-RobotoMono" />
@@ -110,78 +108,104 @@ function Menu() {
 
 function History() {
 	const [log, setLog] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	const [start, setStart] = useState(
+		new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toLocaleDateString("sv")
+	);
+	const [end, setEnd] = useState(new Date(Date.now()).toLocaleDateString("sv"));
+	const [filter, setFilter] = useState("");
 
 	useEffect(() => {
 		async function fetchData() {
-			let start = new Date("03/01/2024").toLocaleDateString("sv");
-			let end = new Date(Date.now()).toLocaleDateString("sv");
-			setLog(await getClusterLog(start, end));
+			setLog([]);
+			setLog(await getClusterLog(start, end, filter));
+			setLoading(false);
 		}
-		fetchData();
-	}, []);
+		if (loading) fetchData();
+	}, [loading]);
 
 	return (
-		<>
-			<div className="flex max-w-[1200px] mx-auto my-6 space-x-6 px-6">
-				<Filter />
-				<Log log={log} />
+		<div className="xl:overflow-x-hidden">
+			<div className="xl:w-screen">
+				<div className="flex max-w-[1200px] flex-col md:flex-row mx-auto my-3 sm:my-6 space-y-3 sm:space-y-6 md:space-y-0 md:space-x-6 px-3 sm:px-6">
+					<Filter
+						setStart={setStart}
+						setEnd={setEnd}
+						setFilter={setFilter}
+						setLoading={setLoading}
+					/>
+					<Log log={log} />
+				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 
-function Filter() {
+function Filter({ setStart, setEnd, setFilter, setLoading }) {
 	return (
-		<div className="w-64 p-6 rounded-md shadow-lg h-fit bg-cool-grey-50">
-			<div className="mb-4">
-				<h2 className="mb-1 ml-1 text-xl font-medium font-Poppins">
-					Start Date
-				</h2>
-				<input
-					type="date"
-					className="block w-full px-2 py-1 rounded-md bg-cool-grey-100 text-md"
-					defaultValue={new Date(
-						Date.now() - 7 * 24 * 60 * 60 * 1000
-					).toLocaleDateString("sv")}
-					onChange={(e) => {}}
-					onKeyDown={(e) => {
-						if (e.key === "Enter") {
-						}
-					}}
-				/>
-			</div>
-			<div className="mb-4">
-				<h2 className="mb-1 ml-1 text-xl font-medium font-Poppins">End Date</h2>
-				<input
-					type="date"
-					className="block w-full px-2 py-1 rounded-md bg-cool-grey-100 text-md"
-					defaultValue={new Date(Date.now()).toLocaleDateString("sv")}
-					onChange={(e) => {}}
-					onKeyDown={(e) => {
-						if (e.key === "Enter") {
-						}
-					}}
-				/>
-			</div>
-			<div className="mb-4">
-				<h2 className="mb-1 ml-1 text-xl font-medium font-Poppins">Filter</h2>
-				<input
-					className="block w-full px-2 py-1 transition-all rounded-md text-md bg-cool-grey-100 focus:outline focus:outline-cool-grey-500"
-					type="text"
-					onChange={(e) => {}}
-					placeholder="Search"
-				/>
-			</div>
-			<button className="block px-2 py-1 mx-auto mt-8 font-medium transition-colors bg-yellow-300 rounded-md hover:bg-yellow-400 font-Poppins text-md">
-				Submit
-			</button>
+		<div className="w-full p-4 rounded-md shadow-lg sm:w-96 sm:mx-auto sm:p-6 md:w-80 h-fit bg-cool-grey-50">
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					setLoading(true);
+				}}
+				className="w-full"
+			>
+				<div className="mb-4">
+					<h2 className="mb-1 ml-1 text-xl font-medium font-Poppins">
+						Start Date
+					</h2>
+					<input
+						type="date"
+						className="block w-full px-2 py-1 rounded-md bg-cool-grey-100 text-md"
+						defaultValue={new Date(
+							Date.now() - 7 * 24 * 60 * 60 * 1000
+						).toLocaleDateString("sv")}
+						onChange={(e) => {
+							setStart(e.target.value);
+						}}
+					/>
+				</div>
+				<div className="mb-4">
+					<h2 className="mb-1 ml-1 text-xl font-medium font-Poppins">
+						End Date
+					</h2>
+					<input
+						type="date"
+						className="block w-full px-2 py-1 rounded-md bg-cool-grey-100 text-md"
+						defaultValue={new Date(Date.now()).toLocaleDateString("sv")}
+						onChange={(e) => {
+							console.log(e.target.value);
+							setEnd(e.value);
+						}}
+					/>
+				</div>
+				<div className="mb-4">
+					<h2 className="mb-1 ml-1 text-xl font-medium font-Poppins">Filter</h2>
+					<input
+						className="block w-full px-2 py-1 transition-all rounded-md text-md bg-cool-grey-100 focus:outline focus:outline-cool-grey-500"
+						type="text"
+						onChange={(e) => {
+							setFilter(e.target.value);
+						}}
+						placeholder="Search"
+					/>
+				</div>
+				<button
+					className="block px-2 py-1 mx-auto mt-8 font-medium transition-colors bg-yellow-300 rounded-md hover:bg-yellow-400 font-Poppins text-md"
+					type="submit"
+				>
+					Submit
+				</button>
+			</form>
 		</div>
 	);
 }
 
 function Log({ log }) {
 	return (
-		<div className="flex-grow p-6 rounded-md shadow-lg h-fit bg-cool-grey-50">
+		<div className="flex-grow p-4 rounded-md shadow-lg sm:p-6 h-fit bg-cool-grey-50">
 			{log.map((cluster) => {
 				return (
 					<div key={cluster.date + " " + cluster.time + " " + cluster.user}>
@@ -190,7 +214,7 @@ function Log({ log }) {
 							date={cluster.date}
 							time={cluster.time}
 						/>
-						<div className="m-4">
+						<div className="m-2 sm:m-4">
 							{Object.entries(cluster.entries).map(([key, value]) => (
 								<div className="mb-4 font-Poppins" key={key}>
 									<h3 className="text-lg font-semibold text-cool-grey-900">

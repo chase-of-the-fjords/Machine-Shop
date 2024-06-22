@@ -4,12 +4,12 @@ export default function Action({ action }) {
 	if (action.action == "updated job") return UpdatedJob({ action });
 	if (action.action == "deleted job") return DeletedJob({ action });
 
-	return <p className="ml-4">{action.action}</p>;
+	return <p className="ml-2 sm:ml-4">{action.action}</p>;
 }
 
 function UpdatedMachine({ action }) {
 	return (
-		<ul className="ml-4">
+		<ul className="ml-2 sm:ml-4">
 			{Object.entries(action.changes).map(([key, value]) => {
 				if (key == "state") {
 					return (
@@ -36,12 +36,12 @@ function UpdatedMachine({ action }) {
 
 function CreatedJob({ action }) {
 	return (
-		<h4 className="mb-2 ml-4">
+		<h4 className="mb-1 ml-2 sm:ml-4">
 			{`Created `}
 			<span className="font-semibold">{action.op}</span>
 			<span className="text-sm font-light text-cool-grey-700">{` (${action.state})`}</span>
 			{action.notes && (
-				<p className="ml-4 text-sm">
+				<p className="ml-2 text-sm sm:ml-4">
 					<span className="font-light text-cool-grey-700">{"Notes: "}</span>
 					<span>{action.notes.trim()}</span>
 				</p>
@@ -68,7 +68,7 @@ function UpdatedJob({ action }) {
 			else if (action.changes.state.new == "DONE") {
 				newState = "Done";
 				return (
-					<h4 className="mb-2 ml-4">
+					<h4 className="mb-1 ml-2 sm:ml-4">
 						{`Completed `}
 						<span className="font-semibold">{action.op}</span>
 					</h4>
@@ -76,7 +76,7 @@ function UpdatedJob({ action }) {
 			}
 
 			return (
-				<h4 className="mb-2 ml-4">
+				<h4 className="mb-1 ml-2 sm:ml-4">
 					{`Marked `}
 					<span className="font-semibold">{action.op}</span>
 					{` as ${newState}`}
@@ -87,10 +87,10 @@ function UpdatedJob({ action }) {
 	}
 
 	return (
-		<h4 className="mb-2 ml-4">
+		<h4 className="mb-1 ml-2 sm:ml-4">
 			{"Updated "}
 			{action.op ? <span className="font-semibold">{action.op}</span> : "Job"}
-			<ul className="ml-4">
+			<ul className="ml-2 sm:ml-4">
 				{Object.entries(action.changes).map(([key, value]) => {
 					return (
 						<li className="text-sm" key={key}>
@@ -109,7 +109,7 @@ function UpdatedJob({ action }) {
 
 function DeletedJob({ action }) {
 	return (
-		<h4 className="mb-2 ml-4">
+		<h4 className="mb-1 ml-2 sm:ml-4">
 			{"Deleted "}
 			<span className="font-semibold">{action.op.trim()}</span>
 		</h4>
