@@ -136,7 +136,7 @@ export async function getBuildings() {
  *
  * @returns An object containing a log of everything that happened.
  */
-export async function getLog(start, end) {
+export async function getLog(start, end, filter = "") {
 	// Gets all jobs that started or ended in that interval.
 	let jobs = await getJobsInterval(start, end);
 
@@ -170,6 +170,7 @@ export async function getLog(start, end) {
 			action: "created job",
 			user: getUser(job.starter),
 			machine: getMachine(job.machine, { machines: current_machines }),
+			id: job.id,
 			op: job.op,
 			notes: job.notes,
 			state: getJobState(job.state),
@@ -207,13 +208,16 @@ export async function getLog(start, end) {
 			action: "updated job",
 			user: getUser(job.starter),
 			machine: getMachine(job.machine, { machines: current_machines }),
+			op: job.op,
 			changes: {},
 		};
 
 		// Store all changes from the previous version.
 		if (previous_version != undefined) {
-			if (job.op != previous_version.op)
+			if (job.op != previous_version.op) {
 				log.changes.op = { new: job.op, old: previous_version.op };
+				log.op = previous_version.op;
+			}
 			if (job.notes != previous_version.notes)
 				log.changes.notes = { new: job.notes, old: previous_version.notes };
 			if (job.state != previous_version.state)
@@ -261,6 +265,7 @@ export async function getLog(start, end) {
 			action: "deleted job",
 			user: getUser(job.ender),
 			machine: getMachine(job.machine, { machines: current_machines }),
+			id: job.id,
 			op: job.op,
 			notes: job.notes,
 			state: getJobState(job.state),
@@ -290,7 +295,7 @@ export async function getLog(start, end) {
 		let log = {
 			timestamp: machine.start,
 			action: "created machine",
-			name: machine.name,
+			machine: machine.name,
 			building: getBuilding(machine.building, { buildings: current_buildings }),
 			width: machine.width,
 			height: machine.height,
@@ -329,7 +334,7 @@ export async function getLog(start, end) {
 		let log = {
 			timestamp: machine.start,
 			action: "updated machine",
-			name: machine.name,
+			machine: machine.name,
 			user: getUser(machine.starter),
 			changes: {},
 		};
@@ -363,6 +368,9 @@ export async function getLog(start, end) {
 		...updated_machines,
 	];
 
+	// Filters the log.
+	merged = runFilter(merged, filter);
+
 	// Sorts the log by timestamp.
 	merged = merged.sort((a, b) => {
 		return new Date(b.timestamp) - new Date(a.timestamp);
@@ -371,6 +379,74 @@ export async function getLog(start, end) {
 	// RETURN THE OUTPUT:
 
 	return merged;
+}
+
+export async function getClusterLog(start, end, filter = "") {
+	let log = await getLog(start, end, filter);
+
+	let clusters = [];
+
+	let currentCluster = { user: "", date: "", time: "", entries: [] };
+
+	let lastTimestamp = new moment();
+
+	const dateFormat = "MMMM Do, YYYY";
+	const timeFormat = "h:mm:ss a";
+
+	// Iterate through every entry in the log
+	log.forEach((entry) => {
+		// For the first entry, skip this step
+		if (currentCluster.entries.length != 0) {
+			// Get the seconds between the last entry and this one
+			let duration = moment.duration(
+				lastTimestamp.diff(moment.utc(entry.timestamp))
+			);
+			let seconds = duration.asSeconds();
+
+			// If the next entry is from a different user, start a new cluster
+			if (entry.user != currentCluster.user) {
+				clusters.push(currentCluster);
+				currentCluster = {
+					user: entry.user,
+					date: moment.utc(entry.timestamp).format(dateFormat),
+					time: moment.utc(entry.timestamp).format(timeFormat),
+					entries: [],
+				};
+			}
+			// If more than 15 seconds passed since the last entry...
+			else if (seconds > 15) {
+				clusters.push(currentCluster);
+				currentCluster = {
+					user: entry.user,
+					date: moment.utc(entry.timestamp).format(dateFormat),
+					time: moment.utc(entry.timestamp).format(timeFormat),
+					entries: [],
+				};
+			}
+		}
+		// If this starts the first cluster, set the initial info
+		else {
+			currentCluster.user = entry.user;
+			currentCluster.date = moment.utc(entry.timestamp).format(dateFormat);
+			currentCluster.time = moment.utc(entry.timestamp).format(timeFormat);
+		}
+
+		// Add the entry to the current cluster and update the last timestamp
+		lastTimestamp = moment.utc(entry.timestamp);
+		currentCluster.entries.push(entry);
+	});
+
+	clusters.push(currentCluster);
+
+	clusters.forEach((cluster) => {
+		let groupedEntries = Object.groupBy(
+			cluster.entries,
+			({ machine }) => machine
+		);
+		cluster.entries = Object.fromEntries(Object.entries(groupedEntries).sort());
+	});
+
+	return clusters;
 }
 
 /**
@@ -527,7 +603,15 @@ export function runFilter(log, filter) {
 
 			if (
 				listIncludes(
-					[date, time, entry.action, entry.machine, entry.user, ...changes],
+					[
+						date,
+						time,
+						entry.action,
+						entry.machine,
+						entry.op,
+						entry.user,
+						...changes,
+					],
 					filter
 				)
 			)
@@ -556,7 +640,6 @@ export function runFilter(log, filter) {
 						date,
 						time,
 						entry.action,
-						entry.name,
 						entry.building,
 						entry.state,
 						`(${entry.xpos}, ${entry.ypos})`,
@@ -575,10 +658,7 @@ export function runFilter(log, filter) {
 			}
 
 			if (
-				listIncludes(
-					[date, time, entry.action, entry.name, entry.user, ...changes],
-					filter
-				)
+				listIncludes([date, time, entry.action, entry.user, ...changes], filter)
 			)
 				filteredLog.push(log[i]);
 		}
@@ -590,6 +670,7 @@ export function runFilter(log, filter) {
 function listIncludes(list, text) {
 	for (let i = 0; i < list.length; i++) {
 		let item = list[i];
+		console.log(list[i]);
 		if (item.toUpperCase().includes(text.toUpperCase())) return true;
 	}
 	return false;
