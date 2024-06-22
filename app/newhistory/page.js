@@ -122,34 +122,89 @@ function History() {
 
 	return (
 		<>
-			<div className="flex max-w-[1000px] mx-auto my-6 space-x-6 px-6">
-				<div className="w-64 h-64 rounded-md shadow-lg bg-cool-grey-50"></div>
-				<div className="flex-grow p-6 rounded-md shadow-lg h-fit bg-cool-grey-50">
-					{log.map((cluster) => {
-						return (
-							<div key={cluster.date + " " + cluster.time + " " + cluster.user}>
-								<ClusterHeading
-									name={cluster.user}
-									date={cluster.date}
-									time={cluster.time}
-								/>
-								<div className="m-4">
-									{Object.entries(cluster.entries).map(([key, value]) => (
-										<div className="mb-4 font-Poppins" key={key}>
-											<h3 className="text-lg font-semibold text-cool-grey-900">
-												{key}
-											</h3>
-											{value.map((action, i) => (
-												<Action action={action} key={i} />
-											))}
-										</div>
-									))}
-								</div>
-							</div>
-						);
-					})}
-				</div>
+			<div className="flex max-w-[1200px] mx-auto my-6 space-x-6 px-6">
+				<Filter />
+				<Log log={log} />
 			</div>
 		</>
+	);
+}
+
+function Filter() {
+	return (
+		<div className="w-64 p-6 rounded-md shadow-lg h-fit bg-cool-grey-50">
+			<div className="mb-4">
+				<h2 className="mb-1 ml-1 text-xl font-medium font-Poppins">
+					Start Date
+				</h2>
+				<input
+					type="date"
+					className="block w-full px-2 py-1 rounded-md bg-cool-grey-100 text-md"
+					defaultValue={new Date(
+						Date.now() - 7 * 24 * 60 * 60 * 1000
+					).toLocaleDateString("sv")}
+					onChange={(e) => {}}
+					onKeyDown={(e) => {
+						if (e.key === "Enter") {
+						}
+					}}
+				/>
+			</div>
+			<div className="mb-4">
+				<h2 className="mb-1 ml-1 text-xl font-medium font-Poppins">End Date</h2>
+				<input
+					type="date"
+					className="block w-full px-2 py-1 rounded-md bg-cool-grey-100 text-md"
+					defaultValue={new Date(Date.now()).toLocaleDateString("sv")}
+					onChange={(e) => {}}
+					onKeyDown={(e) => {
+						if (e.key === "Enter") {
+						}
+					}}
+				/>
+			</div>
+			<div className="mb-4">
+				<h2 className="mb-1 ml-1 text-xl font-medium font-Poppins">Filter</h2>
+				<input
+					className="block w-full px-2 py-1 transition-all rounded-md text-md bg-cool-grey-100 focus:outline focus:outline-cool-grey-500"
+					type="text"
+					onChange={(e) => {}}
+					placeholder="Search"
+				/>
+			</div>
+			<button className="block px-2 py-1 mx-auto mt-8 font-medium transition-colors bg-yellow-300 rounded-md hover:bg-yellow-400 font-Poppins text-md">
+				Submit
+			</button>
+		</div>
+	);
+}
+
+function Log({ log }) {
+	return (
+		<div className="flex-grow p-6 rounded-md shadow-lg h-fit bg-cool-grey-50">
+			{log.map((cluster) => {
+				return (
+					<div key={cluster.date + " " + cluster.time + " " + cluster.user}>
+						<ClusterHeading
+							name={cluster.user}
+							date={cluster.date}
+							time={cluster.time}
+						/>
+						<div className="m-4">
+							{Object.entries(cluster.entries).map(([key, value]) => (
+								<div className="mb-4 font-Poppins" key={key}>
+									<h3 className="text-lg font-semibold text-cool-grey-900">
+										{key}
+									</h3>
+									{value.map((action, i) => (
+										<Action action={action} key={i} />
+									))}
+								</div>
+							))}
+						</div>
+					</div>
+				);
+			})}
+		</div>
 	);
 }
