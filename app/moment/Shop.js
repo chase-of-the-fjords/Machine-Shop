@@ -333,9 +333,14 @@ function Menu({
 							</DropdownMenuTrigger>
 							<DropdownMenuContent>
 								{type == "moment" && (
-									<Link href="./">
-										<DropdownMenuItem>Home</DropdownMenuItem>
-									</Link>
+									<>
+										<Link href="./">
+											<DropdownMenuItem>Home</DropdownMenuItem>
+										</Link>
+										<Link href="./history">
+											<DropdownMenuItem>History Log</DropdownMenuItem>
+										</Link>
+									</>
 								)}
 								{type == "view" && (
 									<DropdownMenuItem

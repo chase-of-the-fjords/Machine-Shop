@@ -92,7 +92,7 @@ function Menu() {
 							</DropdownMenuTrigger>
 							<DropdownMenuContent>
 								<Link href="./">
-									<DropdownMenuItem>View Shop</DropdownMenuItem>
+									<DropdownMenuItem>Home</DropdownMenuItem>
 								</Link>
 								<Link href="./moment">
 									<DropdownMenuItem>Moment History</DropdownMenuItem>
