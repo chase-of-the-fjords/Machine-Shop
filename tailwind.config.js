@@ -111,6 +111,7 @@ module.exports = {
 				Courier: ["courier-std", "monospace"],
 				inter: ["var(--font-inter)"],
 				RobotoMono: ["var(--font-roboto-mono)"],
+				Poppins: ["var(--font-poppins)"],
 			},
 		},
 	},

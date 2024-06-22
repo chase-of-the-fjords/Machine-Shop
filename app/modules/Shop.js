@@ -464,9 +464,17 @@ function Menu({
 									</DropdownMenuItem>
 								)}
 								{type == "edit" && (
-									<a href="./">
-										<DropdownMenuItem>Log Out</DropdownMenuItem>
-									</a>
+									<>
+										<a href="./">
+											<DropdownMenuItem>Log Out</DropdownMenuItem>
+										</a>
+										<Link href="./moment">
+											<DropdownMenuItem>Moment History</DropdownMenuItem>
+										</Link>
+										<Link href="./history">
+											<DropdownMenuItem>History Log</DropdownMenuItem>
+										</Link>
+									</>
 								)}
 								<DropdownMenuItem
 									onSelect={(e) => {
