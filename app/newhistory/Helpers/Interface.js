@@ -136,7 +136,7 @@ export async function getBuildings() {
  *
  * @returns An object containing a log of everything that happened.
  */
-export async function getLog(start, end) {
+export async function getLog(start, end, filter = "") {
 	// Gets all jobs that started or ended in that interval.
 	let jobs = await getJobsInterval(start, end);
 
@@ -378,8 +378,8 @@ export async function getLog(start, end) {
 	return merged;
 }
 
-export async function getClusterLog(start, end) {
-	let log = await getLog(start, end);
+export async function getClusterLog(start, end, filter = "") {
+	let log = await getLog(start, end, filter);
 
 	let clusters = [];
 
@@ -410,8 +410,8 @@ export async function getClusterLog(start, end) {
 					entries: [],
 				};
 			}
-			// If more than 5 seconds passed since the last entry...
-			else if (seconds > 5) {
+			// If more than 15 seconds passed since the last entry...
+			else if (seconds > 15) {
 				clusters.push(currentCluster);
 				currentCluster = {
 					user: entry.user,
