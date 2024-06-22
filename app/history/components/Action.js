@@ -60,17 +60,7 @@ function UpdatedJob({ action }) {
 		let key = Object.keys(action.changes)[0];
 
 		if (key == "state") {
-			let oldState = "new";
-
-			if (action.changes.state.old == "NOW") oldState = "Active";
-			else if (action.changes.state.old == "NEXT") oldState = "Queued";
-			else if (action.changes.state.old == "DONE") oldState = "Completed";
-
-			let newState = "new";
-
-			if (action.changes.state.new == "NOW") newState = "Active";
-			else if (action.changes.state.new == "NEXT") newState = "Queued";
-			else if (action.changes.state.new == "DONE") {
+			if (action.changes.state.new == "DONE") {
 				newState = "Done";
 				return (
 					<h4 className="mb-1 ml-2 sm:ml-4">
@@ -82,10 +72,10 @@ function UpdatedJob({ action }) {
 
 			return (
 				<h4 className="mb-1 ml-2 sm:ml-4">
-					{`Marked `}
+					{`Set `}
 					<span className="font-semibold">{action.op}</span>
-					{` as ${newState}`}
-					<span className="text-sm font-light text-cool-grey-700">{` from ${oldState}`}</span>
+					{` to ${action.changes.state.new}`}
+					<span className="text-sm font-light text-cool-grey-700">{` from ${action.changes.state.old}`}</span>
 				</h4>
 			);
 		}
