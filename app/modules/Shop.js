@@ -434,7 +434,7 @@ function Menu({
 						{user.active ? `${user.name} is now editing` : "Machine Shop"}
 					</div>
 					<Link
-						href="./"
+						href="https://admin.origingolf.com"
 						className="absolute mt-2 ml-4 cursor-pointer w-fit h-fit"
 					>
 						<img src="./inverted-logo.png" className="h-12" />
