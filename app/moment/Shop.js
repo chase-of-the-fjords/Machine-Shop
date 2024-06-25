@@ -313,7 +313,7 @@ function Menu({
 				<div className="relative max-w-[1000px] mx-auto">
 					<div className="absolute w-full ml-4 sm:mx-none">
 						<input
-							className="block mt-4 text-lg sm:mx-auto"
+							className="block px-2 py-1 mt-4 rounded-md font-inter sm:mx-auto bg-cool-grey-100 text-md focus:outline-2 focus:outline-yellow-500"
 							type="datetime-local"
 							onChange={(e) => {
 								setDatetime(e.target.value);
