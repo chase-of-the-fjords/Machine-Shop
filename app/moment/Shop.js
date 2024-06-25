@@ -321,7 +321,7 @@ function Menu({
 						/>
 					</div>
 					<Link
-						href="./"
+						href="http://admin.origingolf.com"
 						className="absolute invisible mt-2 ml-4 cursor-pointer w-fit h-fit sm:visible"
 					>
 						<img src="./inverted-logo.png" className="h-12" />

@@ -79,7 +79,7 @@ function Menu() {
 						Shop History
 					</div>
 					<Link
-						href="./"
+						href="http://admin.origingolf.com"
 						className="absolute mt-2 ml-4 cursor-pointer w-fit h-fit"
 					>
 						<img src="./inverted-logo.png" className="h-12" />
@@ -91,7 +91,7 @@ function Menu() {
 								Menu
 							</DropdownMenuTrigger>
 							<DropdownMenuContent>
-								<Link href="./">
+								<Link href="http://admin.origingolf.com">
 									<DropdownMenuItem>Home</DropdownMenuItem>
 								</Link>
 								<Link href="./moment">
