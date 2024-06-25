@@ -61,7 +61,6 @@ function UpdatedJob({ action }) {
 
 		if (key == "state") {
 			if (action.changes.state.new == "DONE") {
-				newState = "Done";
 				return (
 					<h4 className="mb-1 ml-2 sm:ml-4">
 						{`Completed `}
