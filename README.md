@@ -1,3 +1,4 @@
+# Origin Golf Machine Shop Management Tool
 This project is a machine shop management website, capable of displaying what jobs are running in a machine shop at any given time. It's currently not ready to be deployed past its main deployment on [https://shop.origingolf.com](shop.origingolf.com).
 
 ## Features
